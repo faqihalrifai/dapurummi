@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delicious Bakery - Toko Kue Premium</title>
+    <title>Dapur Ummi - Toko Kue Premium</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         :root {
             --primary: #ff6b6b;
@@ -50,7 +52,7 @@
             top: 0;
             z-index: 1000;
             transform: translateY(0);
-            transition: transform 0.3s ease, background-color 0.3s;
+            transition: transform 0.3s ease, background-color 0.3s, backdrop-filter 0.3s; /* Tambah backdrop-filter */
         }
 
         header.hidden {
@@ -59,7 +61,7 @@
 
         header.scrolled {
             background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px); /* Efek blur saat di-scroll */
         }
 
         .navbar {
@@ -163,7 +165,7 @@
             height: 100%;
             background: radial-gradient(circle at top left, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
                         radial-gradient(circle at bottom right, rgba(255, 142, 142, 0.3) 0%, transparent 50%);
-            animation: heroBackgroundPulse 10s infinite alternate;
+            animation: heroBackgroundPulse 10s infinite alternate; /* Animasi latar belakang */
         }
 
         .hero-content {
@@ -218,7 +220,7 @@
         }
 
         .btn:focus:not(:active)::after {
-            animation: ripple 1s ease-out;
+            animation: ripple 1s ease-out; /* Efek riak */
         }
 
         .btn:hover {
@@ -386,10 +388,6 @@
             opacity: 1;
         }
 
-        .product-card:hover .product-img img {
-            transform: scale(1.1);
-        }
-
         .product-info {
             padding: 20px;
             flex-grow: 1;
@@ -459,24 +457,31 @@
             transform: rotate(360deg);
         }
 
-        /* Testimonials (Sized like Product Cards) */
+        /* Testimonials (Swiper Integration) */
         .testimonials {
             background-color: var(--gray);
-            overflow: hidden;
+            padding: 80px 0; /* Ensure consistent padding for sections */
         }
 
-        .testimonials-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Same as product grid */
-            gap: 30px; /* Same as product grid */
-            padding: 20px 0;
+        /* Swiper container */
+        .swiper {
+            width: 100%;
+            padding-bottom: 50px; /* Space for pagination */
+        }
+
+        /* Swiper slides (testimonial cards) */
+        .swiper-slide {
+            display: flex; /* Ensure flex properties are maintained for card content */
+            justify-content: center;
+            align-items: center;
+            height: auto; /* Allow height to adjust to content */
         }
 
         .testimonial-card {
             background-color: var(--light);
-            border-radius: 10px; /* Same as product card */
-            box-shadow: var(--shadow); /* Same as product card */
-            padding: 20px; /* Adjusted padding */
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -485,13 +490,15 @@
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 107, 107, 0.2);
-            min-height: 300px; /* Ensure consistent height, adjust as needed */
-            justify-content: space-between; /* Distribute content vertically */
+            min-height: 300px; /* Maintain consistent height */
+            justify-content: space-between;
+            width: 100%; /* Ensure card takes full slide width */
+            max-width: 350px; /* Optional: Limit max width of individual card in slider */
         }
 
         .testimonial-card:hover {
-            transform: translateY(-10px) scale(1.02); /* Same as product card */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Same as product card */
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
         .testimonial-card::before {
@@ -502,11 +509,11 @@
             width: 100%;
             height: 5px;
             background: linear-gradient(to right, var(--primary), var(--secondary));
-            border-radius: 10px 10px 0 0; /* Match product card top radius */
+            border-radius: 10px 10px 0 0;
         }
 
         .author-img {
-            width: 70px; /* Slightly smaller for better fit */
+            width: 70px;
             height: 70px;
             border-radius: 50%;
             overflow: hidden;
@@ -531,62 +538,95 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            width: 100%; /* Ensure content takes full width */
+            width: 100%;
         }
 
         .testimonial-card .quote {
-            font-size: 0.95rem; /* Slightly smaller font for compactness */
-            margin-bottom: 15px; /* Adjusted margin */
+            font-size: 0.95rem;
+            margin-bottom: 15px;
             font-style: italic;
             color: #555;
             line-height: 1.6;
             position: relative;
-            padding: 0 5px; /* Reduced padding */
-            flex-grow: 1; /* Allow quote to take available space */
+            padding: 0 5px;
+            flex-grow: 1;
             display: flex;
-            align-items: center; /* Center text vertically if short */
+            align-items: center;
         }
 
         .testimonial-card .quote::before,
         .testimonial-card .quote::after {
             font-family: "Font Awesome 5 Free";
             font-weight: 900;
-            font-size: 2rem; /* Adjusted quote icon size */
+            font-size: 2rem;
             color: var(--primary);
             opacity: 0.15;
             position: absolute;
         }
 
         .testimonial-card .quote::before {
-            content: "\f10d"; /* fa-quote-left */
-            top: -5px; /* Adjusted position */
-            left: -5px; /* Adjusted position */
+            content: "\f10d";
+            top: -5px;
+            left: -5px;
         }
 
         .testimonial-card .quote::after {
-            content: "\f10e"; /* fa-quote-right */
-            bottom: -5px; /* Adjusted position */
-            right: -5px; /* Adjusted position */
+            content: "\f10e";
+            bottom: -5px;
+            right: -5px;
         }
 
         .testimonial-rating {
             color: gold;
             margin-bottom: 10px;
-            font-size: 1rem; /* Adjusted font size */
+            font-size: 1rem;
         }
 
         .author-info h4 {
-            font-size: 1rem; /* Adjusted font size */
+            font-size: 1rem;
             margin-bottom: 5px;
             color: var(--dark);
             font-weight: 600;
         }
 
         .author-info p {
-            font-size: 0.8rem; /* Adjusted font size */
+            font-size: 0.8rem;
             color: #777;
         }
 
+        /* Swiper Navigation (Arrows) */
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 1.2rem;
+        }
+
+        /* Swiper Pagination (Dots) */
+        .swiper-pagination-bullet {
+            background-color: #ccc;
+            opacity: 1;
+            transition: background-color 0.3s;
+        }
+
+        .swiper-pagination-bullet-active {
+            background-color: var(--primary);
+        }
 
         /* Payment Methods */
         .payment-methods {
@@ -1400,10 +1440,30 @@
             background-color: #bbb;
         }
 
+        /* Notification Toast */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s, fadeOut 0.3s 2.7s forwards; /* Animasi masuk dan keluar */
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
 
         @keyframes fadeInDown {
@@ -1568,10 +1628,6 @@
                 font-size: 2rem;
             }
 
-            .testimonials-container {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted for smaller screens */
-            }
-
             .testimonial-card {
                 min-height: 280px; /* Adjusted min-height for smaller screens */
             }
@@ -1589,6 +1645,12 @@
             }
             .order-step-card {
                 min-height: 160px;
+            }
+
+            /* Swiper navigation on smaller screens */
+            .swiper-button-next,
+            .swiper-button-prev {
+                display: none; /* Hide arrows on smaller screens if preferred */
             }
         }
 
@@ -1843,8 +1905,16 @@
                 <h2>Testimoni Pelanggan</h2>
                 <p>Apa kata mereka tentang cookies kami.</p>
             </div>
-            <div class="testimonials-container" id="testimonialsContainer">
-                <!-- Testimoni akan diisi oleh JavaScript -->
+            <!-- Swiper -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper" id="testimonialsContainer">
+                    <!-- Testimoni akan diisi oleh JavaScript di sini (sebagai swiper-slide) -->
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
             </div>
         </div>
     </section>
@@ -1865,31 +1935,31 @@
                 </div>
                 <div class="payment-method">
                     <div class="payment-icon">
-                        <img src="images/icons/payment-method (1).png" alt="OVO" loading="lazy">
+                        
                     </div>
                     <span class="payment-name">OVO</span>
                 </div>
                 <div class="payment-method">
                     <div class="payment-icon">
-                        <img src="images/icons/credit-card (1).png" alt="BCA" loading="lazy">
+                        
                     </div>
                     <span class="payment-name">BCA</span>
                 </div>
                 <div class="payment-method">
                     <div class="payment-icon">
-                        <img src="images/icons/credit-card.png" alt="Mandiri" loading="lazy">
+                        
                     </div>
                     <span class="payment-name">Mandiri</span>
                 </div>
                 <div class="payment-method">
                     <div class="payment-icon">
-                        <img src="images/icons/atm-card.png" alt="BNI" loading="lazy">
+                        
                     </div>
                     <span class="payment-name">BNI</span>
                 </div>
                 <div class="payment-method">
                     <div class="payment-icon">
-                        <img src="images/icons/cash-payment.png" alt="Cash payment" loading="lazy">
+                        
                     </div>
                     <span class="payment-name">Cash</span>
                 </div>
@@ -2156,6 +2226,8 @@
     <!-- Overlay for modal -->
     <div class="overlay" id="modalOverlay"></div>
 
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         // Nomor WhatsApp yang akan digunakan
         const WHATSAPP_NUMBER = '6285722944936';
@@ -2168,7 +2240,7 @@
                 name: "Cookies Mix",
                 description: "Cookies Gurih dengan berbagai macam varian dan topping yang beragam.",
                 price: 120000,
-                image: "images/product/produk1.jpg",
+                image: "images/product/produk1.jpg", // Placeholder image
                 rating: 4.5 // Default rating
             },
             {
@@ -2176,7 +2248,7 @@
                 name: "Cookies Mix",
                 description: "Cookies gurih dengan kombinasi 5 varian dan topping berbeda beda.",
                 price: 120000,
-                image: "images/product/produk2.jpg",
+                image: "images/product/produk2.jpg", // Placeholder image
                 rating: 5
             },
             {
@@ -2184,7 +2256,7 @@
                 name: "Cookies Putri Salju",
                 description: "Cookies putri salju lembut dengan tambahan tepung gula yang berlimpah dan butiran kacang yang terasa di setiap gigitan.",
                 price: 70000,
-                image: "images/product/produk3.jpg",
+                image: "images/product/produk3.jpg", // Placeholder image
                 rating: 4
             },
             {
@@ -2192,15 +2264,15 @@
                 name: "Cookies Stick Coklat",
                 description: "Coklat batangan yang terasa klasik yang bikin lumer dimulut.",
                 price: 80000,
-                image: "images/product/produk5.jpg",
+                image: "images/product/produk5.jpg", // Placeholder image
                 rating: 4.5
             },
             {
                 id: 5,
                 name: "Cookies Cherry",
-                description: "Cookies Cherry yang gurih dan lezat dengan potongan cherry dan ksimis.",
+                description: "Cookies Cherry yang gurih dan lezat dengan potongan cherry dan kismis.",
                 price: 80000,
-                image: "images/product/produk6jpg.jpg",
+                image: "images/product/produk6jpg.jpg", // Placeholder image
                 rating: 3.5
             },
             {
@@ -2208,7 +2280,7 @@
                 name: "Cookies Nastar",
                 description: "Cookies nastar lembut dengan topping kismis segar dan parutan keju.",
                 price: 85000,
-                image: "images/product/produk7.jpg",
+                image: "images/product/produk7.jpg", // Placeholder image
                 rating: 5
             },
             {
@@ -2216,7 +2288,7 @@
                 name: "Bolu ketan item lumer",
                 description: "Bolu ketan hitam yang lumer bikin mau nambah terusss.",
                 price: 7000,
-                image: "images/product/produk8.jpg",
+                image: "images/product/produk8.jpg", // Placeholder image
                 rating: 4
             },
             {
@@ -2224,7 +2296,7 @@
                 name: "Muffin Banana",
                 description: "Bolu mini yang gurih dan lezat ga mau kalah sama bolu ketan item lumer.",
                 price: 5000,
-                image: "images/product/produk9.jpg",
+                image: "images/product/produk9.jpg", // Placeholder image
                 rating: 4.5
             },
             {
@@ -2232,7 +2304,7 @@
                 name: "Blueberry Cheesecake",
                 description: "Cheesecake creamy dengan topping blueberry segar dan renyah.",
                 price: 260000,
-                image: "https://images.unsplash.com/photo-1542826456-c03387796d19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzM4OTl8MHwxfHNlYXJjaHwxfHxibHVlYmVycnklMjBjaGVlc2VjYWtlfGVufDB8fHx8MTcxOTg3MjQ0MDh8MA&ixlib=rb-4.0.3&q=80&w=1080",
+                image: "https://images.unsplash.com/photo-1542826456-c03387796d19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzM4OTl8MHwxfHxibHVlYmVycnklMjBjaGVlc2VjYWtlfGVufDB8fHx8MTcxOTg3MjQ0MDh8MA&ixlib=rb-4.0.3&q=80&w=1080",
                 rating: 5
             },
             {
@@ -2248,7 +2320,7 @@
                 name: "Black Forest Cake",
                 description: "Kue cokelat klasik dengan krim, ceri, dan serutan cokelat.",
                 price: 270000,
-                image: "https://images.unsplash.com/photo-1571597815147-380907e997f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzM4OTl8MHwxfHNlYXJjaHwxfHhibGFjayUyMGZvcmVzdCUyMGNha2V8ZW58MHx8fHwxNzE5ODcyNDQwOHww&ixlib=rb-4.0.3&q=80&w=1080",
+                image: "https://images.unsplash.com/photo-1571597815147-380907e997f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzM4OTl8MHwxfHhibGFjayUyMGZvcmVzdCUyMGNha2V8ZW58MHx8fHwxNzE5ODcyNDQwOHww&ixlib=rb-4.0.3&q=80&w=1080",
                 rating: 4.5
             }
         ];
@@ -2330,19 +2402,19 @@
         const checkoutBtn = document.getElementById('checkoutBtn');
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.querySelector('.nav-links');
-        const testimonialsContainer = document.getElementById('testimonialsContainer');
+        const testimonialsContainer = document.getElementById('testimonialsContainer'); // This will now be the swiper-wrapper
         const loader = document.getElementById('loader');
         const header = document.getElementById('header');
         const deliveryOptionRadios = document.querySelectorAll('input[name="deliveryOption"]');
 
         // Pre-order DOM Elements
-        const preorderNameInput = document.getElementById('preorderName'); // New name input
+        const preorderNameInput = document.getElementById('preorderName');
         const preorderDateInput = document.getElementById('preorderDate');
         const preorderTimeInput = document.getElementById('preorderTime');
-        const preorderProductSelection = document.getElementById('preorderProductSelection'); // Changed to div
+        const preorderProductSelection = document.getElementById('preorderProductSelection');
         const preorderNotesInput = document.getElementById('preorderNotes');
         const preorderBtn = document.getElementById('preorderBtn');
-        const preorderPaymentOptions = document.querySelectorAll('input[name="preorderPaymentOption"]'); // New payment options
+        const preorderPaymentOptions = document.querySelectorAll('input[name="preorderPaymentOption"]');
 
         // FAQ DOM Elements
         const faqQuestions = document.querySelectorAll('.faq-question');
@@ -2377,6 +2449,8 @@
 
         // Render Produk dengan Lazy Loading dan Rating
         function renderProducts() {
+            if (!productsGrid) return;
+
             productsGrid.innerHTML = '';
             products.forEach(product => {
                 const productCard = document.createElement('div');
@@ -2408,12 +2482,10 @@
                 productsGrid.appendChild(productCard);
             });
 
-            // Add event listeners to add to cart buttons
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', addToCart);
             });
 
-            // Add event listeners for product rating
             document.querySelectorAll('.product-rating .stars').forEach(starsContainer => {
                 const productId = parseInt(starsContainer.dataset.productId);
                 starsContainer.querySelectorAll('i').forEach((star, index) => {
@@ -2424,7 +2496,6 @@
                 });
             });
 
-            // Initialize lazy loading
             initLazyLoading();
         }
 
@@ -2432,20 +2503,22 @@
         function updateProductRating(productId, newRating) {
             const productIndex = products.findIndex(p => p.id === productId);
             if (productIndex !== -1) {
-                // For simplicity, we're directly updating the rating.
-                // In a real application, you might want to average user ratings
-                // or send this to a backend.
                 products[productIndex].rating = newRating;
-                renderProducts(); // Re-render products to show updated rating
+                renderProducts();
                 showNotification(`Rating untuk ${products[productIndex].name} diperbarui menjadi ${newRating} bintang!`);
             }
         }
 
-        // Render Testimonials (Grid Layout dengan Rating)
+        // Render Testimonials (Now as Swiper slides)
         function renderTestimonials() {
+            if (!testimonialsContainer) return;
+
             testimonialsContainer.innerHTML = '';
 
             testimonials.forEach(testimonial => {
+                const testimonialSlide = document.createElement('div');
+                testimonialSlide.className = 'swiper-slide'; // Swiper slide class
+
                 const testimonialCard = document.createElement('div');
                 testimonialCard.className = 'testimonial-card';
 
@@ -2464,7 +2537,36 @@
                         </div>
                     </div>
                 `;
-                testimonialsContainer.appendChild(testimonialCard);
+                testimonialSlide.appendChild(testimonialCard);
+                testimonialsContainer.appendChild(testimonialSlide);
+            });
+
+            // Initialize Swiper after slides are rendered
+            initTestimonialsSwiper();
+        }
+
+        // Initialize Swiper for testimonials
+        function initTestimonialsSwiper() {
+            new Swiper(".mySwiper", {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                breakpoints: {
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                },
             });
         }
 
@@ -2514,7 +2616,7 @@
         // Update Cart
         function updateCart() {
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-            if (cartCount) { // Defensive check
+            if (cartCount) {
                 cartCount.textContent = totalItems;
             }
 
@@ -2532,7 +2634,7 @@
 
         // Render Cart Items
         function renderCartItems() {
-            if (!cartItems) return; // Defensive check
+            if (!cartItems) return;
 
             cartItems.innerHTML = '';
 
@@ -2630,25 +2732,12 @@
             const notification = document.createElement('div');
             notification.className = 'notification';
             notification.textContent = message;
-            notification.style.position = 'fixed';
-            notification.style.bottom = '20px';
-            notification.style.left = '50%';
-            notification.style.transform = 'translateX(-50%)';
-            notification.style.backgroundColor = 'var(--primary)';
-            notification.style.color = 'white';
-            notification.style.padding = '10px 20px';
-            notification.style.borderRadius = '5px';
-            notification.style.zIndex = '1000';
-            notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
-            notification.style.animation = 'fadeIn 0.3s';
-
             document.body.appendChild(notification);
 
             setTimeout(() => {
-                notification.style.animation = 'fadeOut 0.3s';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
+                if (notification && notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
             }, 3000);
         }
 
@@ -2657,23 +2746,20 @@
             if (confirmationMessage) confirmationMessage.innerHTML = messageHtml;
             if (sendConfirmationBtn) {
                 sendConfirmationBtn.onclick = () => {
-                    // This will open WhatsApp in a new tab/window
                     window.open(whatsappUrl, '_blank');
                     hideConfirmationModal();
-                    // Clear cart/preorder form after sending confirmation
                     cart = [];
                     updateCart();
                     if (preorderNameInput) preorderNameInput.value = '';
                     if (preorderDateInput) preorderDateInput.value = '';
                     if (preorderTimeInput) preorderTimeInput.value = '';
-                    // Deselect all checkboxes in preorder product selection
                     document.querySelectorAll('#preorderProductSelection input[type="checkbox"]').forEach(checkbox => {
                         checkbox.checked = false;
                         if (checkbox.parentElement) checkbox.parentElement.classList.remove('selected');
                     });
                     if (preorderNotesInput) preorderNotesInput.value = '';
                     const defaultPaymentRadio = document.getElementById('preorderPaymentDana');
-                    if (defaultPaymentRadio) defaultPaymentRadio.checked = true; // Reset payment option
+                    if (defaultPaymentRadio) defaultPaymentRadio.checked = true;
                     showNotification('Pesan konfirmasi telah dikirim!');
                 };
             }
@@ -2686,7 +2772,9 @@
         function hideConfirmationModal() {
             if (confirmationModal) confirmationModal.classList.remove('active');
             if (modalOverlay) modalOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            if (!(cartSidebar && cartSidebar.classList.contains('active')) && !(navLinks && navLinks.classList.contains('active'))) {
+                document.body.style.overflow = 'auto';
+            }
         }
 
         // Checkout function
@@ -2776,7 +2864,7 @@
             });
 
             // Header effect on scroll
-            if (header) { // Defensive check
+            if (header) {
                 if (window.scrollY > 100) {
                     header.classList.add('scrolled');
                 } else {
@@ -2790,7 +2878,7 @@
         function handleHideHeader() {
             const currentScroll = window.scrollY;
 
-            if (header) { // Defensive check
+            if (header) {
                 if (currentScroll > lastScroll && currentScroll > 100) {
                     header.classList.add('hidden');
                 } else {
@@ -2803,7 +2891,7 @@
 
         // Populate Pre-order Products (as checkboxes)
         function populatePreorderProducts() {
-            if (!preorderProductSelection) return; // Defensive check
+            if (!preorderProductSelection) return;
 
             preorderProductSelection.innerHTML = '';
             products.forEach(product => {
@@ -2816,9 +2904,8 @@
                 `;
                 preorderProductSelection.appendChild(productItem);
 
-                // Add event listener to toggle 'selected' class
                 const checkbox = productItem.querySelector('input[type="checkbox"]');
-                if (checkbox) { // Defensive check
+                if (checkbox) {
                     checkbox.addEventListener('change', (e) => {
                         if (e.target.checked) {
                             productItem.classList.add('selected');
@@ -2886,7 +2973,7 @@
         // FAQ Accordion Functionality
         function setupFaqAccordion() {
             faqQuestions.forEach(question => {
-                if (question) { // Defensive check
+                if (question) {
                     question.addEventListener('click', () => {
                         const answer = question.nextElementSibling;
                         const icon = question.querySelector('i');
@@ -2917,21 +3004,17 @@
 
         // Event Listeners and Initialization wrapped in window.onload
         window.addEventListener('load', () => {
-            // Initializing DOM elements after load
-            // (These are already declared as const at the top,
-            // but their values are populated here to ensure elements exist)
-
             // Event Listeners
             if (cartIcon) cartIcon.addEventListener('click', toggleCart);
             if (closeCart) closeCart.addEventListener('click', toggleCart);
             if (overlay) overlay.addEventListener('click', handleOverlayClick);
-            if (modalOverlay) modalOverlay.addEventListener('click', hideConfirmationModal); // Close modal on overlay click
+            if (modalOverlay) modalOverlay.addEventListener('click', hideConfirmationModal);
             if (checkoutBtn) checkoutBtn.addEventListener('click', checkout);
             if (hamburger) hamburger.addEventListener('click', toggleMenu);
-            // window itself is never null, so no check needed
+
             window.addEventListener('scroll', handleScrollAnimation);
             window.addEventListener('scroll', handleHideHeader);
-            if (cancelConfirmationBtn) cancelConfirmationBtn.addEventListener('click', hideConfirmationModal); // Cancel button for modal
+            if (cancelConfirmationBtn) cancelConfirmationBtn.addEventListener('click', hideConfirmationModal);
 
             deliveryOptionRadios.forEach(radio => {
                 if (radio) radio.addEventListener('change', updateCart);
@@ -2940,7 +3023,7 @@
             if (preorderBtn) preorderBtn.addEventListener('click', handlePreorder);
 
             document.querySelectorAll('.nav-links a').forEach(link => {
-                if (link) { // Defensive check for individual link
+                if (link) {
                     link.addEventListener('click', () => {
                         if (navLinks && navLinks.classList.contains('active')) {
                             toggleMenu();
@@ -2956,11 +3039,11 @@
 
             // Initialize functions
             renderProducts();
-            renderTestimonials();
+            renderTestimonials(); // This will now also initialize Swiper
             updateCart();
-            handleScrollAnimation(); // Run once on load to show visible sections
-            populatePreorderProducts(); // Populate products for pre-order
-            setupFaqAccordion(); // Setup FAQ accordion
+            handleScrollAnimation();
+            populatePreorderProducts();
+            setupFaqAccordion();
         });
     </script>
 </body>
