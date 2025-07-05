@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dapur Ummi - Toko Kue Premium</title>
+    <title>Delicious Bakery - Toko Kue Premium</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Swiper CSS untuk slider -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         :root {
             --primary: #ff6b6b;
@@ -52,7 +52,7 @@
             top: 0;
             z-index: 1000;
             transform: translateY(0);
-            transition: transform 0.3s ease, background-color 0.3s, backdrop-filter 0.3s; /* Tambah backdrop-filter */
+            transition: transform 0.3s ease, background-color 0.3s;
         }
 
         header.hidden {
@@ -61,7 +61,7 @@
 
         header.scrolled {
             background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px); /* Efek blur saat di-scroll */
+            backdrop-filter: blur(10px);
         }
 
         .navbar {
@@ -165,7 +165,7 @@
             height: 100%;
             background: radial-gradient(circle at top left, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
                         radial-gradient(circle at bottom right, rgba(255, 142, 142, 0.3) 0%, transparent 50%);
-            animation: heroBackgroundPulse 10s infinite alternate; /* Animasi latar belakang */
+            animation: heroBackgroundPulse 10s infinite alternate;
         }
 
         .hero-content {
@@ -220,7 +220,7 @@
         }
 
         .btn:focus:not(:active)::after {
-            animation: ripple 1s ease-out; /* Efek riak */
+            animation: ripple 1s ease-out;
         }
 
         .btn:hover {
@@ -272,43 +272,50 @@
             margin: 0 auto;
         }
 
-        /* How to Order Section (Miniaturized) */
+        /* How to Order Section (Swiper) */
         .how-to-order-section {
             background-color: var(--light);
-            padding: 60px 0; /* Reduced padding */
+            padding: 60px 0;
         }
 
-        .how-to-order-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Smaller min-width */
-            gap: 20px; /* Reduced gap */
+        .how-to-order-swiper-container { /* Nama kelas baru untuk menghindari konflik */
+            width: 100%;
+            padding-bottom: 50px; /* Ruang untuk pagination */
+        }
+
+        .how-to-order-swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .order-step-card {
             background-color: var(--gray);
             border-radius: 15px;
-            padding: 25px; /* Reduced padding */
+            padding: 25px;
             box-shadow: var(--shadow);
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
-            display: flex; /* Flexbox for internal alignment */
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 180px; /* Ensure a minimum height */
+            min-height: 220px; /* Tinggi yang konsisten untuk kartu */
+            width: 90%; /* Sesuaikan lebar kartu di dalam slide */
+            max-width: 300px; /* Batasi lebar maksimum */
         }
 
         .order-step-card:hover {
-            transform: translateY(-8px); /* Slightly less lift */
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); /* Adjusted shadow */
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
         }
 
         .order-step-card i {
-            font-size: 2.5rem; /* Slightly smaller icon */
+            font-size: 2.5rem;
             color: var(--primary);
-            margin-bottom: 15px; /* Reduced margin */
+            margin-bottom: 15px;
             transition: transform 0.3s ease;
         }
 
@@ -317,14 +324,14 @@
         }
 
         .order-step-card h3 {
-            font-size: 1.3rem; /* Slightly smaller heading */
-            margin-bottom: 10px; /* Reduced margin */
+            font-size: 1.3rem;
+            margin-bottom: 10px;
             color: var(--dark);
         }
 
         .order-step-card p {
             color: #555;
-            font-size: 0.9rem; /* Slightly smaller text */
+            font-size: 0.9rem;
         }
 
         .order-step-card::after {
@@ -332,12 +339,21 @@
             position: absolute;
             top: -10px;
             right: -10px;
-            width: 40px; /* Smaller decorative element */
+            width: 40px;
             height: 40px;
             background-color: var(--secondary);
             border-radius: 0 15px 0 15px;
             opacity: 0.2;
             transform: rotate(45deg);
+        }
+
+        /* Swiper Pagination & Navigation */
+        .swiper-pagination-bullet {
+            background: var(--primary);
+        }
+
+        .swiper-button-next, .swiper-button-prev {
+            color: var(--primary);
         }
 
         /* Products Grid */
@@ -386,6 +402,10 @@
 
         .product-img img.loaded {
             opacity: 1;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
         }
 
         .product-info {
@@ -457,24 +477,41 @@
             transform: rotate(360deg);
         }
 
-        /* Testimonials (Swiper Integration) */
+        /* Testimonials Section (Swiper for Mobile/Tablet, Grid for Desktop) */
         .testimonials {
             background-color: var(--gray);
-            padding: 80px 0; /* Ensure consistent padding for sections */
+            overflow: hidden;
+            padding: 80px 0; /* Sesuaikan padding */
         }
 
-        /* Swiper container */
-        .swiper {
+        .testimonials-container {
+            /* Default: Grid for larger screens */
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        /* Swiper specific styles for testimonials */
+        .testimonials-swiper-container {
             width: 100%;
             padding-bottom: 50px; /* Space for pagination */
+            display: none; /* Hidden by default, shown via media queries */
         }
 
-        /* Swiper slides (testimonial cards) */
-        .swiper-slide {
-            display: flex; /* Ensure flex properties are maintained for card content */
+        .testimonials-swiper-slide {
+            display: flex;
             justify-content: center;
             align-items: center;
-            height: auto; /* Allow height to adjust to content */
+        }
+
+        @media (max-width: 1024px) { /* Aktifkan slider untuk tablet dan mobile */
+            .testimonials-container {
+                display: none; /* Sembunyikan grid pada tablet dan mobile */
+            }
+            .testimonials-swiper-container {
+                display: block; /* Tampilkan slider pada tablet dan mobile */
+            }
         }
 
         .testimonial-card {
@@ -490,10 +527,10 @@
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 107, 107, 0.2);
-            min-height: 300px; /* Maintain consistent height */
+            min-height: 300px;
             justify-content: space-between;
-            width: 100%; /* Ensure card takes full slide width */
-            max-width: 350px; /* Optional: Limit max width of individual card in slider */
+            width: 90%; /* Sesuaikan lebar kartu di dalam slide */
+            max-width: 300px; /* Batasi lebar maksimum */
         }
 
         .testimonial-card:hover {
@@ -594,39 +631,6 @@
             color: #777;
         }
 
-        /* Swiper Navigation (Arrows) */
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: var(--primary);
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            box-shadow: var(--shadow);
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .swiper-button-next:hover,
-        .swiper-button-prev:hover {
-            background-color: var(--primary);
-            color: var(--light);
-        }
-
-        .swiper-button-next::after,
-        .swiper-button-prev::after {
-            font-size: 1.2rem;
-        }
-
-        /* Swiper Pagination (Dots) */
-        .swiper-pagination-bullet {
-            background-color: #ccc;
-            opacity: 1;
-            transition: background-color 0.3s;
-        }
-
-        .swiper-pagination-bullet-active {
-            background-color: var(--primary);
-        }
 
         /* Payment Methods */
         .payment-methods {
@@ -1046,9 +1050,18 @@
             accent-color: var(--primary);
         }
 
+        /* Ini adalah aturan untuk label opsi pengiriman di checkout */
         .delivery-option label {
             font-size: 0.95rem;
-            color: #555;
+            color: var(--dark); /* Warna hitam untuk checkout */
+        }
+
+        /* Gaya baru untuk info biaya pengiriman di checkout */
+        .delivery-fee-info {
+            font-size: 0.85rem;
+            color: var(--dark); /* Warna hitam untuk checkout */
+            margin-top: 5px;
+            padding-left: 25px; /* Sesuaikan dengan margin radio button */
         }
 
         .checkout-btn {
@@ -1063,7 +1076,6 @@
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
-            margin-top: 20px;
         }
 
         .checkout-btn::after {
@@ -1213,7 +1225,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             max-width: 700px;
             margin: 0 auto;
-            color: var(--light);
+            color: var(--light); /* Ini mengatur warna teks default di dalam form pre-order menjadi putih */
             position: relative;
             overflow: hidden;
             animation: fadeIn 0.8s ease-out;
@@ -1245,7 +1257,7 @@
             display: block;
             margin-bottom: 10px;
             font-weight: 600;
-            color: var(--light);
+            color: var(--light); /* Ini juga mengatur warna label di dalam form pre-order menjadi putih */
             font-size: 1.1rem;
         }
 
@@ -1357,11 +1369,29 @@
             transform: scale(1.1);
         }
 
+        /* Ini adalah aturan untuk label metode pembayaran di pre-order */
         .preorder-payment-option label {
             font-size: 0.95rem;
-            color: #555;
+            color: var(--dark); /* Warna hitam untuk metode pembayaran pre-order */
             margin-bottom: 0; /* Override default label margin */
         }
+
+        /* --- ATURAN BARU UNTUK MEMASTIKAN WARNA HITAM DI OPSI PENGIRIMAN PRE-ORDER --- */
+        /* Target spesifik untuk label di opsi pengiriman dalam form pre-order */
+        .preorder-form .delivery-options .delivery-option label {
+            color: var(--dark) !important; /* Memaksa warna teks menjadi hitam */
+            font-weight: 500 !important; /* Mengurangi ketebalan teks menjadi medium */
+            font-size: 0.95rem !important; /* Menyesuaikan ukuran teks */
+        }
+
+        /* Target spesifik untuk info biaya pengiriman dalam form pre-order */
+        .preorder-form .delivery-options .delivery-fee-info {
+            color: var(--dark) !important; /* Memaksa warna teks menjadi hitam */
+            font-weight: 500 !important; /* Mengurangi ketebalan teks menjadi medium */
+            font-size: 0.95rem !important; /* Menyesuaikan ukuran teks */
+        }
+        /* --- AKHIR ATURAN BARU --- */
+
 
         .preorder-form .btn {
             width: 100%;
@@ -1440,30 +1470,10 @@
             background-color: #bbb;
         }
 
-        /* Notification Toast */
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            z-index: 1000;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-            animation: fadeIn 0.3s, fadeOut 0.3s 2.7s forwards; /* Animasi masuk dan keluar */
-        }
-
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
-        }
-
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
         }
 
         @keyframes fadeInDown {
@@ -1628,6 +1638,11 @@
                 font-size: 2rem;
             }
 
+            /* Testimonials Swiper for smaller screens */
+            .testimonials-swiper-container {
+                padding-bottom: 40px; /* Adjust for pagination on smaller screens */
+            }
+
             .testimonial-card {
                 min-height: 280px; /* Adjusted min-height for smaller screens */
             }
@@ -1640,17 +1655,8 @@
                 padding: 30px;
             }
 
-            .how-to-order-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Further adjustment for tablets */
-            }
             .order-step-card {
                 min-height: 160px;
-            }
-
-            /* Swiper navigation on smaller screens */
-            .swiper-button-next,
-            .swiper-button-prev {
-                display: none; /* Hide arrows on smaller screens if preferred */
             }
         }
 
@@ -1796,11 +1802,13 @@
                 width: 100%;
             }
 
-            .how-to-order-grid {
-                grid-template-columns: 1fr; /* Stack on very small screens */
+            /* How to Order Swiper */
+            .how-to-order-swiper-slide {
+                width: 100% !important; /* Pastikan slide mengambil lebar penuh pada mobile */
             }
             .order-step-card {
-                min-height: unset; /* Remove min-height for stacking */
+                min-height: unset; /* Hapus min-height saat mobile */
+                width: 100%; /* Pastikan kartu mengambil lebar penuh */
             }
         }
     </style>
@@ -1853,34 +1861,50 @@
         </div>
     </section>
 
-    <!-- How to Order Section -->
+    <!-- How to Order Section (Diubah menjadi Swiper Slider) -->
     <section class="section how-to-order-section" id="how-to-order">
         <div class="container">
             <div class="section-title">
                 <h2>Cara Memesan</h2>
                 <p>Ikuti langkah mudah ini untuk mendapatkan cookies favorit Anda.</p>
             </div>
-            <div class="how-to-order-grid">
-                <div class="order-step-card">
-                    <i class="fas fa-cookie-bite"></i>
-                    <h3>1. Pilih Produk</h3>
-                    <p>Jelajahi katalog kami dan tambahkan produk yang Anda inginkan ke keranjang belanja.</p>
+            <!-- Swiper untuk Cara Memesan -->
+            <div class="swiper-container how-to-order-swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide how-to-order-swiper-slide">
+                        <div class="order-step-card">
+                            <i class="fas fa-cookie-bite"></i>
+                            <h3>1. Pilih Produk</h3>
+                            <p>Jelajahi katalog kami dan tambahkan produk yang Anda inginkan ke keranjang belanja.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide how-to-order-swiper-slide">
+                        <div class="order-step-card">
+                            <i class="fas fa-shopping-cart"></i>
+                            <h3>2. Checkout / Pre-order</h3>
+                            <p>Lanjutkan ke checkout untuk pesanan langsung atau gunakan fitur pre-order untuk pemesanan di masa mendatang.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide how-to-order-swiper-slide">
+                        <div class="order-step-card">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <h3>3. Konfirmasi & Bayar</h3>
+                            <p>Konfirmasi pesanan Anda melalui WhatsApp dan lakukan pembayaran sesuai instruksi.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide how-to-order-swiper-slide">
+                        <div class="order-step-card">
+                            <i class="fas fa-truck-loading"></i>
+                            <h3>4. Ambil / Diantar</h3>
+                            <p>Ambil pesanan Anda di toko atau tunggu pesanan diantar ke alamat Anda.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="order-step-card">
-                    <i class="fas fa-shopping-cart"></i>
-                    <h3>2. Checkout / Pre-order</h3>
-                    <p>Lanjutkan ke checkout untuk pesanan langsung atau gunakan fitur pre-order untuk pemesanan di masa mendatang.</p>
-                </div>
-                <div class="order-step-card">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <h3>3. Konfirmasi & Bayar</h3>
-                    <p>Konfirmasi pesanan Anda melalui WhatsApp dan lakukan pembayaran sesuai instruksi.</p>
-                </div>
-                <div class="order-step-card">
-                    <i class="fas fa-truck-loading"></i>
-                    <h3>4. Ambil / Diantar</h3>
-                    <p>Ambil pesanan Anda di toko atau tunggu pesanan diantar ke alamat Anda.</p>
-                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
             </div>
         </div>
     </section>
@@ -1898,17 +1922,21 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Testimonials Section (Diubah menjadi Swiper Slider untuk mobile/tablet) -->
     <section class="section testimonials" id="testimonials">
         <div class="container">
             <div class="section-title">
                 <h2>Testimoni Pelanggan</h2>
                 <p>Apa kata mereka tentang cookies kami.</p>
             </div>
-            <!-- Swiper -->
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper" id="testimonialsContainer">
-                    <!-- Testimoni akan diisi oleh JavaScript di sini (sebagai swiper-slide) -->
+            <!-- Testimonials Grid (untuk desktop) -->
+            <div class="testimonials-container" id="testimonialsContainer">
+                <!-- Testimoni akan diisi oleh JavaScript -->
+            </div>
+            <!-- Testimonials Swiper (untuk mobile/tablet) -->
+            <div class="swiper-container testimonials-swiper-container" id="testimonialsSwiperContainer">
+                <div class="swiper-wrapper" id="testimonialsSwiperWrapper">
+                    <!-- Testimoni akan diisi oleh JavaScript -->
                 </div>
                 <!-- Add Pagination -->
                 <div class="swiper-pagination"></div>
@@ -1935,31 +1963,31 @@
                 </div>
                 <div class="payment-method">
                     <div class="payment-icon">
-                        
+                        <img src="images/icons/payment-method (1).png" alt="OVO" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=OVO';">
                     </div>
                     <span class="payment-name">OVO</span>
                 </div>
                 <div class="payment-method">
                     <div class="payment-icon">
-                        
+                        <img src="images/icons/credit-card (1).png" alt="BCA" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=BCA';">
                     </div>
                     <span class="payment-name">BCA</span>
                 </div>
                 <div class="payment-method">
                     <div class="payment-icon">
-                        
+                        <img src="images/icons/credit-card.png" alt="Mandiri" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=Mandiri';">
                     </div>
                     <span class="payment-name">Mandiri</span>
                 </div>
                 <div class="payment-method">
                     <div class="payment-icon">
-                        
+                        <img src="images/icons/atm-card.png" alt="BNI" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=BNI';">
                     </div>
                     <span class="payment-name">BNI</span>
                 </div>
                 <div class="payment-method">
                     <div class="payment-icon">
-                        
+                        <img src="images/icons/cash-payment.png" alt="Cash payment" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=Cash';">
                     </div>
                     <span class="payment-name">Cash</span>
                 </div>
@@ -1991,6 +2019,29 @@
                     <label>Pilih Produk:</label>
                     <div class="preorder-product-selection" id="preorderProductSelection">
                         <!-- Products will be loaded here by JavaScript as checkboxes -->
+                    </div>
+                </div>
+                <!-- Delivery Options for Pre-order -->
+                <div class="form-group">
+                    <label>Opsi Pengiriman Pre-order:</label>
+                    <div class="delivery-options" id="preorderDeliveryOptions">
+                        <div class="delivery-option">
+                            <input type="radio" id="preorderSelfPickup" name="preorderDeliveryOption" value="self-pickup" checked>
+                            <label for="preorderSelfPickup">Ambil Sendiri (Gratis)</label>
+                        </div>
+                        <div class="delivery-option">
+                            <input type="radio" id="preorderFreeDelivery" name="preorderDeliveryOption" value="free-delivery">
+                            <label for="preorderFreeDelivery">Gratis (Jarak < 2 km)</label>
+                        </div>
+                        <div class="delivery-option">
+                            <input type="radio" id="preorderCheapDelivery" name="preorderDeliveryOption" value="cheap-delivery">
+                            <label for="preorderCheapDelivery">Rp 1.500 (Jarak 2 km - 5 km)</label>
+                        </div>
+                        <div class="delivery-option">
+                            <input type="radio" id="preorderFarDelivery" name="preorderDeliveryOption" value="far-delivery">
+                            <label for="preorderFarDelivery">Rp 3.000 (Jarak > 5 km)</label>
+                        </div>
+                        <p class="delivery-fee-info" id="preorderDeliveryFeeInfo"></p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -2107,10 +2158,6 @@
                         </div>
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
-                            <span>+62 857 2294 4936</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
                             <span>+62 859 1482 19009</span>
                         </div>
                         <div class="contact-item">
@@ -2124,12 +2171,11 @@
                     </div>
                     <h3>Ikuti Kami</h3>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/faqihalrf" target="_blank"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
-                <!-- Removed WhatsApp Box as requested -->
             </div>
         </div>
     </section>
@@ -2172,7 +2218,7 @@
     </footer>
 
     <!-- WhatsApp Float -->
-    <a href="https://wa.me/6285722944936" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/62859148219009" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -2192,9 +2238,18 @@
                 <label for="deliverySelfPickup">Ambil Sendiri (Gratis)</label>
             </div>
             <div class="delivery-option">
-                <input type="radio" id="deliveryDeliver" name="deliveryOption" value="deliver">
-                <label for="deliveryDeliver">Diantar (Tambahan Biaya: Rp 3.000)</label>
+                <input type="radio" id="deliveryFreeDelivery" name="deliveryOption" value="free-delivery">
+                <label for="deliveryFreeDelivery">Gratis (Jarak < 2 km)</label>
             </div>
+            <div class="delivery-option">
+                <input type="radio" id="deliveryCheapDelivery" name="deliveryOption" value="cheap-delivery">
+                <label for="deliveryCheapDelivery">Rp 1.500 (Jarak 2 km - 5 km)</label>
+            </div>
+            <div class="delivery-option">
+                <input type="radio" id="deliveryFarDelivery" name="deliveryOption" value="far-delivery">
+                <label for="deliveryFarDelivery">Rp 3.000 (Jarak > 5 km)</label>
+            </div>
+            <p class="delivery-fee-info" id="deliveryFeeInfo"></p>
         </div>
         <div class="cart-total-section">
             <div class="total-row">
@@ -2227,101 +2282,124 @@
     <div class="overlay" id="modalOverlay"></div>
 
     <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Google Maps API (ganti YOUR_API_KEY dengan kunci API Anda) -->
+    <!-- Tambahkan 'places' library untuk Autocomplete -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=geometry,places&callback=initMap" async defer></script>
+
     <script>
+        // Inisialisasi Google Maps API (fungsi kosong karena kita hanya butuh geometry dan places library)
+        // Fungsi initMap kini kosong karena kita tidak lagi menggunakan Autocomplete untuk input alamat
+        function initMap() {
+            console.log('Google Maps API dimuat. Autocomplete tidak digunakan untuk input alamat.');
+        }
+
         // Nomor WhatsApp yang akan digunakan
-        const WHATSAPP_NUMBER = '6285722944936';
-        const DELIVERY_FEE = 3000; // Biaya pengiriman tetap
+        const WHATSAPP_NUMBER = '62859148219009'; // Nomor WhatsApp diperbarui
+        
+        // Batasan jarak untuk biaya pengiriman dalam KM
+        const FREE_DELIVERY_THRESHOLD_KM_MAX = 2; // Gratis jika < 2 km
+        const CHEAP_DELIVERY_THRESHOLD_KM_MAX = 5; // Rp 1.500 jika 2 km hingga 5 km
+        const CHEAP_DELIVERY_FEE = 1500;
+        const FAR_DELIVERY_FEE = 3000; // Rp 3.000 jika > 5 km
 
         // Data Produk
         const products = [
             {
                 id: 1,
                 name: "Cookies Mix",
-                description: "Cookies Gurih dengan berbagai macam varian dan topping yang beragam.",
+                description: "Aneka cookies renyah dengan berbagai varian.",
                 price: 120000,
-                image: "images/product/produk1.jpg", // Placeholder image
-                rating: 4.5 // Default rating
+                image: "images/product/produk1.jpg",
+                rating: 4.9
             },
             {
                 id: 2,
                 name: "Cookies Mix",
-                description: "Cookies gurih dengan kombinasi 5 varian dan topping berbeda beda.",
+                description: "Kombinasi 5 varian cookies dengan topping berbeda.",
                 price: 120000,
-                image: "images/product/produk2.jpg", // Placeholder image
+                image: "images/product/produk2.jpg",
                 rating: 5
             },
             {
                 id: 3,
                 name: "Cookies Putri Salju",
-                description: "Cookies putri salju lembut dengan tambahan tepung gula yang berlimpah dan butiran kacang yang terasa di setiap gigitan.",
+                description: "Cookies lembut bertabur gula halus, lumer di mulut.",
                 price: 70000,
-                image: "images/product/produk3.jpg", // Placeholder image
-                rating: 4
+                image: "images/product/produk3.jpg",
+                rating: 4.7
             },
             {
                 id: 4,
                 name: "Cookies Stick Coklat",
-                description: "Coklat batangan yang terasa klasik yang bikin lumer dimulut.",
+                description: "Stik cokelat klasik yang meleleh di mulut.",
                 price: 80000,
-                image: "images/product/produk5.jpg", // Placeholder image
-                rating: 4.5
+                image: "images/product/produk5.jpg",
+                rating: 5
             },
             {
                 id: 5,
                 name: "Cookies Cherry",
-                description: "Cookies Cherry yang gurih dan lezat dengan potongan cherry dan kismis.",
+                description: "Cookies gurih dengan potongan cherry dan kismis.",
                 price: 80000,
-                image: "images/product/produk6jpg.jpg", // Placeholder image
-                rating: 3.5
+                image: "images/product/produk6jpg.jpg",
+                rating: 5
             },
             {
                 id: 6,
                 name: "Cookies Nastar",
-                description: "Cookies nastar lembut dengan topping kismis segar dan parutan keju.",
+                description: "Nastar lembut dengan isian nanas dan taburan keju.",
                 price: 85000,
-                image: "images/product/produk7.jpg", // Placeholder image
-                rating: 5
+                image: "images/product/produk7.jpg",
+                rating: 4.8
             },
             {
                 id: 7,
-                name: "Bolu ketan item lumer",
-                description: "Bolu ketan hitam yang lumer bikin mau nambah terusss.",
+                name: "Bolu Ketan Hitam Lumer (Mini)",
+                description: "Bolu ketan hitam mini yang lembut dan lumer.",
                 price: 7000,
-                image: "images/product/produk8.jpg", // Placeholder image
-                rating: 4
+                image: "images/product/produk8.jpg",
+                rating: 5
             },
             {
                 id: 8,
                 name: "Muffin Banana",
-                description: "Bolu mini yang gurih dan lezat ga mau kalah sama bolu ketan item lumer.",
+                description: "Muffin pisang empuk dan lezat.",
                 price: 5000,
-                image: "images/product/produk9.jpg", // Placeholder image
-                rating: 4.5
+                image: "images/product/produk9.jpg",
+                rating: 4.9
             },
             {
                 id: 9,
-                name: "Blueberry Cheesecake",
-                description: "Cheesecake creamy dengan topping blueberry segar dan renyah.",
-                price: 260000,
-                image: "https://images.unsplash.com/photo-1542826456-c03387796d19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzM4OTl8MHwxfHxibHVlYmVycnklMjBjaGVlc2VjYWtlfGVufDB8fHx8MTcxOTg3MjQ0MDh8MA&ixlib=rb-4.0.3&q=80&w=1080",
-                rating: 5
+                name: "Bolu Pisang",
+                description: "Bolu pisang klasik, manis dan empuk.",
+                price: 50000,
+                image: "images/product/bolupisang.jpg",
+                rating: 4.9
             },
             {
                 id: 10,
-                name: "Lemon Meringue Pie",
-                description: "Pie lemon asam manis dengan lapisan meringue panggang yang lembut.",
-                price: 190000,
-                image: "https://images.unsplash.com/photo-1579218206982-f5421c609c2a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzM4OTl8MHwxfHxlbW9uJTIwbWVyaW5ndWUlMjBwaWV8ZW58MHx8fHwxNzE5ODcyNDQwOHww&ixlib=rb-4.0.3&q=80&w=1080",
-                rating: 4
+                name: "Bolu Pisang Keju",
+                description: "Bolu pisang dengan taburan keju gurih.",
+                price: 60000,
+                image: "images/product/bolupisangkeju.jpg",
+                rating: 4.9
             },
             {
                 id: 11,
-                name: "Black Forest Cake",
-                description: "Kue cokelat klasik dengan krim, ceri, dan serutan cokelat.",
-                price: 270000,
-                image: "https://images.unsplash.com/photo-1571597815147-380907e997f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1NzM4OTl8MHwxfHhibGFjayUyMGZvcmVzdCUyMGNha2V8ZW58MHx8fHwxNzE5ODcyNDQwOHww&ixlib=rb-4.0.3&q=80&w=1080",
-                rating: 4.5
+                name: "Muffin Tape",
+                description: "Muffin tape singkong yang unik dan nikmat.",
+                price: 5000,
+                image: "images/product/produk10.jpg",
+                rating: 5
+            },
+            {
+                id: 12,
+                name: "Bolu Ketan Hitam Lumer",
+                description: "Bolu ketan hitam besar yang lembut dan lumer.",
+                price: 70000,
+                image: "images/product/produk11.jpg",
+                rating: 5
             }
         ];
 
@@ -2387,6 +2465,7 @@
 
         // Keranjang Belanja
         let cart = [];
+        let currentDeliveryFee = 0; // Variabel untuk menyimpan biaya pengiriman saat ini
 
         // DOM Elements
         const productsGrid = document.getElementById('productsGrid');
@@ -2402,10 +2481,12 @@
         const checkoutBtn = document.getElementById('checkoutBtn');
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.querySelector('.nav-links');
-        const testimonialsContainer = document.getElementById('testimonialsContainer'); // This will now be the swiper-wrapper
+        const testimonialsContainer = document.getElementById('testimonialsContainer'); // Grid container
+        const testimonialsSwiperWrapper = document.getElementById('testimonialsSwiperWrapper'); // Swiper wrapper
         const loader = document.getElementById('loader');
         const header = document.getElementById('header');
         const deliveryOptionRadios = document.querySelectorAll('input[name="deliveryOption"]');
+        const deliveryFeeInfo = document.getElementById('deliveryFeeInfo'); // Info biaya pengiriman
 
         // Pre-order DOM Elements
         const preorderNameInput = document.getElementById('preorderName');
@@ -2415,6 +2496,8 @@
         const preorderNotesInput = document.getElementById('preorderNotes');
         const preorderBtn = document.getElementById('preorderBtn');
         const preorderPaymentOptions = document.querySelectorAll('input[name="preorderPaymentOption"]');
+        const preorderDeliveryOptionsRadios = document.querySelectorAll('input[name="preorderDeliveryOption"]');
+        const preorderDeliveryFeeInfo = document.getElementById('preorderDeliveryFeeInfo');
 
         // FAQ DOM Elements
         const faqQuestions = document.querySelectorAll('.faq-question');
@@ -2449,8 +2532,6 @@
 
         // Render Produk dengan Lazy Loading dan Rating
         function renderProducts() {
-            if (!productsGrid) return;
-
             productsGrid.innerHTML = '';
             products.forEach(product => {
                 const productCard = document.createElement('div');
@@ -2482,10 +2563,12 @@
                 productsGrid.appendChild(productCard);
             });
 
+            // Add event listeners to add to cart buttons
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', addToCart);
             });
 
+            // Add event listeners for product rating
             document.querySelectorAll('.product-rating .stars').forEach(starsContainer => {
                 const productId = parseInt(starsContainer.dataset.productId);
                 starsContainer.querySelectorAll('i').forEach((star, index) => {
@@ -2496,6 +2579,7 @@
                 });
             });
 
+            // Initialize lazy loading
             initLazyLoading();
         }
 
@@ -2504,25 +2588,18 @@
             const productIndex = products.findIndex(p => p.id === productId);
             if (productIndex !== -1) {
                 products[productIndex].rating = newRating;
-                renderProducts();
+                renderProducts(); // Re-render products to show updated rating
                 showNotification(`Rating untuk ${products[productIndex].name} diperbarui menjadi ${newRating} bintang!`);
             }
         }
 
-        // Render Testimonials (Now as Swiper slides)
+        // Render Testimonials (untuk Grid dan Swiper)
         function renderTestimonials() {
-            if (!testimonialsContainer) return;
-
-            testimonialsContainer.innerHTML = '';
+            testimonialsContainer.innerHTML = ''; // Untuk grid
+            testimonialsSwiperWrapper.innerHTML = ''; // Untuk swiper
 
             testimonials.forEach(testimonial => {
-                const testimonialSlide = document.createElement('div');
-                testimonialSlide.className = 'swiper-slide'; // Swiper slide class
-
-                const testimonialCard = document.createElement('div');
-                testimonialCard.className = 'testimonial-card';
-
-                testimonialCard.innerHTML = `
+                const testimonialCardHtml = `
                     <div class="author-img">
                         <img src="${testimonial.image}" alt="${testimonial.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/333333?text=User';">
                     </div>
@@ -2537,36 +2614,21 @@
                         </div>
                     </div>
                 `;
-                testimonialSlide.appendChild(testimonialCard);
-                testimonialsContainer.appendChild(testimonialSlide);
-            });
 
-            // Initialize Swiper after slides are rendered
-            initTestimonialsSwiper();
-        }
+                // Untuk grid
+                const gridCard = document.createElement('div');
+                gridCard.className = 'testimonial-card';
+                gridCard.innerHTML = testimonialCardHtml;
+                testimonialsContainer.appendChild(gridCard);
 
-        // Initialize Swiper for testimonials
-        function initTestimonialsSwiper() {
-            new Swiper(".mySwiper", {
-                slidesPerView: 1,
-                spaceBetween: 30,
-                loop: true,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-                breakpoints: {
-                    768: {
-                        slidesPerView: 2,
-                    },
-                    1024: {
-                        slidesPerView: 3,
-                    },
-                },
+                // Untuk swiper
+                const swiperSlide = document.createElement('div');
+                swiperSlide.className = 'swiper-slide testimonials-swiper-slide';
+                const swiperCardContent = document.createElement('div'); // Create a div to hold the card content
+                swiperCardContent.className = 'testimonial-card'; // Re-use the card style
+                swiperCardContent.innerHTML = testimonialCardHtml;
+                swiperSlide.appendChild(swiperCardContent); // Append the content to the slide
+                testimonialsSwiperWrapper.appendChild(swiperSlide);
             });
         }
 
@@ -2613,6 +2675,36 @@
             showNotification(`${product.name} telah ditambahkan ke keranjang`);
         }
 
+        // Fungsi untuk menghitung biaya pengiriman berdasarkan opsi yang dipilih
+        function calculateDeliveryFee(deliveryOption) {
+            let fee = 0;
+            let infoText = '';
+
+            switch (deliveryOption) {
+                case 'self-pickup':
+                    fee = 0;
+                    infoText = 'Ambil Sendiri (Gratis)';
+                    break;
+                case 'free-delivery':
+                    fee = 0;
+                    infoText = `Gratis (Jarak < ${FREE_DELIVERY_THRESHOLD_KM_MAX} km)`;
+                    break;
+                case 'cheap-delivery':
+                    fee = CHEAP_DELIVERY_FEE;
+                    infoText = `Rp ${CHEAP_DELIVERY_FEE.toLocaleString('id-ID')} (Jarak ${FREE_DELIVERY_THRESHOLD_KM_MAX} km - ${CHEAP_DELIVERY_THRESHOLD_KM_MAX} km)`;
+                    break;
+                case 'far-delivery':
+                    fee = FAR_DELIVERY_FEE;
+                    infoText = `Rp ${FAR_DELIVERY_FEE.toLocaleString('id-ID')} (Jarak > ${CHEAP_DELIVERY_THRESHOLD_KM_MAX} km)`;
+                    break;
+                default:
+                    fee = 0;
+                    infoText = '';
+                    break;
+            }
+            return { fee, infoText };
+        }
+
         // Update Cart
         function updateCart() {
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
@@ -2624,7 +2716,11 @@
 
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const selectedDeliveryOption = document.querySelector('input[name="deliveryOption"]:checked');
-            const currentDeliveryFee = selectedDeliveryOption && selectedDeliveryOption.value === 'deliver' ? DELIVERY_FEE : 0;
+
+            let deliveryFeeResult = calculateDeliveryFee(selectedDeliveryOption ? selectedDeliveryOption.value : 'self-pickup');
+            currentDeliveryFee = deliveryFeeResult.fee;
+            if (deliveryFeeInfo) deliveryFeeInfo.textContent = deliveryFeeResult.infoText;
+
             const grandTotal = subtotal + currentDeliveryFee;
 
             if (cartSubtotal) cartSubtotal.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
@@ -2732,12 +2828,25 @@
             const notification = document.createElement('div');
             notification.className = 'notification';
             notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.backgroundColor = 'var(--primary)';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '1000';
+            notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+            notification.style.animation = 'fadeIn 0.3s';
+
             document.body.appendChild(notification);
 
             setTimeout(() => {
-                if (notification && notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
+                notification.style.animation = 'fadeOut 0.3s';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
             }, 3000);
         }
 
@@ -2760,6 +2869,11 @@
                     if (preorderNotesInput) preorderNotesInput.value = '';
                     const defaultPaymentRadio = document.getElementById('preorderPaymentDana');
                     if (defaultPaymentRadio) defaultPaymentRadio.checked = true;
+                    // Reset delivery options for preorder
+                    const defaultPreorderDeliveryRadio = document.getElementById('preorderSelfPickup');
+                    if (defaultPreorderDeliveryRadio) defaultPreorderDeliveryRadio.checked = true;
+                    if (preorderDeliveryFeeInfo) preorderDeliveryFeeInfo.textContent = '';
+
                     showNotification('Pesan konfirmasi telah dikirim!');
                 };
             }
@@ -2772,9 +2886,7 @@
         function hideConfirmationModal() {
             if (confirmationModal) confirmationModal.classList.remove('active');
             if (modalOverlay) modalOverlay.classList.remove('active');
-            if (!(cartSidebar && cartSidebar.classList.contains('active')) && !(navLinks && navLinks.classList.contains('active'))) {
-                document.body.style.overflow = 'auto';
-            }
+            document.body.style.overflow = 'auto';
         }
 
         // Checkout function
@@ -2784,6 +2896,10 @@
                 return;
             }
 
+            const selectedDeliveryOption = document.querySelector('input[name="deliveryOption"]:checked');
+            const deliveryOptionValue = selectedDeliveryOption ? selectedDeliveryOption.value : 'self-pickup';
+            const { fee: deliveryFee, infoText: deliveryInfo } = calculateDeliveryFee(deliveryOptionValue);
+
             let messageDetails = '';
             let subtotal = 0;
 
@@ -2792,16 +2908,8 @@
                 subtotal += item.price * item.quantity;
             });
 
-            const selectedDeliveryOption = document.querySelector('input[name="deliveryOption"]:checked');
-            let deliveryText = '';
-            let finalTotal = subtotal;
-
-            if (selectedDeliveryOption && selectedDeliveryOption.value === 'self-pickup') {
-                deliveryText = 'Pengiriman: Ambil Sendiri (Gratis)';
-            } else {
-                deliveryText = `Pengiriman: Diantar (Biaya: Rp ${DELIVERY_FEE.toLocaleString('id-ID')})`;
-                finalTotal += DELIVERY_FEE;
-            }
+            let deliveryText = `Pengiriman: ${deliveryInfo}`;
+            let finalTotal = subtotal + deliveryFee;
 
             const confirmationText = `
                 Halo, saya ingin mengkonfirmasi pesanan dari keranjang belanja saya.
@@ -2927,6 +3035,11 @@
             const notes = preorderNotesInput ? preorderNotesInput.value.trim() : '';
             const selectedPaymentOptionElement = document.querySelector('input[name="preorderPaymentOption"]:checked');
             const selectedPaymentOption = selectedPaymentOptionElement ? selectedPaymentOptionElement.value : 'Tidak dipilih';
+            
+            // Get selected pre-order delivery option and its fee/info
+            const selectedPreorderDeliveryOption = document.querySelector('input[name="preorderDeliveryOption"]:checked');
+            const preorderDeliveryOptionValue = selectedPreorderDeliveryOption ? selectedPreorderDeliveryOption.value : 'self-pickup';
+            const { fee: preorderDeliveryFee, infoText: preorderDeliveryInfo } = calculateDeliveryFee(preorderDeliveryOptionValue);
 
             if (!name || !date || !time || selectedProductIds.length === 0) {
                 showNotification('Mohon lengkapi Nama, Tanggal, Waktu, dan pilih minimal satu Produk untuk Pre-order.');
@@ -2942,6 +3055,8 @@
                 totalPreorderPrice += product.price;
             });
 
+            let finalPreorderTotal = totalPreorderPrice + preorderDeliveryFee;
+
             let confirmationText = `
                 Halo, saya ingin melakukan Pre-order:
 
@@ -2951,7 +3066,8 @@
 
                 *Produk yang dipesan:*
                 ${messageDetails}
-                *Total Estimasi Harga:* Rp ${totalPreorderPrice.toLocaleString('id-ID')}
+                *Opsi Pengiriman:* ${preorderDeliveryInfo}
+                *Total Estimasi Harga:* Rp ${finalPreorderTotal.toLocaleString('id-ID')}
                 *Metode Pembayaran Pilihan:* ${selectedPaymentOption}
             `;
 
@@ -2968,6 +3084,17 @@
                 Setelah penjual menyetujui, Anda dapat melakukan pembayaran sesuai metode *${selectedPaymentOption}*.`,
                 whatsappUrl
             );
+        }
+
+        // Update Pre-order Delivery Fee Display
+        function updatePreorderDeliveryDisplay() {
+            const selectedPreorderDeliveryOption = document.querySelector('input[name="preorderDeliveryOption"]:checked');
+            const deliveryOptionValue = selectedPreorderDeliveryOption ? selectedPreorderDeliveryOption.value : 'self-pickup';
+            const { fee: deliveryFee, infoText: deliveryInfo } = calculateDeliveryFee(deliveryOptionValue); // Menggunakan fungsi calculateDeliveryFee yang sama
+            
+            if (preorderDeliveryFeeInfo) {
+                preorderDeliveryFeeInfo.textContent = deliveryInfo;
+            }
         }
 
         // FAQ Accordion Functionality
@@ -3004,6 +3131,94 @@
 
         // Event Listeners and Initialization wrapped in window.onload
         window.addEventListener('load', () => {
+            // Inisialisasi Swiper untuk "Cara Memesan"
+            new Swiper('.how-to-order-swiper-container', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                        spaceBetween: 40,
+                    },
+                }
+            });
+
+            // Inisialisasi Swiper untuk Testimoni
+            new Swiper('.testimonials-swiper-container', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                // Breakpoints untuk mengaktifkan/menonaktifkan slider
+                breakpoints: {
+                    0: { // Mobile
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                        enabled: true, // Aktifkan slider
+                    },
+                    768: { // Tablet
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                        enabled: true, // Aktifkan slider
+                    },
+                    1025: { // Desktop (nonaktifkan slider, kembali ke grid)
+                        slidesPerView: 3, // Atau jumlah kolom grid yang Anda inginkan
+                        spaceBetween: 30,
+                        enabled: false, // Nonaktifkan slider
+                    }
+                },
+                on: {
+                    // Update CSS display based on Swiper's enabled state
+                    init: function() {
+                        const testimonialsGrid = document.getElementById('testimonialsContainer');
+                        const testimonialsSwiper = document.getElementById('testimonialsSwiperContainer');
+                        if (this.params.enabled) {
+                            testimonialsGrid.style.display = 'none';
+                            testimonialsSwiper.style.display = 'block';
+                        } else {
+                            testimonialsGrid.style.display = 'grid';
+                            testimonialsSwiper.style.display = 'none';
+                        }
+                    },
+                    resize: function() {
+                        const testimonialsGrid = document.getElementById('testimonialsContainer');
+                        const testimonialsSwiper = document.getElementById('testimonialsSwiperContainer');
+                        if (this.params.enabled) {
+                            testimonialsGrid.style.display = 'none';
+                            testimonialsSwiper.style.display = 'block';
+                        } else {
+                            testimonialsGrid.style.display = 'grid';
+                            testimonialsSwiper.style.display = 'none';
+                        }
+                    }
+                }
+            });
+
+
             // Event Listeners
             if (cartIcon) cartIcon.addEventListener('click', toggleCart);
             if (closeCart) closeCart.addEventListener('click', toggleCart);
@@ -3011,13 +3226,18 @@
             if (modalOverlay) modalOverlay.addEventListener('click', hideConfirmationModal);
             if (checkoutBtn) checkoutBtn.addEventListener('click', checkout);
             if (hamburger) hamburger.addEventListener('click', toggleMenu);
-
             window.addEventListener('scroll', handleScrollAnimation);
             window.addEventListener('scroll', handleHideHeader);
             if (cancelConfirmationBtn) cancelConfirmationBtn.addEventListener('click', hideConfirmationModal);
 
+            // Event listener untuk perubahan opsi pengiriman di keranjang
             deliveryOptionRadios.forEach(radio => {
                 if (radio) radio.addEventListener('change', updateCart);
+            });
+
+            // Event listener untuk perubahan opsi pengiriman di pre-order
+            preorderDeliveryOptionsRadios.forEach(radio => {
+                if (radio) radio.addEventListener('change', updatePreorderDeliveryDisplay);
             });
 
             if (preorderBtn) preorderBtn.addEventListener('click', handlePreorder);
@@ -3039,11 +3259,12 @@
 
             // Initialize functions
             renderProducts();
-            renderTestimonials(); // This will now also initialize Swiper
-            updateCart();
+            renderTestimonials(); // Render testimonials untuk grid dan swiper
+            updateCart(); // Initial call to set delivery fee display for cart
             handleScrollAnimation();
             populatePreorderProducts();
             setupFaqAccordion();
+            updatePreorderDeliveryDisplay(); // Initial call for preorder delivery display
         });
     </script>
 </body>
