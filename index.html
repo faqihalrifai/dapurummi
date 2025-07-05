@@ -1380,15 +1380,11 @@
         /* Target spesifik untuk label di opsi pengiriman dalam form pre-order */
         .preorder-form .delivery-options .delivery-option label {
             color: var(--dark) !important; /* Memaksa warna teks menjadi hitam */
-            font-weight: 500 !important; /* Mengurangi ketebalan teks menjadi medium */
-            font-size: 0.95rem !important; /* Menyesuaikan ukuran teks */
         }
 
         /* Target spesifik untuk info biaya pengiriman dalam form pre-order */
         .preorder-form .delivery-options .delivery-fee-info {
             color: var(--dark) !important; /* Memaksa warna teks menjadi hitam */
-            font-weight: 500 !important; /* Mengurangi ketebalan teks menjadi medium */
-            font-size: 0.95rem !important; /* Menyesuaikan ukuran teks */
         }
         /* --- AKHIR ATURAN BARU --- */
 
@@ -2624,10 +2620,10 @@
                 // Untuk swiper
                 const swiperSlide = document.createElement('div');
                 swiperSlide.className = 'swiper-slide testimonials-swiper-slide';
-                const swiperCardContent = document.createElement('div'); // Create a div to hold the card content
-                swiperCardContent.className = 'testimonial-card'; // Re-use the card style
-                swiperCardContent.innerHTML = testimonialCardHtml;
-                swiperSlide.appendChild(swiperCardContent); // Append the content to the slide
+                const swiperCard = document.createElement('div');
+                swiperCard.className = 'testimonial-card'; // Re-use the card style
+                swiperCard.innerHTML = testimonialCardHtml;
+                swiperSlide.appendChild(swiperCard);
                 testimonialsSwiperWrapper.appendChild(swiperSlide);
             });
         }
