@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Swiper CSS untuk slider -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         :root {
@@ -19,1540 +18,1001 @@
             --gray: #f5f5f5;
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             --gradient-preorder: linear-gradient(135deg, #ff6b6b, #ff8e8e); /* Gradien baru untuk pre-order */
-            --preorder-border-radius: 15px; /* Border radius baru untuk pre-order */
+            --preorder-border-color: #ffcccc; /* Warna border baru untuk pre-order */
+            --preorder-background-light: #fff0f0; /* Warna background light untuk pre-order */
         }
 
+        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--gray);
-            color: var(--dark);
+            font-family: 'Poppins', sans-serif;
             line-height: 1.6;
-            overflow-x: hidden;
+            color: var(--dark);
+            background-color: var(--light);
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            overflow-x: hidden; /* Prevent horizontal scroll issues */
         }
 
         .container {
-            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 1.5rem;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--primary);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        h3 {
+            font-size: 1.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--light);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--light);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-padding {
+            padding: 4rem 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
         }
 
         /* Header */
-        header {
+        #header {
             background-color: var(--light);
             box-shadow: var(--shadow);
             position: fixed;
             width: 100%;
             top: 0;
+            left: 0;
             z-index: 1000;
-            transform: translateY(0);
-            transition: transform 0.3s ease, background-color 0.3s;
-        }
-
-        header.hidden {
-            transform: translateY(-100%);
-        }
-
-        header.scrolled {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            padding: 1rem 0;
         }
 
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 0 1.5rem;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .logo i {
-            margin-right: 10px;
         }
 
         .nav-links {
             display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 30px;
+            gap: 1.5rem;
         }
 
         .nav-links a {
-            text-decoration: none;
             color: var(--dark);
             font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
+            transition: color 0.3s ease;
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary);
-            bottom: -5px;
-            left: 0;
-            transition: width 0.3s ease;
+        .nav-links a:hover {
+            color: var(--primary);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .header-icons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .hamburger {
+        .menu-toggle {
             display: none;
+            font-size: 2rem;
             cursor: pointer;
-            z-index: 1001;
-        }
-
-        .hamburger div {
-            width: 25px;
-            height: 3px;
-            background-color: var(--dark);
-            margin: 5px;
-            transition: all 0.3s ease;
+            color: var(--dark);
         }
 
         /* Hero Section */
         .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1500x800/ff6b6b/ffffff?text=Delicious+Bakery+Hero') no-repeat center center/cover;
+            color: var(--light);
+            text-align: center;
+            padding: 10rem 0 8rem;
             display: flex;
             align-items: center;
-            text-align: center;
-            color: var(--light);
-            margin-top: 70px;
+            justify-content: center;
+            min-height: 70vh; /* Adjust hero height */
             position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top left, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
-                        radial-gradient(circle at bottom right, rgba(255, 142, 142, 0.3) 0%, transparent 50%);
-            animation: heroBackgroundPulse 10s infinite alternate;
+            z-index: 1; /* Ensure hero is below header */
+            margin-top: 60px; /* Space for fixed header */
         }
 
         .hero-content {
             max-width: 800px;
             margin: 0 auto;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.3s;
-            position: relative;
-            z-index: 1;
+            padding: 0 1.5rem;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        .hero-content h1 {
+            font-size: 3.8rem;
+            margin-bottom: 1rem;
+            color: var(--light); /* Ensure hero heading is white */
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
         }
 
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: var(--light);
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1, 1) translate(-50%);
-            transform-origin: 50% 50%;
-        }
-
-        .btn:focus:not(:active)::after {
-            animation: ripple 1s ease-out;
-        }
-
-        .btn:hover {
-            background-color: var(--secondary);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Sections */
-        .section {
-            padding: 80px 0;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            width: 50%;
-            height: 3px;
-            background-color: var(--primary);
-            bottom: -10px;
-            left: 25%;
-            border-radius: 3px;
-        }
-
-        .section-title p {
-            color: #777;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* How to Order Section (Swiper) */
-        .how-to-order-section {
-            background-color: var(--light);
-            padding: 60px 0;
-        }
-
-        .how-to-order-swiper-container { /* Nama kelas baru untuk menghindari konflik */
-            width: 100%;
-            padding-bottom: 50px; /* Ruang untuk pagination */
-        }
-
-        .how-to-order-swiper-slide {
+        /* About Us Section */
+        .about-us .container {
             display: flex;
-            justify-content: center;
             align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-content: center;
+        }
+
+        .about-image, .about-content {
+            flex: 1;
+            min-width: 300px; /* Ensure content doesn't get too small */
+        }
+
+        .about-image img {
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Products Section */
+        #products {
+            background-color: var(--gray);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Auto-fit columns */
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--light);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px; /* Fixed height for consistency */
+            object-fit: cover; /* Cover ensures image fills the space */
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .product-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .product-card .price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .product-card .add-to-cart {
+            margin-top: auto; /* Push button to bottom */
+        }
+
+        /* How to Order Section */
+        #how-to-order {
+            background-color: var(--light);
+        }
+
+        .order-steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Auto-fit columns */
+            gap: 2rem;
         }
 
         .order-step-card {
-            background-color: var(--gray);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: var(--shadow);
+            background: var(--gray);
+            border-radius: 10px;
+            padding: 2rem;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            box-shadow: var(--shadow);
+            min-height: 250px; /* Default min-height for larger screens */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 220px; /* Tinggi yang konsisten untuk kartu */
-            width: 90%; /* Sesuaikan lebar kartu di dalam slide */
-            max-width: 300px; /* Batasi lebar maksimum */
-        }
-
-        .order-step-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .order-step-card i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 15px;
             transition: transform 0.3s ease;
         }
 
-        .order-step-card:hover i {
-            transform: scale(1.1);
+        .order-step-card:hover {
+            transform: translateY(-5px);
+            background: var(--preorder-background-light); /* Slight change on hover */
+        }
+
+        .order-step-card .icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
         }
 
         .order-step-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
             color: var(--dark);
         }
 
         .order-step-card p {
+            font-size: 0.95rem;
             color: #555;
-            font-size: 0.9rem;
         }
 
-        .order-step-card::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            width: 40px;
-            height: 40px;
-            background-color: var(--secondary);
-            border-radius: 0 15px 0 15px;
-            opacity: 0.2;
-            transform: rotate(45deg);
-        }
-
-        /* Swiper Pagination & Navigation */
-        .swiper-pagination-bullet {
-            background: var(--primary);
-        }
-
-        .swiper-button-next, .swiper-button-prev {
-            color: var(--primary);
-        }
-
-        /* Products Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .product-card {
-            background-color: var(--light);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
-            will-change: transform;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .product-img {
-            height: 200px;
-            overflow: hidden;
-            position: relative;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-            will-change: transform;
-        }
-
-        .product-img img.lazy {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .product-img img.loaded {
-            opacity: 1;
-        }
-
-        .product-card:hover .product-img img {
-            transform: scale(1.1);
-        }
-
-        .product-info {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .product-info h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        .product-info p {
-            color: #777;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            flex-grow: 1;
-        }
-
-        .product-rating {
-            margin-bottom: 10px;
-        }
-
-        .product-rating .stars {
-            color: gold;
-            cursor: pointer;
-        }
-
-        .product-rating .stars i {
-            transition: color 0.2s;
-        }
-
-        .product-rating .stars i:hover {
-            color: orange;
-        }
-
-        .product-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
-        }
-
-        .price {
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .add-to-cart {
-            background-color: var(--primary);
-            color: var(--light);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .add-to-cart:hover {
-            background-color: var(--secondary);
-            transform: rotate(360deg);
-        }
-
-        /* Testimonials Section (Swiper for Mobile/Tablet, Grid for Desktop) */
-        .testimonials {
+        /* Testimonials Section */
+        #testimonials {
             background-color: var(--gray);
-            overflow: hidden;
-            padding: 80px 0; /* Sesuaikan padding */
         }
 
-        .testimonials-container {
-            /* Default: Grid for larger screens */
+        .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 20px 0;
-        }
-
-        /* Swiper specific styles for testimonials */
-        .testimonials-swiper-container {
-            width: 100%;
-            padding-bottom: 50px; /* Space for pagination */
-            display: none; /* Hidden by default, shown via media queries */
-        }
-
-        .testimonials-swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        @media (max-width: 1024px) { /* Aktifkan slider untuk tablet dan mobile */
-            .testimonials-container {
-                display: none; /* Sembunyikan grid pada tablet dan mobile */
-            }
-            .testimonials-swiper-container {
-                display: block; /* Tampilkan slider pada tablet dan mobile */
-            }
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Auto-fit columns */
+            gap: 2rem;
         }
 
         .testimonial-card {
-            background-color: var(--light);
+            background: var(--light);
             border-radius: 10px;
             box-shadow: var(--shadow);
-            padding: 20px;
+            padding: 2rem;
+            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 107, 107, 0.2);
-            min-height: 300px;
-            justify-content: space-between;
-            width: 90%; /* Sesuaikan lebar kartu di dalam slide */
-            max-width: 300px; /* Batasi lebar maksimum */
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .testimonial-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            border-radius: 10px 10px 0 0;
-        }
-
-        .author-img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin-bottom: 15px;
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 0 5px rgba(255, 107, 107, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .testimonial-card:hover .author-img {
-            transform: scale(1.05);
-        }
-
-        .author-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .testimonial-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 100%;
+            justify-content: center;
+            min-height: 220px; /* Ensure consistent height */
         }
 
         .testimonial-card .quote {
-            font-size: 0.95rem;
-            margin-bottom: 15px;
             font-style: italic;
+            margin-bottom: 1rem;
             color: #555;
-            line-height: 1.6;
-            position: relative;
-            padding: 0 5px;
-            flex-grow: 1;
+            font-size: 1rem;
+        }
+
+        .testimonial-card .author {
+            font-weight: 600;
+            color: var(--dark);
+            margin-top: 0.5rem;
+        }
+
+        /* Swiper specific styles for testimonials */
+        .swiper-container {
+            width: 100%;
+            padding-bottom: 3rem; /* Space for pagination */
+        }
+
+        .swiper-slide {
             display: flex;
+            justify-content: center;
             align-items: center;
         }
 
-        .testimonial-card .quote::before,
-        .testimonial-card .quote::after {
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            font-size: 2rem;
-            color: var(--primary);
-            opacity: 0.15;
-            position: absolute;
+        .swiper-pagination-bullet-active {
+            background: var(--primary) !important;
         }
 
-        .testimonial-card .quote::before {
-            content: "\f10d";
-            top: -5px;
-            left: -5px;
+        .testimonials-grid.swiper-active {
+            display: block; /* Hide grid when swiper is active */
         }
-
-        .testimonial-card .quote::after {
-            content: "\f10e";
-            bottom: -5px;
-            right: -5px;
-        }
-
-        .testimonial-rating {
-            color: gold;
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-
-        .author-info h4 {
-            font-size: 1rem;
-            margin-bottom: 5px;
-            color: var(--dark);
-            font-weight: 600;
-        }
-
-        .author-info p {
-            font-size: 0.8rem;
-            color: #777;
+        .testimonials-grid:not(.swiper-active) {
+            display: grid; /* Show grid when swiper is not active */
         }
 
 
-        /* Payment Methods */
-        .payment-methods {
-            background-color: var(--gray);
-            padding: 40px 0;
-        }
-
-        .payment-title {
+        /* CTA Banner */
+        .cta-banner {
+            background: var(--gradient-preorder); /* Re-using preorder gradient */
+            color: var(--light);
+            padding: 4rem 2rem;
             text-align: center;
-            margin-bottom: 30px;
+            border-radius: 10px;
+            margin-top: 4rem;
+            box-shadow: var(--shadow);
         }
 
-        .payment-title h3 {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 10px;
+        .cta-banner h2 {
+            color: var(--light);
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
         }
 
-        .payment-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
+        .cta-banner p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
         }
 
-        .payment-icons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 25px;
-            margin-top: 20px;
+        /* Pre-order Section */
+        #preorder {
+            background-color: var(--light);
         }
 
-        .payment-method {
+        .preorder-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100px;
-            transition: transform 0.3s ease;
-            text-decoration: none;
-            color: inherit;
+            gap: 2rem;
         }
 
-        .payment-method:hover {
-            transform: translateY(-5px);
-        }
-
-        .payment-icon {
-            width: 60px;
-            height: 60px;
-            background-color: var(--light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow);
-            transition: all 0.3s;
-            font-size: 1.5rem;
-            color: var(--primary);
-            overflow: hidden;
-        }
-
-        .payment-icon:hover {
-            background-color: var(--primary);
-            color: var(--light);
-            transform: scale(1.1);
-        }
-
-        .payment-icon img {
-            max-width: 70%;
-            max-height: 70%;
-            object-fit: contain;
-        }
-
-        .payment-name {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--dark);
-            text-align: center;
-        }
-
-        /* Contact Section */
-        .contact {
-            background-color: var(--light);
-        }
-
-        .contact-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            justify-content: center; /* Pusatkan konten */
-        }
-
-        .contact-info {
-            flex: 1;
-            min-width: 300px;
-            padding: 20px;
+        .preorder-form {
+            background-color: var(--preorder-background-light);
+            border: 1px solid var(--preorder-border-color);
             border-radius: 10px;
-            background-color: var(--gray); /* Latar belakang abu-abu */
+            padding: 2rem;
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
+            max-width: 600px;
+            width: 100%;
         }
 
-        .contact-info:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .contact-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 10px;
-        }
-
-        .contact-info p {
-            margin-bottom: 30px;
-            color: #555;
-        }
-
-        .contact-details {
-            margin-bottom: 30px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-            color: #444;
-        }
-
-        .contact-item i {
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary);
-            color: var(--light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            transition: transform 0.3s, background-color 0.3s;
-            flex-shrink: 0;
-        }
-
-        .contact-item:hover i {
-            transform: rotate(360deg);
-            background-color: var(--secondary);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary);
-            color: var(--light);
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            background-color: var(--secondary);
-            transform: translateY(-3px);
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: var(--light);
-            padding: 50px 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: #bbb;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-column ul li a:hover {
-            color: var(--primary);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            color: #bbb;
-            font-size: 0.9rem;
-        }
-
-        /* WhatsApp Float */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #25D366;
-            color: var(--light);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 100;
-            transition: all 0.3s;
-            text-decoration: none;
-            animation: pulse 2s infinite;
-        }
-
-        .whatsapp-float:hover {
-            background-color: #128C7E;
-            transform: scale(1.1);
-            animation: none;
-        }
-
-        /* Cart Sidebar */
-        .cart-sidebar {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100%;
-            background-color: var(--light);
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            transition: right 0.3s ease;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .cart-sidebar.active {
-            right: 0;
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cart-header h3 {
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-
-        .close-cart {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
+        .preorder-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
             color: var(--dark);
-            transition: transform 0.3s;
         }
 
-        .close-cart:hover {
-            transform: rotate(90deg);
-        }
-
-        .cart-items {
-            margin-bottom: 20px;
-        }
-
-        .cart-item {
-            display: flex;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cart-item-img {
-            width: 80px;
-            height: 80px;
+        .preorder-form input[type="text"],
+        .preorder-form input[type="email"],
+        .preorder-form input[type="tel"],
+        .preorder-form input[type="number"],
+        .preorder-form select,
+        .preorder-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--preorder-border-color);
             border-radius: 5px;
-            overflow: hidden;
-            margin-right: 15px;
-            flex-shrink: 0;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .cart-item-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .preorder-form textarea {
+            resize: vertical;
+            min-height: 80px;
         }
 
-        .cart-item-details {
-            flex: 1;
-        }
-
-        .cart-item-title {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .cart-item-price {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .cart-item-quantity {
-            display: flex;
-            align-items: center;
-        }
-
-        .quantity-btn {
-            width: 25px;
-            height: 25px;
-            background-color: var(--gray);
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .quantity-btn:hover {
-            background-color: #ddd;
-        }
-
-        .quantity-input {
-            width: 40px;
-            text-align: center;
-            margin: 0 5px;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            padding: 3px;
-        }
-
-        .remove-item {
-            color: #ff6b6b;
-            background: none;
-            border: none;
-            cursor: pointer;
-            margin-left: 10px;
-            transition: transform 0.3s;
-        }
-
-        .remove-item:hover {
-            transform: scale(1.2);
-        }
-
-        .cart-total-section {
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-            margin-top: 20px;
-        }
-
-        .cart-total-section .total-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-
-        .cart-total-section .total-row.grand-total {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .delivery-options {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: var(--gray);
-            border-radius: 8px;
-        }
-
-        .delivery-options h4 {
-            margin-bottom: 10px;
-            color: var(--dark);
-            font-size: 1rem;
-        }
-
-        .delivery-option {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .delivery-option input[type="radio"] {
-            margin-right: 10px;
-            accent-color: var(--primary);
-        }
-
-        /* Ini adalah aturan untuk label opsi pengiriman di checkout */
-        .delivery-option label {
-            font-size: 0.95rem;
-            color: var(--dark); /* Warna hitam untuk checkout */
-        }
-
-        /* Gaya baru untuk info biaya pengiriman di checkout */
-        .delivery-fee-info {
-            font-size: 0.85rem;
-            color: var(--dark); /* Warna hitam untuk checkout */
-            margin-top: 5px;
-            padding-left: 25px; /* Sesuaikan dengan margin radio button */
-        }
-
-        .checkout-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary);
+        .preorder-form input[type="submit"] {
+            width: auto;
+            padding: 0.8rem 2rem;
+            background: var(--primary);
             color: var(--light);
             border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .preorder-form input[type="submit"]:hover {
+            background: var(--secondary);
+        }
+
+        .preorder-delivery-options {
+            margin-bottom: 1rem;
+            border: 1px solid var(--preorder-border-color);
+            padding: 1rem;
             border-radius: 5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .checkout-btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1, 1) translate(-50%);
-            transform-origin: 50% 50%;
-        }
-
-        .checkout-btn:focus:not(:active)::after {
-            animation: ripple 1s ease-out;
-        }
-
-        .checkout-btn:hover {
-            background-color: var(--secondary);
-        }
-
-        /* Overlay */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Cart Icon */
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s;
-            font-size: 1.2rem;
-            color: var(--dark);
-        }
-
-        .cart-icon:hover {
-            transform: scale(1.1);
-            color: var(--primary);
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background-color: var(--primary);
-            color: var(--light);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 600;
-            transition: transform 0.3s;
-        }
-
-        .cart-icon:hover .cart-count {
-            transform: scale(1.2);
-        }
-
-        /* FAQ Section */
-        .faq-section {
             background-color: var(--light);
         }
 
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
+        .preorder-delivery-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
         }
 
-        .faq-item {
-            border-bottom: 1px solid #eee;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
+        .preorder-delivery-option input[type="radio"] {
+            margin-right: 0.5rem;
         }
 
-        .faq-item:last-child {
+        .preorder-delivery-option label {
+            margin-bottom: 0;
+            font-weight: 400;
+            font-size: 0.95rem;
+        }
+
+        .delivery-details {
+            border: 1px solid var(--preorder-border-color);
+            padding: 1rem;
+            border-radius: 5px;
+            background-color: var(--light);
+            margin-top: 1rem;
+        }
+
+        .preorder-total-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 1rem;
+            text-align: right;
+        }
+
+        .preorder-product-selection {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--preorder-border-color);
+            border-radius: 5px;
+            background-color: var(--light);
+        }
+
+        .preorder-product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .preorder-product-item:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
+        }
+
+        .preorder-product-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .preorder-product-info span {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .preorder-product-info small {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        .preorder-quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .preorder-quantity-control button {
+            background-color: var(--primary);
+            color: var(--light);
+            border: none;
+            border-radius: 5px;
+            width: 25px;
+            height: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .preorder-quantity-control button:hover {
+            background-color: var(--secondary);
+        }
+
+        .preorder-quantity-control input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px 0;
+            -moz-appearance: textfield; /* Remove number input arrows in Firefox */
+        }
+        .preorder-quantity-control input::-webkit-outer-spin-button,
+        .preorder-quantity-control input::-webkit-inner-spin-button {
+            -webkit-appearance: none; /* Remove number input arrows in Chrome, Safari */
+            margin: 0;
+        }
+
+        /* FAQ Section */
+        #faq {
+            background-color: var(--gray);
+        }
+
+        .faq-item {
+            background-color: var(--light);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
         .faq-question {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
+            padding: 1.2rem 1.5rem;
+            background-color: var(--primary);
+            color: var(--light);
             cursor: pointer;
             font-weight: 600;
-            color: var(--dark);
-            transition: color 0.3s;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
         }
 
-        .faq-question:hover {
-            color: var(--primary);
+        .faq-question.active {
+            background-color: var(--secondary);
         }
 
-        .faq-question i {
-            transition: transform 0.3s;
+        .faq-question .icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
         }
 
-        .faq-question.active i {
+        .faq-question.active .icon {
             transform: rotate(180deg);
         }
 
         .faq-answer {
+            padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            color: #555;
-            padding-right: 20px;
+            transition: max-height 0.4s ease-out;
+            background-color: var(--light);
+            color: var(--dark);
         }
 
-        .faq-answer.active {
-            max-height: 200px; /* Adjust as needed for content */
-            padding-bottom: 15px;
+        .faq-answer p {
+            padding: 1rem 0;
+            margin-bottom: 0;
+            border-top: 1px solid #eee; /* Separator for content inside */
         }
 
-        /* Pre-order Section - Modern Look */
-        .preorder-section {
+
+        /* Contact Section */
+        #contact {
+            background-color: var(--light);
+        }
+
+        .contact-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .contact-info {
             background-color: var(--gray);
-            padding: 80px 0;
-        }
-
-        .preorder-form {
-            background: var(--gradient-preorder);
-            padding: 40px;
-            border-radius: var(--preorder-border-radius);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            max-width: 700px;
-            margin: 0 auto;
-            color: var(--light); /* Ini mengatur warna teks default di dalam form pre-order menjadi putih */
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .preorder-form::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
             width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            clip-path: circle(15% at 0% 0%);
-            transition: clip-path 0.5s ease-out;
+            max-width: 500px;
         }
 
-        .preorder-form:hover::before {
-            clip-path: circle(75% at 0% 0%);
+        .contact-info p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
         }
 
-        .preorder-form .form-group {
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
+        .contact-info p i {
+            color: var(--primary);
+            font-size: 1.2rem;
         }
 
-        .preorder-form label {
+        .contact-form {
+            background-color: var(--gray);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .contact-form label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 0.5rem;
             font-weight: 600;
-            color: var(--light); /* Ini juga mengatur warna label di dalam form pre-order menjadi putih */
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form button {
+            width: auto;
+            padding: 0.8rem 2rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap; /* Allow wrapping */
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px; /* Min width for footer columns */
+            margin-bottom: 1rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section ul {
+            font-size: 0.95rem;
+            color: #ccc;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+
+        /* Cart Modal */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 2000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex; /* Show when active */
+        }
+
+        .modal-content {
+            background-color: var(--light);
+            margin: auto;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+            max-width: 90%; /* Responsive max width */
+            width: 600px; /* Default width */
+            animation: fadeIn 0.3s ease-out;
+            overflow-y: auto; /* Enable scroll for content */
+            max-height: 90vh; /* Max height to fit viewport */
+        }
+
+        .close-button {
+            color: #aaa;
+            font-size: 2rem;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--dark);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-content h2 {
+            text-align: left;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        #cart-items {
+            margin-bottom: 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .item-info img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-details span {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .item-details small {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .item-controls button {
+            background-color: var(--primary);
+            color: var(--light);
+            border: none;
+            border-radius: 5px;
+            width: 28px;
+            height: 28px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .item-controls button:hover {
+            background-color: var(--secondary);
+        }
+
+        .item-controls span {
+            font-weight: 600;
+            font-size: 1.1rem;
+            width: 30px;
+            text-align: center;
+        }
+
+        .item-price {
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 80px; /* Ensure price column aligns */
+            text-align: right;
+        }
+
+        .cart-summary {
+            border-top: 2px solid #eee;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .cart-summary div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
             font-size: 1.1rem;
         }
 
-        .preorder-form input[type="date"],
-        .preorder-form input[type="time"],
-        .preorder-form input[type="text"], /* Added for name field */
-        .preorder-form textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            color: var(--dark);
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+        .cart-summary .total {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.3rem;
+            border-top: 1px dashed #ddd;
+            padding-top: 0.8rem;
+            margin-top: 0.8rem;
         }
 
-        .preorder-form input[type="date"]:focus,
-        .preorder-form input[type="time"]:focus,
-        .preorder-form input[type="text"]:focus,
-        .preorder-form textarea:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Modern Product Selection for Pre-order */
-        .preorder-product-selection {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
-            padding: 10px;
-            max-height: 250px;
-            overflow-y: auto;
+        .delivery-options {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
             border: 1px solid #ddd;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+            padding: 1rem;
+            border-radius: 5px;
+            background-color: var(--gray);
         }
 
-        .preorder-product-item {
+        .delivery-option {
             display: flex;
             align-items: center;
-            padding: 8px 10px;
-            margin-bottom: 5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .delivery-option input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+
+        .delivery-option label {
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
+        .delivery-details {
+            border: 1px solid #ddd;
+            padding: 1rem;
             border-radius: 5px;
             background-color: var(--light);
-            border: 1px solid #eee;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
+            margin-top: 1rem;
         }
 
-        .preorder-product-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .preorder-product-item input[type="checkbox"] {
-            margin-right: 10px;
-            accent-color: var(--primary);
-            transform: scale(1.2);
-        }
-
-        .preorder-product-item label {
-            flex-grow: 1;
-            margin-bottom: 0;
-            font-weight: 400;
-            color: var(--dark);
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-
-        .preorder-product-item span.price {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-left: 10px;
-        }
-
-        .preorder-product-item.selected {
-            background-color: #ffebeb;
-            border-color: var(--primary);
-        }
-
-        /* Payment Options for Pre-order */
-        .preorder-payment-options {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        .preorder-payment-options h4 {
-            margin-bottom: 15px;
-            color: var(--dark);
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .preorder-payment-option {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .preorder-payment-option:last-child {
-            margin-bottom: 0;
-        }
-
-        .preorder-payment-option input[type="radio"] {
-            margin-right: 10px;
-            accent-color: var(--primary);
-            transform: scale(1.1);
-        }
-
-        /* Ini adalah aturan untuk label metode pembayaran di pre-order */
-        .preorder-payment-option label {
-            font-size: 0.95rem;
-            color: var(--dark); /* Warna hitam untuk metode pembayaran pre-order */
-            margin-bottom: 0; /* Override default label margin */
-        }
-
-        /* --- ATURAN BARU UNTUK MEMASTIKAN WARNA HITAM DI OPSI PENGIRIMAN PRE-ORDER --- */
-        /* Target spesifik untuk label di opsi pengiriman dalam form pre-order */
-        .preorder-form .delivery-options .delivery-option label {
-            color: var(--dark) !important; /* Memaksa warna teks menjadi hitam */
-            font-weight: 500 !important; /* Mengurangi ketebalan teks menjadi medium */
-            font-size: 0.95rem !important; /* Menyesuaikan ukuran teks */
-        }
-
-        /* Target spesifik untuk info biaya pengiriman dalam form pre-order */
-        .preorder-form .delivery-options .delivery-fee-info {
-            color: var(--dark) !important; /* Memaksa warna teks menjadi hitam */
-            font-weight: 500 !important; /* Mengurangi ketebalan teks menjadi medium */
-            font-size: 0.95rem !important; /* Menyesuaikan ukuran teks */
-        }
-        /* --- AKHIR ATURAN BARU --- */
-
-
-        .preorder-form .btn {
+        #delivery-address {
             width: 100%;
-            margin-top: 30px;
-            background-color: var(--light);
-            color: var(--primary);
-            font-size: 1.1rem;
-            padding: 15px 30px;
-            border-radius: 50px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
+            padding: 0.6rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
-        .preorder-form .btn:hover {
-            background-color: #f0f0f0;
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Confirmation Modal */
-        .confirmation-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: var(--light);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            z-index: 1001;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .confirmation-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .confirmation-modal h3 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-
-        .confirmation-modal p {
-            margin-bottom: 25px;
+        #delivery-fee-display {
+            font-size: 0.95rem;
             color: #555;
-            line-height: 1.8;
+            margin-top: 0.5rem;
         }
 
-        .confirmation-modal .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
+        .checkout-btn {
+            width: 100%;
+            margin-top: 1.5rem;
         }
 
-        .confirmation-modal .btn-group .btn {
-            padding: 10px 25px;
-            font-size: 1rem;
-            border-radius: 8px;
-            width: auto;
-            margin-top: 0; /* Override default btn margin-top */
-        }
-
-        .confirmation-modal .btn-group .btn.cancel {
-            background-color: #ccc;
-            color: var(--dark);
-        }
-
-        .confirmation-modal .btn-group .btn.cancel:hover {
-            background-color: #bbb;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-            }
-        }
-
-        @keyframes ripple {
-            0% {
-                transform: scale(0, 0);
-                opacity: 1;
-            }
-            20% {
-                transform: scale(25, 25);
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                transform: scale(40, 40);
-            }
-        }
-
-        @keyframes heroBackgroundPulse {
-            0% {
-                background: radial-gradient(circle at top left, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
-                            radial-gradient(circle at bottom right, rgba(255, 142, 142, 0.3) 0%, transparent 50%);
-            }
-            50% {
-                background: radial-gradient(circle at top left, rgba(255, 142, 142, 0.4) 0%, transparent 55%),
-                            radial-gradient(circle at bottom right, rgba(255, 107, 107, 0.4) 0%, transparent 55%);
-            }
-            100% {
-                background: radial-gradient(circle at top left, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
-                            radial-gradient(circle at bottom right, rgba(255, 142, 142, 0.3) 0%, transparent 50%);
-            }
-        }
-
-        /* Loading Animation */
+        /* Loader */
         .loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--light);
+            background: rgba(255, 255, 255, 0.9);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s, visibility 0.5s;
+            transition: opacity 0.5s ease-out;
         }
 
         .loader.hidden {
@@ -1560,12 +1020,12 @@
             visibility: hidden;
         }
 
-        .loader-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--primary);
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid var(--primary);
             border-radius: 50%;
+            width: 60px;
+            height: 60px;
             animation: spin 1s linear infinite;
         }
 
@@ -1574,1683 +1034,1256 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Responsive */
-        @media (max-width: 992px) {
-            .nav-links {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100vh;
-                background-color: var(--light);
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 20px 0;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                z-index: 999;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
+        /* MEDIA QUERIES */
+
+        /* Mobile devices (max-width: 767px) */
+        @media (max-width: 767px) {
+            .container {
+                padding: 0 1rem;
             }
 
-            .nav-links.active {
-                transform: translateX(0);
-            }
-
-            .nav-links li {
-                margin: 20px 0;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .hamburger.active div:nth-child(1) {
-                transform: rotate(-45deg) translate(-5px, 6px);
-            }
-
-            .hamburger.active div:nth-child(2) {
-                opacity: 0;
-            }
-
-            .hamburger.active div:nth-child(3) {
-                transform: rotate(45deg) translate(-5px, -6px);
-            }
-
-            .hero h1 {
+            h1 {
                 font-size: 2.5rem;
             }
 
-            .cart-sidebar {
-                width: 350px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
+            h2 {
                 font-size: 2rem;
             }
 
-            .hero p {
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            .hero {
+                padding: 8rem 0 6rem;
+                margin-top: 55px; /* Adjust for smaller header */
+            }
+
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            /* Navbar for Mobile */
+            .navbar {
+                padding: 0.8rem 1rem;
+            }
+            .logo {
+                font-size: 1.8rem;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background-color: var(--light);
+                position: absolute;
+                top: 60px; /* Below header */
+                left: 0;
+                width: 100%;
+                box-shadow: var(--shadow);
+                padding: 1rem 0;
+                border-top: 1px solid #eee;
+                transition: all 0.3s ease-in-out;
+                z-index: 999; /* Ensure it's above other content */
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 0.8rem 1.5rem;
+                border-bottom: 1px solid #eee;
+                text-align: center;
+            }
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            /* About Us */
+            .about-us .container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .about-image, .about-content {
+                min-width: unset; /* Allow to shrink fully */
+                width: 100%;
+            }
+            .about-image {
+                order: 2; /* Image below text on mobile */
+            }
+            .about-content {
+                order: 1;
+                text-align: center;
+            }
+
+            /* Product and Order Steps grids */
+            .products-grid,
+            .order-steps-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr; /* Single column for mobile */
+                gap: 1.5rem;
+            }
+
+            .product-card, .order-step-card, .testimonial-card {
+                padding: 1rem;
+            }
+            .product-card img {
+                height: 180px;
+            }
+            .order-step-card {
+                min-height: unset; /* Remove fixed min-height for small screens */
+            }
+
+            /* Testimonials - Swiper always visible on mobile */
+            .testimonials-grid:not(.swiper-active) {
+                display: none; /* Hide grid display if swiper is active */
+            }
+            .swiper-container {
+                display: block; /* Ensure swiper is always shown on mobile */
+            }
+
+            /* CTA Banner */
+            .cta-banner h2 {
+                font-size: 1.8rem;
+            }
+            .cta-banner p {
                 font-size: 1rem;
             }
 
-            .section-title h2 {
-                font-size: 2rem;
-            }
-
-            /* Testimonials Swiper for smaller screens */
-            .testimonials-swiper-container {
-                padding-bottom: 40px; /* Adjust for pagination on smaller screens */
-            }
-
-            .testimonial-card {
-                min-height: 280px; /* Adjusted min-height for smaller screens */
-            }
-
-            .cart-sidebar {
-                width: 300px;
-            }
-
+            /* Pre-order Form */
             .preorder-form {
-                padding: 30px;
+                padding: 1.5rem;
+            }
+            .preorder-product-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .preorder-quantity-control {
+                width: 100%;
+                justify-content: flex-end; /* Push quantity control to right */
             }
 
-            .order-step-card {
-                min-height: 160px;
+            /* FAQ */
+            .faq-question {
+                padding: 1rem 1.2rem;
+                font-size: 1rem;
+            }
+            .faq-answer p {
+                font-size: 0.9rem;
+            }
+
+            /* Contact */
+            .contact-info, .contact-form {
+                padding: 1.5rem;
+            }
+
+            /* Footer */
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            .footer-section {
+                min-width: unset;
+                width: 100%;
+                margin-bottom: 0;
+            }
+            .social-links {
+                justify-content: center;
+            }
+
+            /* Modal (Cart/Pre-order confirmation) */
+            .modal-content {
+                padding: 1.5rem;
+                max-width: 95%; /* Even wider on very small screens */
+            }
+            .modal-content h2 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .item-controls {
+                width: 100%;
+                justify-content: flex-end; /* Push controls to right */
+            }
+            .item-price {
+                align-self: flex-end;
+            }
+            .checkout-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
             }
         }
 
-        @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 1.8rem;
+        /* Tablet devices (min-width: 768px and max-width: 991px) */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .container {
+                padding: 0 1.5rem;
             }
 
-            .section-title h2 {
-                font-size: 1.8rem;
+            h1 {
+                font-size: 3rem;
             }
 
-            /* Perubahan untuk card produk di mobile */
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
+            h2 {
+                font-size: 2.2rem;
             }
 
-            .product-card {
-                flex-direction: row;
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            /* Navbar */
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+            .logo {
+                font-size: 2rem;
+            }
+
+            /* About Us */
+            .about-us .container {
+                flex-direction: row; /* Ensure side-by-side on tablet */
+            }
+            .about-image, .about-content {
+                min-width: unset;
+                width: 50%; /* Distribute space */
+            }
+            .about-image {
+                order: unset; /* Reset order */
+            }
+            .about-content {
+                order: unset;
+                text-align: left;
+            }
+
+            /* Grids */
+            .products-grid,
+            .order-steps-grid,
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+                gap: 1.5rem;
+            }
+
+            .order-step-card {
+                min-height: 220px; /* Maintain a reasonable height for tablet */
+            }
+
+            /* Testimonials - Swiper on tablet */
+            .testimonials-grid:not(.swiper-active) {
+                display: grid; /* Keep grid if swiper is not explicitly activated */
+            }
+            .swiper-container {
+                display: none; /* Hide swiper by default for tablets, only show if JS activates */
+            }
+
+            /* CTA Banner */
+            .cta-banner h2 {
+                font-size: 2rem;
+            }
+
+            /* Pre-order Form */
+            .preorder-form {
+                max-width: 700px; /* Slightly wider for tablet */
+            }
+            .preorder-product-item {
+                flex-direction: row; /* Keep side-by-side */
                 align-items: center;
-                padding: 15px;
-                border-radius: 10px;
+            }
+            .preorder-quantity-control {
+                justify-content: flex-start;
             }
 
-            .product-img {
-                width: 100px;
-                height: 100px;
-                flex-shrink: 0;
-                margin-right: 15px;
-                border-radius: 8px;
-            }
-
-            .product-img img {
-                border-radius: 8px;
-            }
-
-            .product-info {
-                padding: 0;
-                display: flex;
-                flex-direction: column;
+            /* Contact */
+            .contact-content {
+                flex-direction: row;
                 justify-content: center;
-                flex-grow: 1;
+                flex-wrap: wrap;
+            }
+            .contact-info, .contact-form {
+                flex: 1;
+                min-width: 350px;
+            }
+            .contact-info {
+                text-align: left; /* Adjust alignment */
+            }
+        }
+
+        /* Desktop and larger (min-width: 992px) */
+        @media (min-width: 992px) {
+            .container {
+                padding: 0 2rem;
             }
 
-            .product-info h3 {
-                font-size: 1.1rem;
-                margin-bottom: 5px;
+            h1 {
+                font-size: 3.8rem;
             }
 
-            .product-info p {
-                font-size: 0.85rem;
-                margin-bottom: 10px;
+            h2 {
+                font-size: 2.5rem;
             }
 
-            .product-price {
+            .hero-content h1 {
+                font-size: 4.5rem;
+            }
+            .hero-content p {
+                font-size: 1.3rem;
+            }
+
+            /* Nav links always visible */
+            .nav-links {
+                display: flex;
+            }
+            .menu-toggle {
+                display: none;
+            }
+
+            /* Grids */
+            .products-grid,
+            .order-steps-grid {
+                grid-template-columns: repeat(3, 1fr); /* 3 columns for desktop */
+            }
+            .testimonials-grid {
+                grid-template-columns: repeat(3, 1fr); /* 3 columns for desktop */
+            }
+            .swiper-container {
+                display: none; /* Hide swiper on desktop, show grid */
+            }
+            .testimonials-grid:not(.swiper-active) {
+                display: grid; /* Ensure grid is shown */
+            }
+
+            /* Contact Section */
+            .contact-content {
                 flex-direction: row;
                 justify-content: space-between;
-                align-items: center;
-                width: 100%;
-                margin-top: 0;
+                flex-wrap: nowrap;
+            }
+            .contact-info, .contact-form {
+                max-width: 500px; /* Set specific max-width for desktop */
             }
 
-            .price {
-                font-size: 1rem;
+            /* Footer */
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+                flex-wrap: nowrap;
+                text-align: left;
             }
-
-            .add-to-cart {
-                width: 35px;
-                height: 35px;
-            }
-
-            /* Perubahan untuk card testimoni di mobile agar mirip produk card */
-            .testimonial-card {
-                flex-direction: column; /* Keep column for better quote display */
-                padding: 20px;
-                min-height: 260px; /* Adjusted min-height for mobile */
-            }
-            .testimonial-card .quote {
-                font-size: 0.9rem;
-                margin-bottom: 10px;
-            }
-            .testimonial-card .quote::before,
-            .testimonial-card .quote::after {
-                font-size: 1.8rem;
-            }
-            .author-img {
-                width: 60px;
-                height: 60px;
-            }
-            .testimonial-rating {
-                font-size: 0.9rem;
-            }
-            .author-info h4 {
-                font-size: 0.95rem;
-            }
-            .author-info p {
-                font-size: 0.75rem;
-            }
-
-
-            .cart-sidebar {
-                width: 100%;
-                right: -100%;
-            }
-
-            .cart-sidebar.active {
-                right: 0;
-            }
-
-            /* Responsive adjustment for payment icons */
-            .payment-method {
-                width: 80px;
-            }
-
-            .payment-icon {
-                width: 50px;
-                height: 50px;
-            }
-
-            .payment-icon img {
-                max-width: 75%;
-                max-height: 75%;
-            }
-
-            .payment-name {
-                font-size: 0.8rem;
-            }
-
-            .preorder-form {
-                padding: 20px;
-            }
-
-            .confirmation-modal {
-                width: 95%;
-                padding: 20px;
-            }
-            .confirmation-modal .btn-group {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .confirmation-modal .btn-group .btn {
-                width: 100%;
-            }
-
-            /* How to Order Swiper */
-            .how-to-order-swiper-slide {
-                width: 100% !important; /* Pastikan slide mengambil lebar penuh pada mobile */
-            }
-            .order-step-card {
-                min-height: unset; /* Hapus min-height saat mobile */
-                width: 100%; /* Pastikan kartu mengambil lebar penuh */
+            .footer-section {
+                min-width: 200px; /* Allow smaller columns for desktop */
             }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loader" id="loader">
-        <div class="loader-spinner"></div>
+    <div class="loader">
+        <div class="spinner"></div>
     </div>
 
-    <!-- Header -->
     <header id="header">
-        <div class="container">
-            <nav class="navbar">
-                <a href="#" class="logo">
-                    <i class="fa-solid fa-kitchen-set"></i> Dapur Ummi
-                </a>
-                <ul class="nav-links">
-                    <li><a href="#home">Beranda</a></li>
-                    <li><a href="#how-to-order">Cara Memesan</a></li>
-                    <li><a href="#products">Produk</a></li>
-                    <li><a href="#testimonials">Testimoni</a></li>
-                    <li><a href="#preorder">Pre-order</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#contact">Kontak</a></li>
-                </ul>
-                <div class="header-icons">
-                    <div class="cart-icon" id="cartIcon">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </div>
-                </div>
-                <div class="hamburger" id="hamburger">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </nav>
-        </div>
+        <nav class="navbar container">
+            <a href="#" class="logo">Delicious Bakery</a>
+            <ul class="nav-links">
+                <li><a href="#hero">Beranda</a></li>
+                <li><a href="#about-us">Tentang Kami</a></li>
+                <li><a href="#products">Produk</a></li>
+                <li><a href="#how-to-order">Cara Pesan</a></li>
+                <li><a href="#testimonials">Testimoni</a></li>
+                <li><a href="#preorder">Pre-order</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Kontak</a></li>
+                <li><a href="#" id="cart-icon"><i class="fas fa-shopping-cart"></i> <span id="cart-count" class="cart-count">0</span></a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>Kue Lezat untuk Setiap Momen Spesial Anda</h1>
+            <p>Nikmati kelezatan premium dari bahan-bahan pilihan, dibuat dengan cinta dan passion.</p>
+            <a href="#products" class="btn">Lihat Produk Kami</a>
+        </div>
+    </section>
+
+    <section id="about-us" class="section-padding">
         <div class="container">
-            <div class="hero-content">
-                <h1>Kue Lezat untuk Setiap Momen Spesial</h1>
-                <p>Temukan berbagai macam cookies berkualitas tinggi dengan rasa yang memikat dan desain yang indah untuk acara spesial Anda.</p>
-                <a href="#products" class="btn">Lihat Produk</a>
+            <div class="about-image">
+                <img src="https://via.placeholder.com/600x400/ff8e8e/ffffff?text=Our+Bakery" alt="Delicious Bakery">
+            </div>
+            <div class="about-content">
+                <h2>Tentang Delicious Bakery</h2>
+                <p>Delicious Bakery telah melayani pelanggan setia sejak 2010, berdedikasi untuk menciptakan kue dan roti berkualitas tinggi yang tidak hanya lezat tetapi juga indah dipandang. Kami hanya menggunakan bahan-bahan segar terbaik, resep orisinal, dan sentuhan personal dalam setiap produk.</p>
+                <p>Komitmen kami adalah memberikan pengalaman kuliner yang tak terlupakan untuk setiap perayaan Anda, mulai dari ulang tahun, pernikahan, hingga momen kumpul keluarga.</p>
+                <a href="#contact" class="btn btn-outline">Hubungi Kami</a>
             </div>
         </div>
     </section>
 
-    <!-- How to Order Section (Diubah menjadi Swiper Slider) -->
-    <section class="section how-to-order-section" id="how-to-order">
+    <section id="products" class="section-padding">
         <div class="container">
-            <div class="section-title">
-                <h2>Cara Memesan</h2>
-                <p>Ikuti langkah mudah ini untuk mendapatkan cookies favorit Anda.</p>
-            </div>
-            <!-- Swiper untuk Cara Memesan -->
-            <div class="swiper-container how-to-order-swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide how-to-order-swiper-slide">
-                        <div class="order-step-card">
-                            <i class="fas fa-cookie-bite"></i>
-                            <h3>1. Pilih Produk</h3>
-                            <p>Jelajahi katalog kami dan tambahkan produk yang Anda inginkan ke keranjang belanja.</p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide how-to-order-swiper-slide">
-                        <div class="order-step-card">
-                            <i class="fas fa-shopping-cart"></i>
-                            <h3>2. Checkout / Pre-order</h3>
-                            <p>Lanjutkan ke checkout untuk pesanan langsung atau gunakan fitur pre-order untuk pemesanan di masa mendatang.</p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide how-to-order-swiper-slide">
-                        <div class="order-step-card">
-                            <i class="fas fa-money-bill-wave"></i>
-                            <h3>3. Konfirmasi & Bayar</h3>
-                            <p>Konfirmasi pesanan Anda melalui WhatsApp dan lakukan pembayaran sesuai instruksi.</p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide how-to-order-swiper-slide">
-                        <div class="order-step-card">
-                            <i class="fas fa-truck-loading"></i>
-                            <h3>4. Ambil / Diantar</h3>
-                            <p>Ambil pesanan Anda di toko atau tunggu pesanan diantar ke alamat Anda.</p>
-                        </div>
-                    </div>
+            <h2>Produk Unggulan Kami</h2>
+            <div class="products-grid" id="products-grid">
                 </div>
-                <!-- Add Pagination -->
+        </div>
+    </section>
+
+    <section id="how-to-order" class="section-padding">
+        <div class="container">
+            <h2>Cara Memesan</h2>
+            <div class="order-steps-grid">
+                <div class="order-step-card">
+                    <i class="fas fa-cookie-bite icon"></i>
+                    <h3>Pilih Kue Anda</h3>
+                    <p>Jelajahi berbagai pilihan kue, roti, dan pastry kami yang lezat.</p>
+                </div>
+                <div class="order-step-card">
+                    <i class="fas fa-shopping-cart icon"></i>
+                    <h3>Tambahkan ke Keranjang</h3>
+                    <p>Pilih jumlah yang Anda inginkan dan masukkan ke keranjang belanja Anda.</p>
+                </div>
+                <div class="order-step-card">
+                    <i class="fas fa-money-check-alt icon"></i>
+                    <h3>Lakukan Pembayaran</h3>
+                    <p>Selesaikan pembayaran dengan mudah dan aman melalui berbagai metode.</p>
+                </div>
+                <div class="order-step-card">
+                    <i class="fas fa-truck icon"></i>
+                    <h3>Kue Anda Siap Diantar</h3>
+                    <p>Kami akan menyiapkan pesanan Anda dengan cermat dan mengantarkannya langsung ke pintu Anda.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section-padding">
+        <div class="container">
+            <h2>Apa Kata Pelanggan Kami</h2>
+            <div class="testimonials-grid" id="testimonials-grid">
+                </div>
+            <div class="swiper-container" id="testimonials-swiper-container" style="display: none;">
+                <div class="swiper-wrapper" id="testimonials-swiper-wrapper">
+                    </div>
                 <div class="swiper-pagination"></div>
-                <!-- Add Navigation -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
             </div>
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section class="section" id="products">
+    <section class="section-padding pt-0">
         <div class="container">
-            <div class="section-title">
-                <h2>Produk Kami</h2>
-                <p>Pilih dari berbagai macam cookies lezat kami yang dibuat dengan bahan-bahan terbaik dan penuh cinta.</p>
-            </div>
-            <div class="products-grid" id="productsGrid">
-                <!-- Produk akan diisi oleh JavaScript -->
+            <div class="cta-banner text-center">
+                <h2>Pesan Kue Impian Anda Sekarang!</h2>
+                <p>Untuk pesanan khusus atau dalam jumlah besar, kami siap membantu Anda mewujudkan acara spesial.</p>
+                <a href="#preorder" class="btn btn-outline">Ajukan Pre-order</a>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section (Diubah menjadi Swiper Slider untuk mobile/tablet) -->
-    <section class="section testimonials" id="testimonials">
+    <section id="preorder" class="section-padding">
         <div class="container">
-            <div class="section-title">
-                <h2>Testimoni Pelanggan</h2>
-                <p>Apa kata mereka tentang cookies kami.</p>
-            </div>
-            <!-- Testimonials Grid (untuk desktop) -->
-            <div class="testimonials-container" id="testimonialsContainer">
-                <!-- Testimoni akan diisi oleh JavaScript -->
-            </div>
-            <!-- Testimonials Swiper (untuk mobile/tablet) -->
-            <div class="swiper-container testimonials-swiper-container" id="testimonialsSwiperContainer">
-                <div class="swiper-wrapper" id="testimonialsSwiperWrapper">
-                    <!-- Testimoni akan diisi oleh JavaScript -->
-                </div>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
-                <!-- Add Navigation -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+            <h2>Formulir Pre-order</h2>
+            <div class="preorder-content">
+                <form id="preorder-form" class="preorder-form">
+                    <div class="preorder-product-selection" id="preorder-product-selection">
+                        <label>Pilih Produk Pre-order:</label>
+                        </div>
+
+                    <label for="preorder-name">Nama Lengkap:</label>
+                    <input type="text" id="preorder-name" name="preorder-name" required>
+
+                    <label for="preorder-email">Email:</label>
+                    <input type="email" id="preorder-email" name="preorder-email" required>
+
+                    <label for="preorder-phone">Nomor Telepon:</label>
+                    <input type="tel" id="preorder-phone" name="preorder-phone" required>
+
+                    <label for="preorder-date">Tanggal Pengiriman/Pengambilan:</label>
+                    <input type="date" id="preorder-date" name="preorder-date" required>
+
+                    <div class="preorder-delivery-options">
+                        <label>Pilih Opsi Pengiriman:</label>
+                        <div class="preorder-delivery-option">
+                            <input type="radio" id="preorder-delivery-pickup" name="preorder-delivery-option" value="pickup" checked>
+                            <label for="preorder-delivery-pickup">Ambil Sendiri (Gratis)</label>
+                        </div>
+                        <div class="preorder-delivery-option">
+                            <input type="radio" id="preorder-delivery-delivery" name="preorder-delivery-option" value="delivery">
+                            <label for="preorder-delivery-delivery">Diantar (Biaya sesuai jarak)</label>
+                        </div>
+                    </div>
+
+                    <div id="preorder-delivery-details" class="delivery-details" style="display: none;">
+                        <label for="preorder-address">Alamat Pengiriman:</label>
+                        <input type="text" id="preorder-address" name="preorder-address" placeholder="Masukkan alamat lengkap Anda" required>
+                        <p id="preorder-delivery-fee-display" style="font-size: 0.9em; color: #555;">Biaya pengiriman akan dihitung.</p>
+                    </div>
+
+                    <label for="preorder-message">Catatan Tambahan:</label>
+                    <textarea id="preorder-message" name="preorder-message" rows="4" placeholder="Contoh: Ucapan ulang tahun, detail desain khusus, alergi."></textarea>
+
+                    <div class="preorder-total-price" id="preorder-total-price">
+                        Total Pre-order: Rp0
+                    </div>
+
+                    <button type="submit" class="btn">Kirim Pre-order</button>
+                </form>
             </div>
         </div>
     </section>
 
-    <!-- Payment Methods -->
-    <section class="payment-methods">
+    <section id="faq" class="section-padding">
         <div class="container">
-            <div class="payment-title">
-                <h3>Metode Pembayaran</h3>
-                <p>Kami menerima berbagai metode pembayaran untuk kemudahan Anda</p>
-            </div>
-            <div class="payment-icons">
-                <div class="payment-method">
-                    <div class="payment-icon">
-                        <i class="fas fa-wallet"></i>
-                    </div>
-                    <span class="payment-name">DANA</span>
+            <h2>Pertanyaan yang Sering Diajukan</h2>
+            <div class="faq-container" id="faq-container">
                 </div>
-                <div class="payment-method">
-                    <div class="payment-icon">
-                        <img src="images/icons/payment-method (1).png" alt="OVO" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=OVO';">
-                    </div>
-                    <span class="payment-name">OVO</span>
-                </div>
-                <div class="payment-method">
-                    <div class="payment-icon">
-                        <img src="images/icons/credit-card (1).png" alt="BCA" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=BCA';">
-                    </div>
-                    <span class="payment-name">BCA</span>
-                </div>
-                <div class="payment-method">
-                    <div class="payment-icon">
-                        <img src="images/icons/credit-card.png" alt="Mandiri" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=Mandiri';">
-                    </div>
-                    <span class="payment-name">Mandiri</span>
-                </div>
-                <div class="payment-method">
-                    <div class="payment-icon">
-                        <img src="images/icons/atm-card.png" alt="BNI" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=BNI';">
-                    </div>
-                    <span class="payment-name">BNI</span>
-                </div>
-                <div class="payment-method">
-                    <div class="payment-icon">
-                        <img src="images/icons/cash-payment.png" alt="Cash payment" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=Cash';">
-                    </div>
-                    <span class="payment-name">Cash</span>
-                </div>
-            </div>
         </div>
     </section>
 
-    <!-- Pre-order Section -->
-    <section class="section preorder-section" id="preorder">
+    <section id="contact" class="section-padding">
         <div class="container">
-            <div class="section-title">
-                <h2>Pesan Sekarang (Pre-order)</h2>
-                <p>Rencanakan momen spesial Anda dengan memesan cookies favorit jauh-jauh hari.</p>
-            </div>
-            <div class="preorder-form">
-                <div class="form-group">
-                    <label for="preorderName">Nama Lengkap:</label>
-                    <input type="text" id="preorderName" placeholder="Masukkan nama Anda" required>
-                </div>
-                <div class="form-group">
-                    <label for="preorderDate">Tanggal Pengambilan/Pengiriman:</label>
-                    <input type="date" id="preorderDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="preorderTime">Waktu Pengambilan/Pengiriman:</label>
-                    <input type="time" id="preorderTime" required>
-                </div>
-                <div class="form-group">
-                    <label>Pilih Produk:</label>
-                    <div class="preorder-product-selection" id="preorderProductSelection">
-                        <!-- Products will be loaded here by JavaScript as checkboxes -->
-                    </div>
-                </div>
-                <!-- Delivery Options for Pre-order -->
-                <div class="form-group">
-                    <label>Opsi Pengiriman Pre-order:</label>
-                    <div class="delivery-options" id="preorderDeliveryOptions">
-                        <div class="delivery-option">
-                            <input type="radio" id="preorderSelfPickup" name="preorderDeliveryOption" value="self-pickup" checked>
-                            <label for="preorderSelfPickup">Ambil Sendiri (Gratis)</label>
-                        </div>
-                        <div class="delivery-option">
-                            <input type="radio" id="preorderFreeDelivery" name="preorderDeliveryOption" value="free-delivery">
-                            <label for="preorderFreeDelivery">Gratis (Jarak < 2 km)</label>
-                        </div>
-                        <div class="delivery-option">
-                            <input type="radio" id="preorderCheapDelivery" name="preorderDeliveryOption" value="cheap-delivery">
-                            <label for="preorderCheapDelivery">Rp 1.500 (Jarak 2 km - 5 km)</label>
-                        </div>
-                        <div class="delivery-option">
-                            <input type="radio" id="preorderFarDelivery" name="preorderDeliveryOption" value="far-delivery">
-                            <label for="preorderFarDelivery">Rp 3.000 (Jarak > 5 km)</label>
-                        </div>
-                        <p class="delivery-fee-info" id="preorderDeliveryFeeInfo"></p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Metode Pembayaran:</label>
-                    <div class="preorder-payment-options">
-                        <h4>Pilih Metode Pembayaran</h4>
-                        <div class="preorder-payment-option">
-                            <input type="radio" id="preorderPaymentDana" name="preorderPaymentOption" value="DANA" checked>
-                            <label for="preorderPaymentDana">DANA</label>
-                        </div>
-                        <div class="preorder-payment-option">
-                            <input type="radio" id="preorderPaymentOVO" name="preorderPaymentOption" value="OVO">
-                            <label for="preorderPaymentOVO">OVO</label>
-                        </div>
-                        <div class="preorder-payment-option">
-                            <input type="radio" id="preorderPaymentBCA" name="preorderPaymentOption" value="BCA">
-                            <label for="preorderPaymentBCA">BCA</label>
-                        </div>
-                        <div class="preorder-payment-option">
-                            <input type="radio" id="preorderPaymentMandiri" name="preorderPaymentOption" value="Mandiri">
-                            <label for="preorderPaymentMandiri">Mandiri</label>
-                        </div>
-                        <div class="preorder-payment-option">
-                            <input type="radio" id="preorderPaymentBNI" name="preorderPaymentOption" value="BNI">
-                            <label for="preorderPaymentBNI">BNI</label>
-                        </div>
-                        <div class="preorder-payment-option">
-                            <input type="radio" id="preorderPaymentCash" name="preorderPaymentOption" value="Cash">
-                            <label for="preorderPaymentCash">Cash</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="preorderNotes">Catatan Tambahan (opsional):</label>
-                    <textarea id="preorderNotes" placeholder="Contoh: Ucapan di kue, request khusus"></textarea>
-                </div>
-                <button class="btn" id="preorderBtn">Kirim Pesanan Pre-order</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="section faq-section" id="faq">
-        <div class="container">
-            <div class="section-title">
-                <h2>Pertanyaan Umum (FAQ)</h2>
-                <p>Temukan jawaban atas pertanyaan yang sering diajukan tentang produk dan layanan kami.</p>
-            </div>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Bagaimana cara memesan cookies?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Anda dapat memesan cookies langsung melalui website kami dengan menambahkan produk ke keranjang dan melanjutkan ke checkout. Anda juga bisa menggunakan fitur pre-order untuk pemesanan di masa mendatang.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Apakah ada opsi pengiriman?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Ya, kami menyediakan opsi pengambilan sendiri (gratis) atau pengiriman dengan biaya tambahan. Anda bisa memilih opsi ini saat proses checkout.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Berapa lama waktu yang dibutuhkan untuk pre-order?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Untuk pre-order, kami menyarankan Anda untuk memesan setidaknya H-3 dari tanggal yang diinginkan. Untuk pesanan khusus, mungkin diperlukan waktu lebih lama.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Metode pembayaran apa saja yang diterima?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Kami menerima pembayaran melalui transfer bank (BCA, Mandiri, BNI), dompet digital (DANA, OVO), dan tunai saat pengambilan.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Bisakah saya request desain cookies custom?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Tentu! Untuk pesanan cookies custom, silakan hubungi kami langsung melalui WhatsApp atau email untuk mendiskusikan desain dan detail lainnya.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="section contact" id="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Hubungi Kami</h2>
-                <p>Pesan cookies spesial Anda atau tanyakan informasi lebih lanjut.</p>
-            </div>
+            <h2>Hubungi Kami</h2>
             <div class="contact-content">
                 <div class="contact-info">
                     <h3>Informasi Kontak</h3>
-                    <p>Kami siap membantu Anda dengan segala pertanyaan tentang produk dan pemesanan cookies di toko kami.</p>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Jl. Kalijaga, Perumahan Griya Taman SUci Blok C3 No. 1, Kab. Cirebon</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>+62 859 1482 19009</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>faqihalrf@gmail.com</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Buka Setiap Hari 08:00 - 17.00</span>
-                        </div>
-                    </div>
-                    <h3>Ikuti Kami</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Jalan Contoh No. 123, Kota ABC, 12345</p>
+                    <p><i class="fas fa-phone"></i> +62 812 3456 7890</p>
+                    <p><i class="fas fa-envelope"></i> info@deliciousbakery.com</p>
+                    <p><i class="fas fa-clock"></i> Senin - Sabtu: 09:00 - 18:00 WIB</p>
                     <div class="social-links">
-                        <a href="https://www.instagram.com/faqihalrf" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
+                <form class="contact-form">
+                    <h3>Kirim Pesan kepada Kami</h3>
+                    <label for="name">Nama:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="subject">Subjek:</label>
+                    <input type="text" id="subject" name="subject" required>
+
+                    <label for="message">Pesan:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+
+                    <button type="submit" class="btn">Kirim Pesan</button>
+                </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Dapur Ummi</h3>
-                    <p>Toko cookies premium dengan bahan-bahan terbaik dan rasa yang tak terlupakan untuk setiap momen spesial Anda.</p>
+                <div class="footer-section">
+                    <h3 class="footer-logo">Delicious Bakery</h3>
+                    <p>Menyajikan kebahagiaan melalui setiap gigitan. Kue premium untuk momen spesial Anda.</p>
                 </div>
-                <div class="footer-column">
+                <div class="footer-section">
                     <h3>Menu</h3>
                     <ul>
-                        <li><a href="#home">Beranda</a></li>
-                        <li><a href="#how-to-order">Cara Memesan</a></li>
+                        <li><a href="#hero">Beranda</a></li>
+                        <li><a href="#about-us">Tentang Kami</a></li>
                         <li><a href="#products">Produk</a></li>
-                        <li><a href="#testimonials">Testimoni</a></li>
                         <li><a href="#preorder">Pre-order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Dukungan</h3>
+                    <ul>
                         <li><a href="#faq">FAQ</a></li>
                         <li><a href="#contact">Kontak</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Produk</h3>
-                    <ul>
-                        <li><a href="#">Bolu</a></li>
-                        <li><a href="#">Muffin</a></li>
-                        <li><a href="#">cookies</a></li>
-                        <li><a href="#">Cupcakes</a></li>
-                        <li><a href="#">Kue Kering</a></li>
-                    </ul>
+                <div class="footer-section">
+                    <h3>Ikuti Kami</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2025 Dapur Ummi. All Rights Reserved.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Delicious Bakery. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/62859148219009" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <!-- Cart Sidebar -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h3>Keranjang Belanja</h3>
-            <button class="close-cart" id="closeCart">&times;</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <!-- Item keranjang akan diisi oleh JavaScript -->
-        </div>
-        <div class="delivery-options">
-            <h4>Opsi Pengiriman</h4>
-            <div class="delivery-option">
-                <input type="radio" id="deliverySelfPickup" name="deliveryOption" value="self-pickup" checked>
-                <label for="deliverySelfPickup">Ambil Sendiri (Gratis)</label>
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Keranjang Belanja</h2>
+            <div id="cart-items">
+                </div>
+            <div class="delivery-options">
+                <label>Pilih Opsi Pengiriman:</label>
+                <div class="delivery-option">
+                    <input type="radio" id="delivery-pickup" name="delivery-option" value="pickup" checked>
+                    <label for="delivery-pickup">Ambil Sendiri (Gratis)</label>
+                </div>
+                <div class="delivery-option">
+                    <input type="radio" id="delivery-delivery" name="delivery-option" value="delivery">
+                    <label for="delivery-delivery">Diantar (Biaya sesuai jarak)</label>
+                </div>
             </div>
-            <div class="delivery-option">
-                <input type="radio" id="deliveryFreeDelivery" name="deliveryOption" value="free-delivery">
-                <label for="deliveryFreeDelivery">Gratis (Jarak < 2 km)</label>
+            <div id="delivery-details" class="delivery-details" style="display: none;">
+                <label for="delivery-address">Alamat Pengiriman:</label>
+                <input type="text" id="delivery-address" placeholder="Masukkan alamat lengkap Anda">
+                <p id="delivery-fee-display" style="font-size: 0.9em; color: #555;">Biaya pengiriman akan dihitung.</p>
             </div>
-            <div class="delivery-option">
-                <input type="radio" id="deliveryCheapDelivery" name="deliveryOption" value="cheap-delivery">
-                <label for="deliveryCheapDelivery">Rp 1.500 (Jarak 2 km - 5 km)</label>
+            <div class="cart-summary">
+                <div>Subtotal: <span id="cart-subtotal">Rp0</span></div>
+                <div>Biaya Pengiriman: <span id="cart-delivery-fee">Rp0</span></div>
+                <div class="total">Total: <span id="cart-total">Rp0</span></div>
             </div>
-            <div class="delivery-option">
-                <input type="radio" id="deliveryFarDelivery" name="deliveryOption" value="far-delivery">
-                <label for="deliveryFarDelivery">Rp 3.000 (Jarak > 5 km)</label>
-            </div>
-            <p class="delivery-fee-info" id="deliveryFeeInfo"></p>
-        </div>
-        <div class="cart-total-section">
-            <div class="total-row">
-                <span>Subtotal:</span>
-                <span id="cartSubtotal">Rp 0</span>
-            </div>
-            <div class="total-row">
-                <span>Biaya Pengiriman:</span>
-                <span id="deliveryFee">Rp 0</span>
-            </div>
-            <div class="total-row grand-total">
-                <span>Total Keseluruhan:</span>
-                <span id="cartGrandTotal">Rp 0</span>
-            </div>
-        </div>
-        <button class="checkout-btn" id="checkoutBtn">Checkout</button>
-    </div>
-
-    <!-- Confirmation Modal -->
-    <div class="confirmation-modal" id="confirmationModal">
-        <h3>Konfirmasi Pesanan</h3>
-        <p id="confirmationMessage"></p>
-        <div class="btn-group">
-            <button class="btn cancel" id="cancelConfirmation">Batal</button>
-            <button class="btn" id="sendConfirmation">Kirim Pesan Konfirmasi ke WhatsApp</button>
+            <button class="btn checkout-btn">Lanjutkan ke Pembayaran</button>
         </div>
     </div>
 
-    <!-- Overlay for modal -->
-    <div class="overlay" id="modalOverlay"></div>
 
-    <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <!-- Google Maps API (ganti YOUR_API_KEY dengan kunci API Anda) -->
-    <!-- Tambahkan 'places' library untuk Autocomplete -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=geometry,places&callback=initMap" async defer></script>
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
     <script>
-        // Inisialisasi Google Maps API (fungsi kosong karena kita hanya butuh geometry dan places library)
-        // Fungsi initMap kini kosong karena kita tidak lagi menggunakan Autocomplete untuk input alamat
-        function initMap() {
-            console.log('Google Maps API dimuat. Autocomplete tidak digunakan untuk input alamat.');
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.querySelector('.loader');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const cartIcon = document.getElementById('cart-icon');
+            const cartModal = document.getElementById('cart-modal');
+            const closeButton = document.querySelector('.modal .close-button');
+            const productsGrid = document.getElementById('products-grid');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartSubtotalSpan = document.getElementById('cart-subtotal');
+            const cartDeliveryFeeSpan = document.getElementById('cart-delivery-fee');
+            const cartTotalSpan = document.getElementById('cart-total');
+            const cartCountSpan = document.getElementById('cart-count');
+            const checkoutBtn = document.querySelector('.checkout-btn');
 
-        // Nomor WhatsApp yang akan digunakan
-        const WHATSAPP_NUMBER = '62859148219009'; // Nomor WhatsApp diperbarui
-        
-        // Batasan jarak untuk biaya pengiriman dalam KM
-        const FREE_DELIVERY_THRESHOLD_KM_MAX = 2; // Gratis jika < 2 km
-        const CHEAP_DELIVERY_THRESHOLD_KM_MAX = 5; // Rp 1.500 jika 2 km hingga 5 km
-        const CHEAP_DELIVERY_FEE = 1500;
-        const FAR_DELIVERY_FEE = 3000; // Rp 3.000 jika > 5 km
+            const deliveryOptionRadios = document.querySelectorAll('input[name="delivery-option"]');
+            const deliveryDetailsDiv = document.getElementById('delivery-details');
+            const deliveryAddressInput = document.getElementById('delivery-address');
+            const deliveryFeeDisplay = document.getElementById('delivery-fee-display');
 
-        // Data Produk
-        const products = [
-            {
-                id: 1,
-                name: "Cookies Mix",
-                description: "Aneka cookies renyah dengan berbagai varian.",
-                price: 120000,
-                image: "images/product/produk1.jpg",
-                rating: 4.9
-            },
-            {
-                id: 2,
-                name: "Cookies Mix",
-                description: "Kombinasi 5 varian cookies dengan topping berbeda.",
-                price: 120000,
-                image: "images/product/produk2.jpg",
-                rating: 5
-            },
-            {
-                id: 3,
-                name: "Cookies Putri Salju",
-                description: "Cookies lembut bertabur gula halus, lumer di mulut.",
-                price: 70000,
-                image: "images/product/produk3.jpg",
-                rating: 4.7
-            },
-            {
-                id: 4,
-                name: "Cookies Stick Coklat",
-                description: "Stik cokelat klasik yang meleleh di mulut.",
-                price: 80000,
-                image: "images/product/produk5.jpg",
-                rating: 5
-            },
-            {
-                id: 5,
-                name: "Cookies Cherry",
-                description: "Cookies gurih dengan potongan cherry dan kismis.",
-                price: 80000,
-                image: "images/product/produk6jpg.jpg",
-                rating: 5
-            },
-            {
-                id: 6,
-                name: "Cookies Nastar",
-                description: "Nastar lembut dengan isian nanas dan taburan keju.",
-                price: 85000,
-                image: "images/product/produk7.jpg",
-                rating: 4.8
-            },
-            {
-                id: 7,
-                name: "Bolu Ketan Hitam Lumer (Mini)",
-                description: "Bolu ketan hitam mini yang lembut dan lumer.",
-                price: 7000,
-                image: "images/product/produk8.jpg",
-                rating: 5
-            },
-            {
-                id: 8,
-                name: "Muffin Banana",
-                description: "Muffin pisang empuk dan lezat.",
-                price: 5000,
-                image: "images/product/produk9.jpg",
-                rating: 4.9
-            },
-            {
-                id: 9,
-                name: "Bolu Pisang",
-                description: "Bolu pisang klasik, manis dan empuk.",
-                price: 50000,
-                image: "images/product/bolupisang.jpg",
-                rating: 4.9
-            },
-            {
-                id: 10,
-                name: "Bolu Pisang Keju",
-                description: "Bolu pisang dengan taburan keju gurih.",
-                price: 60000,
-                image: "images/product/bolupisangkeju.jpg",
-                rating: 4.9
-            },
-            {
-                id: 11,
-                name: "Muffin Tape",
-                description: "Muffin tape singkong yang unik dan nikmat.",
-                price: 5000,
-                image: "images/product/produk10.jpg",
-                rating: 5
-            },
-            {
-                id: 12,
-                name: "Bolu Ketan Hitam Lumer",
-                description: "Bolu ketan hitam besar yang lembut dan lumer.",
-                price: 70000,
-                image: "images/product/produk11.jpg",
-                rating: 5
+            const preorderForm = document.getElementById('preorder-form');
+            const preorderProductSelection = document.getElementById('preorder-product-selection');
+            const preorderDeliveryOptionsRadios = document.querySelectorAll('input[name="preorder-delivery-option"]');
+            const preorderDeliveryDetailsDiv = document.getElementById('preorder-delivery-details');
+            const preorderAddressInput = document.getElementById('preorder-address');
+            const preorderDeliveryFeeDisplay = document.getElementById('preorder-delivery-fee-display');
+            const preorderTotalPriceSpan = document.getElementById('preorder-total-price');
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let products = []; // This will be populated from API/data source
+            let testimonials = []; // This will be populated from API/data source
+            let faqs = []; // This will be populated from API/data source
+            let deliveryDestinationLatLng = null; // To store lat/lng of delivery address
+
+            // Dummy Data (replace with actual API calls in a real app)
+            async function fetchProducts() {
+                // Simulate API call
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve([
+                            { id: 1, name: 'Red Velvet Cake', price: 250000, image: 'https://via.placeholder.com/400x300/ff6b6b/ffffff?text=Red+Velvet' },
+                            { id: 2, name: 'Chocolate Fudge', price: 280000, image: 'https://via.placeholder.com/400x300/8B4513/ffffff?text=Chocolate+Fudge' },
+                            { id: 3, name: 'Vanilla Bean Cupcakes', price: 45000, image: 'https://via.placeholder.com/400x300/FFD700/ffffff?text=Vanilla+Cupcakes' },
+                            { id: 4, name: 'Lemon Meringue Pie', price: 180000, image: 'https://via.placeholder.com/400x300/FFECB3/333333?text=Lemon+Pie' },
+                            { id: 5, name: 'Strawberry Shortcake', price: 220000, image: 'https://via.placeholder.com/400x300/FF6347/ffffff?text=Strawberry+Cake' },
+                            { id: 6, name: 'Blueberry Cheesecake', price: 270000, image: 'https://via.placeholder.com/400x300/87CEEB/ffffff?text=Blueberry+Cheesecake' }
+                        ]);
+                    }, 500);
+                });
             }
-        ];
 
-        // Data Testimoni (semua rating diatur ke 5)
-        const testimonials = [
-            {
-                id: 1,
-                quote: "Kue ulang tahun dari Delicious Bakery membuat pesta anak saya sangat spesial. Rasanya luar biasa dan dekorasinya persis seperti yang saya minta!",
-                name: "Sarah Wijaya",
-                role: "Ibu Rumah Tangga",
-                image: "https://randomuser.me/api/portraits/women/32.jpg",
-                rating: 5
-            },
-            {
-                id: 2,
-                quote: "Saya selalu memesan kue untuk meeting kantor dari Delicious Bakery. Rekan-rekan kerja selalu memuji pilihan saya!",
-                name: "Budi Santoso",
-                role: "Manajer Perusahaan",
-                image: "https://randomuser.me/api/portraits/men/45.jpg",
-                rating: 5
-            },
-            {
-                id: 3,
-                quote: "Kue pernikahan kami dibuat oleh Delicious Bakery dan semua tamu terkesan. Rasanya sempurna dan tampilannya memukau!",
-                name: "Dewi Anggraeni",
-                role: "Pengantin Bahagia",
-                image: "https://randomuser.me/api/portraits/women/68.jpg",
-                rating: 5
-            },
-            {
-                id: 4,
-                quote: "Pelayanan sangat memuaskan dan kuenya fresh banget. Anak-anak saya sampai minta tambah!",
-                name: "Rina Permata",
-                role: "Guru TK",
-                image: "https://randomuser.me/api/portraits/women/44.jpg",
-                rating: 5
-            },
-            {
-                id: 5,
-                quote: "Sudah 3 tahun langganan Delicious Bakery untuk acara kantor. Kualitas selalu konsisten dan rasanya enak!",
-                name: "Andi Setiawan",
-                role: "Direktur Marketing",
-                image: "https://randomuser.me/api/portraits/men/22.jpg",
-                rating: 5
-            },
-            {
-                id: 6,
-                quote: "Kue ultah suami saya dari sini, semua tamu pada nanya beli dimana. Recommended banget!",
-                name: "Linda Hartono",
-                role: "Pengusaha",
-                image: "https://randomuser.me/api/portraits/women/65.jpg",
-                rating: 5
-            },
-            {
-                id: 7,
-                quote: "Pertama kali pesan kue disini langsung jatuh cinta. Sekarang jadi langganan tetap untuk acara keluarga.",
-                name: "Agus Prabowo",
-                role: "Pegawai Bank",
-                image: "https://randomuser.me/api/portraits/men/33.jpg",
-                rating: 5
+            async function fetchTestimonials() {
+                // Simulate API call
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve([
+                            { id: 1, quote: "Kuenya sangat lezat dan tampilannya cantik sekali! Sempurna untuk acara spesial.", author: "Putri Ananda" },
+                            { id: 2, quote: "Pelayanan cepat dan ramah, kuenya selalu fresh. Sudah langganan di Delicious Bakery!", author: "Budi Santoso" },
+                            { id: 3, quote: "Browniesnya juara! Tidak terlalu manis dan cokelatnya terasa banget. Pasti akan pesan lagi.", author: "Dewi Lestari" },
+                            { id: 4, quote: "Sangat recommended! Rasa kuenya otentik dan bahan-bahannya berkualitas.", author: "Faisal Rahman" },
+                            { id: 5, quote: "Pesan birthday cake di sini, hasilnya melebihi ekspektasi. Terima kasih Delicious Bakery!", author: "Citra Kirana" }
+                        ]);
+                    }, 500);
+                });
             }
-        ];
 
-        // Keranjang Belanja
-        let cart = [];
-        let currentDeliveryFee = 0; // Variabel untuk menyimpan biaya pengiriman saat ini
-
-        // DOM Elements
-        const productsGrid = document.getElementById('productsGrid');
-        const cartIcon = document.getElementById('cartIcon');
-        const cartCount = document.getElementById('cartCount');
-        const cartSidebar = document.getElementById('cartSidebar');
-        const cartItems = document.getElementById('cartItems');
-        const cartSubtotal = document.getElementById('cartSubtotal');
-        const deliveryFeeElement = document.getElementById('deliveryFee');
-        const cartGrandTotal = document.getElementById('cartGrandTotal');
-        const closeCart = document.getElementById('closeCart');
-        const overlay = document.getElementById('overlay');
-        const checkoutBtn = document.getElementById('checkoutBtn');
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.querySelector('.nav-links');
-        const testimonialsContainer = document.getElementById('testimonialsContainer'); // Grid container
-        const testimonialsSwiperWrapper = document.getElementById('testimonialsSwiperWrapper'); // Swiper wrapper
-        const loader = document.getElementById('loader');
-        const header = document.getElementById('header');
-        const deliveryOptionRadios = document.querySelectorAll('input[name="deliveryOption"]');
-        const deliveryFeeInfo = document.getElementById('deliveryFeeInfo'); // Info biaya pengiriman
-
-        // Pre-order DOM Elements
-        const preorderNameInput = document.getElementById('preorderName');
-        const preorderDateInput = document.getElementById('preorderDate');
-        const preorderTimeInput = document.getElementById('preorderTime');
-        const preorderProductSelection = document.getElementById('preorderProductSelection');
-        const preorderNotesInput = document.getElementById('preorderNotes');
-        const preorderBtn = document.getElementById('preorderBtn');
-        const preorderPaymentOptions = document.querySelectorAll('input[name="preorderPaymentOption"]');
-        const preorderDeliveryOptionsRadios = document.querySelectorAll('input[name="preorderDeliveryOption"]');
-        const preorderDeliveryFeeInfo = document.getElementById('preorderDeliveryFeeInfo');
-
-        // FAQ DOM Elements
-        const faqQuestions = document.querySelectorAll('.faq-question');
-
-        // Scroll Animation Elements
-        const sections = document.querySelectorAll('.section');
-
-        // Confirmation Modal Elements
-        const confirmationModal = document.getElementById('confirmationModal');
-        const confirmationMessage = document.getElementById('confirmationMessage');
-        const sendConfirmationBtn = document.getElementById('sendConfirmation');
-        const cancelConfirmationBtn = document.getElementById('cancelConfirmation');
-        const modalOverlay = document.getElementById('modalOverlay');
-
-        // Fungsi untuk menghasilkan bintang rating
-        function getRatingStars(rating) {
-            let stars = '';
-            const fullStars = Math.floor(rating);
-            const hasHalfStar = rating % 1 !== 0;
-
-            for (let i = 0; i < fullStars; i++) {
-                stars += '<i class="fas fa-star"></i>';
+            async function fetchFaqs() {
+                // Simulate API call
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve([
+                            { question: "Bagaimana cara memesan kue kustom?", answer: "Anda bisa mengajukan pesanan kue kustom melalui formulir pre-order kami atau menghubungi tim customer service." },
+                            { question: "Apakah ada opsi pengiriman?", answer: "Ya, kami menyediakan opsi ambil sendiri di toko dan pengiriman ke alamat Anda dengan biaya tambahan sesuai jarak." },
+                            { question: "Berapa lama waktu yang dibutuhkan untuk pre-order?", answer: "Waktu pengerjaan pre-order bervariasi tergantung jenis kue dan tingkat kerumitan, biasanya 2-5 hari kerja. Mohon konsultasikan dengan tim kami." },
+                            { question: "Apakah ada pilihan bebas gluten atau vegan?", answer: "Saat ini kami sedang mengembangkan opsi bebas gluten dan vegan. Silakan hubungi kami untuk informasi lebih lanjut mengenai ketersediaan." },
+                            { question: "Bisakah saya mengubah atau membatalkan pesanan?", answer: "Perubahan atau pembatalan pesanan dapat dilakukan paling lambat 24 jam sebelum jadwal pengiriman/pengambilan. Hubungi customer service kami segera." }
+                        ]);
+                    }, 500);
+                });
             }
-            if (hasHalfStar) {
-                stars += '<i class="fas fa-star-half-alt"></i>';
-            }
-            for (let i = 0; i < (5 - fullStars - (hasHalfStar ? 1 : 0)); i++) {
-                stars += '<i class="far fa-star"></i>';
-            }
-            return stars;
-        }
 
-        // Render Produk dengan Lazy Loading dan Rating
-        function renderProducts() {
-            productsGrid.innerHTML = '';
-            products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <div class="product-img">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3C/svg%3E"
-                             data-src="${product.image}"
-                             alt="${product.name}"
-                             class="lazy" onerror="this.onerror=null;this.src='https://placehold.co/400x200/ff6b6b/ffffff?text=Image+Not+Found';">
-                    </div>
-                    <div class="product-info">
+            // Render Functions
+            function renderProducts() {
+                productsGrid.innerHTML = '';
+                products.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.classList.add('product-card');
+                    productCard.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}">
                         <h3>${product.name}</h3>
-                        <p>${product.description}</p>
-                        <div class="product-rating">
-                            <span class="stars" data-product-id="${product.id}">
-                                ${getRatingStars(product.rating)}
-                            </span>
-                            (${product.rating})
-                        </div>
-                        <div class="product-price">
-                            <span class="price">Rp ${product.price.toLocaleString('id-ID')}</span>
-                            <button class="add-to-cart" data-id="${product.id}">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                productsGrid.appendChild(productCard);
-            });
+                        <p class="price">Rp${product.price.toLocaleString('id-ID')}</p>
+                        <button class="btn add-to-cart" data-id="${product.id}">Tambah ke Keranjang</button>
+                    `;
+                    productsGrid.appendChild(productCard);
+                });
 
-            // Add event listeners to add to cart buttons
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', addToCart);
-            });
-
-            // Add event listeners for product rating
-            document.querySelectorAll('.product-rating .stars').forEach(starsContainer => {
-                const productId = parseInt(starsContainer.dataset.productId);
-                starsContainer.querySelectorAll('i').forEach((star, index) => {
-                    star.addEventListener('click', () => {
-                        const newRating = index + 1;
-                        updateProductRating(productId, newRating);
+                document.querySelectorAll('.add-to-cart').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.dataset.id);
+                        addToCart(productId);
                     });
                 });
-            });
-
-            // Initialize lazy loading
-            initLazyLoading();
-        }
-
-        // Update Product Rating
-        function updateProductRating(productId, newRating) {
-            const productIndex = products.findIndex(p => p.id === productId);
-            if (productIndex !== -1) {
-                products[productIndex].rating = newRating;
-                renderProducts(); // Re-render products to show updated rating
-                showNotification(`Rating untuk ${products[productIndex].name} diperbarui menjadi ${newRating} bintang!`);
             }
-        }
 
-        // Render Testimonials (untuk Grid dan Swiper)
-        function renderTestimonials() {
-            testimonialsContainer.innerHTML = ''; // Untuk grid
-            testimonialsSwiperWrapper.innerHTML = ''; // Untuk swiper
+            function renderTestimonials() {
+                const testimonialsGrid = document.getElementById('testimonials-grid');
+                const testimonialsSwiperWrapper = document.getElementById('testimonials-swiper-wrapper');
+                testimonialsGrid.innerHTML = '';
+                testimonialsSwiperWrapper.innerHTML = '';
 
-            testimonials.forEach(testimonial => {
-                const testimonialCardHtml = `
-                    <div class="author-img">
-                        <img src="${testimonial.image}" alt="${testimonial.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/333333?text=User';">
-                    </div>
-                    <div class="testimonial-content">
-                        <p class="quote">${testimonial.quote}</p>
-                        <div class="testimonial-rating">
-                            ${getRatingStars(testimonial.rating)}
+                // Create cards for both grid and swiper
+                testimonials.forEach(testimonial => {
+                    const cardHtml = `
+                        <div class="testimonial-card">
+                            <p class="quote">"${testimonial.quote}"</p>
+                            <p class="author">- ${testimonial.author}</p>
                         </div>
-                        <div class="author-info">
-                            <h4>${testimonial.name}</h4>
-                            <p>${testimonial.role}</p>
-                        </div>
-                    </div>
-                `;
+                    `;
+                    // For Grid (Desktop)
+                    testimonialsGrid.innerHTML += cardHtml;
 
-                // Untuk grid
-                const gridCard = document.createElement('div');
-                gridCard.className = 'testimonial-card';
-                gridCard.innerHTML = testimonialCardHtml;
-                testimonialsContainer.appendChild(gridCard);
-
-                // Untuk swiper
-                const swiperSlide = document.createElement('div');
-                swiperSlide.className = 'swiper-slide testimonials-swiper-slide';
-                const swiperCardContent = document.createElement('div'); // Create a div to hold the card content
-                swiperCardContent.className = 'testimonial-card'; // Re-use the card style
-                swiperCardContent.innerHTML = testimonialCardHtml;
-                swiperSlide.appendChild(swiperCardContent); // Append the content to the slide
-                testimonialsSwiperWrapper.appendChild(swiperSlide);
-            });
-        }
-
-        // Initialize Lazy Loading
-        function initLazyLoading() {
-            const lazyImages = document.querySelectorAll('img.lazy');
-
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const lazyImage = entry.target;
-                        lazyImage.src = lazyImage.dataset.src;
-                        lazyImage.classList.remove('lazy');
-                        lazyImage.classList.add('loaded');
-                        observer.unobserve(lazyImage);
-                    }
+                    // For Swiper (Mobile/Tablet)
+                    const swiperSlide = document.createElement('div');
+                    swiperSlide.classList.add('swiper-slide');
+                    swiperSlide.innerHTML = cardHtml;
+                    testimonialsSwiperWrapper.appendChild(swiperSlide);
                 });
-            }, {
-                rootMargin: '0px 0px 100px 0px'
-            });
 
-            lazyImages.forEach(lazyImage => {
-                imageObserver.observe(lazyImage);
-            });
-        }
-
-        // Add to Cart
-        function addToCart(e) {
-            const productId = parseInt(e.currentTarget.getAttribute('data-id'));
-            const product = products.find(p => p.id === productId);
-
-            const existingItem = cart.find(item => item.id === productId);
-
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    ...product,
-                    quantity: 1
-                });
-            }
-
-            updateCart();
-            showNotification(`${product.name} telah ditambahkan ke keranjang`);
-        }
-
-        // Fungsi untuk menghitung biaya pengiriman berdasarkan opsi yang dipilih
-        function calculateDeliveryFee(deliveryOption) {
-            let fee = 0;
-            let infoText = '';
-
-            switch (deliveryOption) {
-                case 'self-pickup':
-                    fee = 0;
-                    infoText = 'Ambil Sendiri (Gratis)';
-                    break;
-                case 'free-delivery':
-                    fee = 0;
-                    infoText = `Gratis (Jarak < ${FREE_DELIVERY_THRESHOLD_KM_MAX} km)`;
-                    break;
-                case 'cheap-delivery':
-                    fee = CHEAP_DELIVERY_FEE;
-                    infoText = `Rp ${CHEAP_DELIVERY_FEE.toLocaleString('id-ID')} (Jarak ${FREE_DELIVERY_THRESHOLD_KM_MAX} km - ${CHEAP_DELIVERY_THRESHOLD_KM_MAX} km)`;
-                    break;
-                case 'far-delivery':
-                    fee = FAR_DELIVERY_FEE;
-                    infoText = `Rp ${FAR_DELIVERY_FEE.toLocaleString('id-ID')} (Jarak > ${CHEAP_DELIVERY_THRESHOLD_KM_MAX} km)`;
-                    break;
-                default:
-                    fee = 0;
-                    infoText = '';
-                    break;
-            }
-            return { fee, infoText };
-        }
-
-        // Update Cart
-        function updateCart() {
-            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-            if (cartCount) {
-                cartCount.textContent = totalItems;
-            }
-
-            renderCartItems();
-
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const selectedDeliveryOption = document.querySelector('input[name="deliveryOption"]:checked');
-
-            let deliveryFeeResult = calculateDeliveryFee(selectedDeliveryOption ? selectedDeliveryOption.value : 'self-pickup');
-            currentDeliveryFee = deliveryFeeResult.fee;
-            if (deliveryFeeInfo) deliveryFeeInfo.textContent = deliveryFeeResult.infoText;
-
-            const grandTotal = subtotal + currentDeliveryFee;
-
-            if (cartSubtotal) cartSubtotal.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
-            if (deliveryFeeElement) deliveryFeeElement.textContent = `Rp ${currentDeliveryFee.toLocaleString('id-ID')}`;
-            if (cartGrandTotal) cartGrandTotal.textContent = `Rp ${grandTotal.toLocaleString('id-ID')}`;
-        }
-
-        // Render Cart Items
-        function renderCartItems() {
-            if (!cartItems) return;
-
-            cartItems.innerHTML = '';
-
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p>Keranjang belanja Anda kosong</p>';
-                return;
-            }
-
-            cart.forEach(item => {
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <div class="cart-item-img">
-                        <img src="${item.image}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/80x80/ff6b6b/ffffff?text=Product';">
-                    </div>
-                    <div class="cart-item-details">
-                        <h4 class="cart-item-title">${item.name}</h4>
-                        <p class="cart-item-price">Rp ${item.price.toLocaleString('id-ID')}</p>
-                        <div class="cart-item-quantity">
-                            <button class="quantity-btn minus" data-id="${item.id}">-</button>
-                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
-                            <button class="quantity-btn plus" data-id="${item.id}">+</button>
-                            <button class="remove-item" data-id="${item.id}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                cartItems.appendChild(cartItem);
-            });
-
-            document.querySelectorAll('.quantity-btn.minus').forEach(button => {
-                if (button) button.addEventListener('click', decreaseQuantity);
-            });
-
-            document.querySelectorAll('.quantity-btn.plus').forEach(button => {
-                if (button) button.addEventListener('click', increaseQuantity);
-            });
-
-            document.querySelectorAll('.quantity-input').forEach(input => {
-                if (input) input.addEventListener('change', updateQuantity);
-            });
-
-            document.querySelectorAll('.remove-item').forEach(button => {
-                if (button) button.addEventListener('click', removeItem);
-            });
-        }
-
-        // Decrease Quantity
-        function decreaseQuantity(e) {
-            const productId = parseInt(e.currentTarget.getAttribute('data-id'));
-            const item = cart.find(item => item.id === productId);
-
-            if (item.quantity > 1) {
-                item.quantity -= 1;
-            } else {
-                cart = cart.filter(item => item.id !== productId);
-            }
-
-            updateCart();
-        }
-
-        // Increase Quantity
-        function increaseQuantity(e) {
-            const productId = parseInt(e.currentTarget.getAttribute('data-id'));
-            const item = cart.find(item => item.id === productId);
-            item.quantity += 1;
-            updateCart();
-        }
-
-        // Update Quantity
-        function updateQuantity(e) {
-            const productId = parseInt(e.currentTarget.getAttribute('data-id'));
-            const newQuantity = parseInt(e.currentTarget.value);
-            const item = cart.find(item => item.id === productId);
-
-            if (newQuantity > 0) {
-                item.quantity = newQuantity;
-            } else {
-                cart = cart.filter(item => item.id !== productId);
-            }
-
-            updateCart();
-        }
-
-        // Remove Item
-        function removeItem(e) {
-            const productId = parseInt(e.currentTarget.getAttribute('data-id'));
-            cart = cart.filter(item => item.id !== productId);
-            updateCart();
-        }
-
-        // Show Notification
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.textContent = message;
-            notification.style.position = 'fixed';
-            notification.style.bottom = '20px';
-            notification.style.left = '50%';
-            notification.style.transform = 'translateX(-50%)';
-            notification.style.backgroundColor = 'var(--primary)';
-            notification.style.color = 'white';
-            notification.style.padding = '10px 20px';
-            notification.style.borderRadius = '5px';
-            notification.style.zIndex = '1000';
-            notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
-            notification.style.animation = 'fadeIn 0.3s';
-
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.style.animation = 'fadeOut 0.3s';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-        }
-
-        // Show Confirmation Modal
-        function showConfirmationModal(messageHtml, whatsappUrl) {
-            if (confirmationMessage) confirmationMessage.innerHTML = messageHtml;
-            if (sendConfirmationBtn) {
-                sendConfirmationBtn.onclick = () => {
-                    window.open(whatsappUrl, '_blank');
-                    hideConfirmationModal();
-                    cart = [];
-                    updateCart();
-                    if (preorderNameInput) preorderNameInput.value = '';
-                    if (preorderDateInput) preorderDateInput.value = '';
-                    if (preorderTimeInput) preorderTimeInput.value = '';
-                    document.querySelectorAll('#preorderProductSelection input[type="checkbox"]').forEach(checkbox => {
-                        checkbox.checked = false;
-                        if (checkbox.parentElement) checkbox.parentElement.classList.remove('selected');
-                    });
-                    if (preorderNotesInput) preorderNotesInput.value = '';
-                    const defaultPaymentRadio = document.getElementById('preorderPaymentDana');
-                    if (defaultPaymentRadio) defaultPaymentRadio.checked = true;
-                    // Reset delivery options for preorder
-                    const defaultPreorderDeliveryRadio = document.getElementById('preorderSelfPickup');
-                    if (defaultPreorderDeliveryRadio) defaultPreorderDeliveryRadio.checked = true;
-                    if (preorderDeliveryFeeInfo) preorderDeliveryFeeInfo.textContent = '';
-
-                    showNotification('Pesan konfirmasi telah dikirim!');
-                };
-            }
-            if (confirmationModal) confirmationModal.classList.add('active');
-            if (modalOverlay) modalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Hide Confirmation Modal
-        function hideConfirmationModal() {
-            if (confirmationModal) confirmationModal.classList.remove('active');
-            if (modalOverlay) modalOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Checkout function
-        function checkout() {
-            if (cart.length === 0) {
-                showNotification('Keranjang belanja Anda kosong');
-                return;
-            }
-
-            const selectedDeliveryOption = document.querySelector('input[name="deliveryOption"]:checked');
-            const deliveryOptionValue = selectedDeliveryOption ? selectedDeliveryOption.value : 'self-pickup';
-            const { fee: deliveryFee, infoText: deliveryInfo } = calculateDeliveryFee(deliveryOptionValue);
-
-            let messageDetails = '';
-            let subtotal = 0;
-
-            cart.forEach(item => {
-                messageDetails += `- ${item.name} (${item.quantity}x) = Rp ${(item.price * item.quantity).toLocaleString('id-ID')}\n`;
-                subtotal += item.price * item.quantity;
-            });
-
-            let deliveryText = `Pengiriman: ${deliveryInfo}`;
-            let finalTotal = subtotal + deliveryFee;
-
-            const confirmationText = `
-                Halo, saya ingin mengkonfirmasi pesanan dari keranjang belanja saya.
-                Mohon cek ketersediaan dan instruksi pembayaran.
-
-                *Detail Pesanan:*
-                ${messageDetails}
-                Subtotal: Rp ${subtotal.toLocaleString('id-ID')}
-                ${deliveryText}
-                Total Keseluruhan: Rp ${finalTotal.toLocaleString('id-ID')}
-
-                Terima kasih!
-            `;
-
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(confirmationText)}`;
-
-            showConfirmationModal(
-                `Pesanan Anda akan dikirimkan ke WhatsApp penjual untuk konfirmasi. Penjual akan membalas untuk menginformasikan ketersediaan dan detail pembayaran.<br><br>
-                Setelah penjual menyetujui, Anda dapat melakukan pembayaran sesuai metode yang disepakati.`,
-                whatsappUrl
-            );
-        }
-
-        // Toggle Cart
-        function toggleCart() {
-            if (cartSidebar) cartSidebar.classList.toggle('active');
-            if (overlay) overlay.classList.toggle('active');
-            document.body.style.overflow = (cartSidebar && cartSidebar.classList.contains('active')) || (navLinks && navLinks.classList.contains('active')) || (confirmationModal && confirmationModal.classList.contains('active')) ? 'hidden' : 'auto';
-        }
-
-        // Toggle Mobile Menu
-        function toggleMenu() {
-            if (navLinks) navLinks.classList.toggle('active');
-            if (hamburger) hamburger.classList.toggle('active');
-            document.body.style.overflow = (navLinks && navLinks.classList.contains('active')) || (cartSidebar && cartSidebar.classList.contains('active')) || (confirmationModal && confirmationModal.classList.contains('active')) ? 'hidden' : 'auto';
-        }
-
-        // Close Cart/Menu/Modal when clicking outside
-        function handleOverlayClick() {
-            if (cartSidebar && cartSidebar.classList.contains('active')) {
-                toggleCart();
-            }
-            if (navLinks && navLinks.classList.contains('active')) {
-                toggleMenu();
-            }
-            if (confirmationModal && confirmationModal.classList.contains('active')) {
-                hideConfirmationModal();
-            }
-        }
-
-        // Handle Scroll Animation
-        function handleScrollAnimation() {
-            sections.forEach(section => {
-                const sectionTop = section.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-
-                if (sectionTop < windowHeight - 100) {
-                    section.classList.add('visible');
-                }
-            });
-
-            // Header effect on scroll
-            if (header) {
-                if (window.scrollY > 100) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            }
-        }
-
-        // Hide Header on scroll down
-        let lastScroll = 0;
-        function handleHideHeader() {
-            const currentScroll = window.scrollY;
-
-            if (header) {
-                if (currentScroll > lastScroll && currentScroll > 100) {
-                    header.classList.add('hidden');
-                } else {
-                    header.classList.remove('hidden');
-                }
-            }
-
-            lastScroll = currentScroll;
-        }
-
-        // Populate Pre-order Products (as checkboxes)
-        function populatePreorderProducts() {
-            if (!preorderProductSelection) return;
-
-            preorderProductSelection.innerHTML = '';
-            products.forEach(product => {
-                const productItem = document.createElement('div');
-                productItem.className = 'preorder-product-item';
-                productItem.innerHTML = `
-                    <input type="checkbox" id="preorderProduct-${product.id}" value="${product.id}">
-                    <label for="preorderProduct-${product.id}">${product.name}</label>
-                    <span class="price">Rp ${product.price.toLocaleString('id-ID')}</span>
-                `;
-                preorderProductSelection.appendChild(productItem);
-
-                const checkbox = productItem.querySelector('input[type="checkbox"]');
-                if (checkbox) {
-                    checkbox.addEventListener('change', (e) => {
-                        if (e.target.checked) {
-                            productItem.classList.add('selected');
-                        } else {
-                            productItem.classList.remove('selected');
-                        }
-                    });
-                }
-            });
-        }
-
-        // Handle Pre-order
-        function handlePreorder() {
-            const name = preorderNameInput ? preorderNameInput.value.trim() : '';
-            const date = preorderDateInput ? preorderDateInput.value : '';
-            const time = preorderTimeInput ? preorderTimeInput.value : '';
-            const selectedProductCheckboxes = document.querySelectorAll('#preorderProductSelection input[type="checkbox"]:checked');
-            const selectedProductIds = Array.from(selectedProductCheckboxes).map(checkbox => parseInt(checkbox.value));
-            const notes = preorderNotesInput ? preorderNotesInput.value.trim() : '';
-            const selectedPaymentOptionElement = document.querySelector('input[name="preorderPaymentOption"]:checked');
-            const selectedPaymentOption = selectedPaymentOptionElement ? selectedPaymentOptionElement.value : 'Tidak dipilih';
-            
-            // Get selected pre-order delivery option and its fee/info
-            const selectedPreorderDeliveryOption = document.querySelector('input[name="preorderDeliveryOption"]:checked');
-            const preorderDeliveryOptionValue = selectedPreorderDeliveryOption ? selectedPreorderDeliveryOption.value : 'self-pickup';
-            const { fee: preorderDeliveryFee, infoText: preorderDeliveryInfo } = calculateDeliveryFee(preorderDeliveryOptionValue);
-
-            if (!name || !date || !time || selectedProductIds.length === 0) {
-                showNotification('Mohon lengkapi Nama, Tanggal, Waktu, dan pilih minimal satu Produk untuk Pre-order.');
-                return;
-            }
-
-            const selectedProducts = products.filter(p => selectedProductIds.includes(p.id));
-
-            let messageDetails = '';
-            let totalPreorderPrice = 0;
-            selectedProducts.forEach(product => {
-                messageDetails += `- ${product.name} (Rp ${product.price.toLocaleString('id-ID')})\n`;
-                totalPreorderPrice += product.price;
-            });
-
-            let finalPreorderTotal = totalPreorderPrice + preorderDeliveryFee;
-
-            let confirmationText = `
-                Halo, saya ingin melakukan Pre-order:
-
-                *Nama Pemesan:* ${name}
-                *Tanggal Pengambilan/Pengiriman:* ${date}
-                *Waktu Pengambilan/Pengiriman:* ${time}
-
-                *Produk yang dipesan:*
-                ${messageDetails}
-                *Opsi Pengiriman:* ${preorderDeliveryInfo}
-                *Total Estimasi Harga:* Rp ${finalPreorderTotal.toLocaleString('id-ID')}
-                *Metode Pembayaran Pilihan:* ${selectedPaymentOption}
-            `;
-
-            if (notes) {
-                confirmationText += `\n*Catatan Tambahan:* ${notes}`;
-            }
-
-            confirmationText += `\n\nMohon konfirmasi ketersediaan pesanan ini. Jika disetujui, saya akan segera melakukan pembayaran.`;
-
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(confirmationText)}`;
-
-            showConfirmationModal(
-                `Pesanan Pre-order Anda akan dikirimkan ke WhatsApp penjual untuk konfirmasi. Penjual akan membalas untuk menginformasikan ketersediaan dan detail pembayaran.<br><br>
-                Setelah penjual menyetujui, Anda dapat melakukan pembayaran sesuai metode *${selectedPaymentOption}*.`,
-                whatsappUrl
-            );
-        }
-
-        // Update Pre-order Delivery Fee Display
-        function updatePreorderDeliveryDisplay() {
-            const selectedPreorderDeliveryOption = document.querySelector('input[name="preorderDeliveryOption"]:checked');
-            const deliveryOptionValue = selectedPreorderDeliveryOption ? selectedPreorderDeliveryOption.value : 'self-pickup';
-            const { fee: deliveryFee, infoText: deliveryInfo } = calculateDeliveryFee(deliveryOptionValue); // Menggunakan fungsi calculateDeliveryFee yang sama
-            
-            if (preorderDeliveryFeeInfo) {
-                preorderDeliveryFeeInfo.textContent = deliveryInfo;
-            }
-        }
-
-        // FAQ Accordion Functionality
-        function setupFaqAccordion() {
-            faqQuestions.forEach(question => {
-                if (question) {
-                    question.addEventListener('click', () => {
-                        const answer = question.nextElementSibling;
-                        const icon = question.querySelector('i');
-
-                        faqQuestions.forEach(otherQuestion => {
-                            if (otherQuestion && otherQuestion !== question && otherQuestion.classList.contains('active')) {
-                                otherQuestion.classList.remove('active');
-                                if (otherQuestion.nextElementSibling) otherQuestion.nextElementSibling.classList.remove('active');
-                                const otherIcon = otherQuestion.querySelector('i');
-                                if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
-                                if (otherQuestion.nextElementSibling) otherQuestion.nextElementSibling.style.maxHeight = "0";
+                // Initialize Swiper only if on mobile/tablet or if grid is hidden
+                const testimonialsSwiperContainer = document.getElementById('testimonials-swiper-container');
+                let mySwiper;
+
+                function initSwiper() {
+                    if (window.innerWidth <= 991 && !mySwiper) { // Max-width 991px for tablet and mobile
+                        testimonialsSwiperContainer.style.display = 'block';
+                        testimonialsGrid.classList.add('swiper-active'); // Add class to hide grid via CSS
+                        mySwiper = new Swiper(testimonialsSwiperContainer, {
+                            slidesPerView: 1,
+                            spaceBetween: 30,
+                            loop: true,
+                            pagination: {
+                                el: '.swiper-pagination',
+                                clickable: true,
+                            },
+                            autoplay: {
+                                delay: 5000,
+                                disableOnInteraction: false,
+                            },
+                            breakpoints: {
+                                768: { // For tablets
+                                    slidesPerView: 2,
+                                    spaceBetween: 20
+                                }
                             }
                         });
+                    } else if (window.innerWidth > 991 && mySwiper) { // Desktop
+                        mySwiper.destroy(true, true);
+                        mySwiper = undefined;
+                        testimonialsSwiperContainer.style.display = 'none';
+                        testimonialsGrid.classList.remove('swiper-active'); // Remove class to show grid
+                    }
+                }
+
+                initSwiper(); // Initialize on page load
+                window.addEventListener('resize', initSwiper); // Re-initialize on resize
+            }
+
+
+            function setupFaqAccordion() {
+                const faqContainer = document.getElementById('faq-container');
+                faqContainer.innerHTML = '';
+                faqs.forEach((faq, index) => {
+                    const faqItem = document.createElement('div');
+                    faqItem.classList.add('faq-item');
+                    faqItem.innerHTML = `
+                        <div class="faq-question">
+                            <span>${faq.question}</span>
+                            <i class="fas fa-chevron-down icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>${faq.answer}</p>
+                        </div>
+                    `;
+                    faqContainer.appendChild(faqItem);
+                });
+
+                document.querySelectorAll('.faq-question').forEach(question => {
+                    question.addEventListener('click', () => {
+                        const answer = question.nextElementSibling;
+                        const icon = question.querySelector('.icon');
 
                         question.classList.toggle('active');
-                        if (answer) answer.classList.toggle('active');
-                        if (answer && answer.classList.contains('active')) {
-                            if (icon) icon.style.transform = 'rotate(180deg)';
-                            if (answer) answer.style.maxHeight = answer.scrollHeight + "px";
+                        if (answer.style.maxHeight) {
+                            answer.style.maxHeight = null;
                         } else {
-                            if (icon) icon.style.transform = 'rotate(0deg)';
-                            if (answer) answer.style.maxHeight = "0";
+                            answer.style.maxHeight = answer.scrollHeight + "px";
                         }
                     });
-                }
-            });
-        }
+                });
+            }
 
-        // Event Listeners and Initialization wrapped in window.onload
-        window.addEventListener('load', () => {
-            // Inisialisasi Swiper untuk "Cara Memesan"
-            new Swiper('.how-to-order-swiper-container', {
-                slidesPerView: 1,
-                spaceBetween: 30,
-                loop: true,
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                breakpoints: {
-                    640: {
-                        slidesPerView: 2,
-                        spaceBetween: 20,
-                    },
-                    768: {
-                        slidesPerView: 3,
-                        spaceBetween: 30,
-                    },
-                    1024: {
-                        slidesPerView: 4,
-                        spaceBetween: 40,
-                    },
-                }
-            });
-
-            // Inisialisasi Swiper untuk Testimoni
-            new Swiper('.testimonials-swiper-container', {
-                slidesPerView: 1,
-                spaceBetween: 30,
-                loop: true,
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                // Breakpoints untuk mengaktifkan/menonaktifkan slider
-                breakpoints: {
-                    0: { // Mobile
-                        slidesPerView: 1,
-                        spaceBetween: 20,
-                        enabled: true, // Aktifkan slider
-                    },
-                    768: { // Tablet
-                        slidesPerView: 2,
-                        spaceBetween: 30,
-                        enabled: true, // Aktifkan slider
-                    },
-                    1025: { // Desktop (nonaktifkan slider, kembali ke grid)
-                        slidesPerView: 3, // Atau jumlah kolom grid yang Anda inginkan
-                        spaceBetween: 30,
-                        enabled: false, // Nonaktifkan slider
+            // Cart Functions
+            function addToCart(productId) {
+                const product = products.find(p => p.id === productId);
+                if (product) {
+                    const existingItem = cart.find(item => item.id === productId);
+                    if (existingItem) {
+                        existingItem.quantity++;
+                    } else {
+                        cart.push({ ...product, quantity: 1 });
                     }
-                },
-                on: {
-                    // Update CSS display based on Swiper's enabled state
-                    init: function() {
-                        const testimonialsGrid = document.getElementById('testimonialsContainer');
-                        const testimonialsSwiper = document.getElementById('testimonialsSwiperContainer');
-                        if (this.params.enabled) {
-                            testimonialsGrid.style.display = 'none';
-                            testimonialsSwiper.style.display = 'block';
-                        } else {
-                            testimonialsGrid.style.display = 'grid';
-                            testimonialsSwiper.style.display = 'none';
-                        }
-                    },
-                    resize: function() {
-                        const testimonialsGrid = document.getElementById('testimonialsContainer');
-                        const testimonialsSwiper = document.getElementById('testimonialsSwiperContainer');
-                        if (this.params.enabled) {
-                            testimonialsGrid.style.display = 'none';
-                            testimonialsSwiper.style.display = 'block';
-                        } else {
-                            testimonialsGrid.style.display = 'grid';
-                            testimonialsSwiper.style.display = 'none';
-                        }
+                    saveCart();
+                    updateCart();
+                }
+            }
+
+            function updateQuantity(productId, change) {
+                const item = cart.find(i => i.id === productId);
+                if (item) {
+                    item.quantity += change;
+                    if (item.quantity <= 0) {
+                        cart = cart.filter(i => i.id !== productId);
                     }
+                    saveCart();
+                    updateCart();
+                }
+            }
+
+            function removeItem(productId) {
+                cart = cart.filter(item => item.id !== productId);
+                saveCart();
+                updateCart();
+            }
+
+            async function calculateDeliveryFee() {
+                const isDeliverySelected = document.getElementById('delivery-delivery')?.checked;
+                const address = deliveryAddressInput.value.trim();
+
+                if (!isDeliverySelected || !address) {
+                    deliveryFeeDisplay.textContent = 'Biaya pengiriman akan dihitung.';
+                    return 0;
+                }
+
+                // If we already have coordinates for the exact address, use them.
+                if (deliveryDestinationLatLng && deliveryAddressInput.dataset.lastAddress === address) {
+                     return getHaversineDistance(deliveryDestinationLatLng.lat, deliveryDestinationLatLng.lng, -6.2, 106.8); // Example fixed origin (Jakarta)
+                }
+
+                try {
+                    const geocoder = new google.maps.Geocoder();
+                    const response = await geocoder.geocode({ 'address': address });
+
+                    if (response.results && response.results.length > 0) {
+                        const location = response.results[0].geometry.location;
+                        deliveryDestinationLatLng = { lat: location.lat(), lng: location.lng() };
+                        deliveryAddressInput.dataset.lastAddress = address; // Store last successfully geocoded address
+
+                        // Example origin coordinates (e.g., your bakery location in Jakarta)
+                        const originLat = -6.2000;
+                        const originLng = 106.8167;
+
+                        // Calculate distance using Haversine formula (more accurate than straight line)
+                        // This is a simplified example. In a real app, you might use Distance Matrix API
+                        const distanceKm = getHaversineDistance(deliveryDestinationLatLng.lat, deliveryDestinationLatLng.lng, originLat, originLng);
+                        const feePerKm = 5000; // Example fee per kilometer
+                        let deliveryFee = distanceKm * feePerKm;
+
+                        // Add a base fee for delivery
+                        const baseDeliveryFee = 15000;
+                        deliveryFee += baseDeliveryFee;
+
+                        deliveryFee = Math.round(deliveryFee / 1000) * 1000; // Round to nearest thousand
+
+                        deliveryFeeDisplay.textContent = `Biaya pengiriman: Rp${deliveryFee.toLocaleString('id-ID')}`;
+                        return deliveryFee;
+                    } else {
+                        deliveryFeeDisplay.textContent = 'Alamat tidak ditemukan. Silakan periksa kembali.';
+                        deliveryDestinationLatLng = null; // Reset if address not found
+                        return 0;
+                    }
+                } catch (error) {
+                    console.error('Geocoding failed:', error);
+                    deliveryFeeDisplay.textContent = 'Gagal menghitung biaya pengiriman. Coba lagi.';
+                    deliveryDestinationLatLng = null; // Reset on error
+                    return 0;
+                }
+            }
+
+            function getHaversineDistance(lat1, lon1, lat2, lon2) {
+                const R = 6371; // Radius of Earth in kilometers
+                const dLat = (lat2 - lat1) * Math.PI / 180;
+                const dLon = (lon2 - lon1) * Math.PI / 180;
+                const a =
+                    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                const distance = R * c; // Distance in km
+                return distance;
+            }
+
+
+            async function updateCart() {
+                cartItemsContainer.innerHTML = '';
+                let subtotal = 0;
+
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<p class="text-center">Keranjang Anda kosong.</p>';
+                } else {
+                    cart.forEach(item => {
+                        const itemTotal = item.price * item.quantity;
+                        subtotal += itemTotal;
+                        const cartItemDiv = document.createElement('div');
+                        cartItemDiv.classList.add('cart-item');
+                        cartItemDiv.innerHTML = `
+                            <div class="item-info">
+                                <img src="${item.image}" alt="${item.name}">
+                                <div class="item-details">
+                                    <span>${item.name}</span>
+                                    <small>Rp${item.price.toLocaleString('id-ID')}</small>
+                                </div>
+                            </div>
+                            <div class="item-controls">
+                                <button data-id="${item.id}" data-change="-1">-</button>
+                                <span>${item.quantity}</span>
+                                <button data-id="${item.id}" data-change="1">+</button>
+                                <button class="remove-item" data-id="${item.id}"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <span class="item-price">Rp${itemTotal.toLocaleString('id-ID')}</span>
+                        `;
+                        cartItemsContainer.appendChild(cartItemDiv);
+                    });
+                }
+
+                cartSubtotalSpan.textContent = `Rp${subtotal.toLocaleString('id-ID')}`;
+                cartCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+                const deliveryFee = await calculateDeliveryFee();
+                cartDeliveryFeeSpan.textContent = `Rp${deliveryFee.toLocaleString('id-ID')}`;
+                cartTotalSpan.textContent = `Rp${(subtotal + deliveryFee).toLocaleString('id-ID')}`;
+
+                document.querySelectorAll('.item-controls button[data-change]').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.dataset.id);
+                        const change = parseInt(e.target.dataset.change);
+                        updateQuantity(productId, change);
+                    });
+                });
+
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.dataset.id) || parseInt(e.target.closest('button').dataset.id);
+                        removeItem(productId);
+                    });
+                });
+            }
+
+            function saveCart() {
+                localStorage.setItem('cart', JSON.stringify(cart));
+            }
+
+            // Pre-order Functions
+            let preorderProducts = [];
+
+            async function populatePreorderProducts() {
+                preorderProducts = products.map(p => ({ ...p, quantity: 0 })); // Initialize with 0 quantity
+                renderPreorderProducts();
+            }
+
+            function renderPreorderProducts() {
+                preorderProductSelection.innerHTML = '<label>Pilih Produk Pre-order:</label>'; // Clear existing
+                preorderProducts.forEach(product => {
+                    const productItemDiv = document.createElement('div');
+                    productItemDiv.classList.add('preorder-product-item');
+                    productItemDiv.innerHTML = `
+                        <div class="preorder-product-info">
+                            <span>${product.name}</span>
+                            <small>Rp${product.price.toLocaleString('id-ID')}</small>
+                        </div>
+                        <div class="preorder-quantity-control">
+                            <button type="button" data-id="${product.id}" data-change="-1">-</button>
+                            <input type="number" value="${product.quantity}" min="0" data-id="${product.id}" class="preorder-product-quantity">
+                            <button type="button" data-id="${product.id}" data-change="1">+</button>
+                        </div>
+                    `;
+                    preorderProductSelection.appendChild(productItemDiv);
+                });
+
+                document.querySelectorAll('.preorder-quantity-control button').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.dataset.id);
+                        const change = parseInt(e.target.dataset.change);
+                        updatePreorderQuantity(productId, change);
+                    });
+                });
+
+                document.querySelectorAll('.preorder-product-quantity').forEach(input => {
+                    input.addEventListener('change', (e) => {
+                        const productId = parseInt(e.target.dataset.id);
+                        const newQuantity = parseInt(e.target.value);
+                        updatePreorderQuantity(productId, newQuantity - (preorderProducts.find(p => p.id === productId)?.quantity || 0));
+                    });
+                });
+                updatePreorderTotal();
+            }
+
+            function updatePreorderQuantity(productId, change) {
+                const product = preorderProducts.find(p => p.id === productId);
+                if (product) {
+                    product.quantity = Math.max(0, product.quantity + change);
+                    renderPreorderProducts(); // Re-render to update quantities and total
+                }
+            }
+
+            async function updatePreorderTotal() {
+                let subtotal = preorderProducts.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                let deliveryFee = 0;
+
+                const isDeliverySelected = document.getElementById('preorder-delivery-delivery')?.checked;
+                const address = preorderAddressInput.value.trim();
+
+                if (isDeliverySelected && address) {
+                    try {
+                        const geocoder = new google.maps.Geocoder();
+                        const response = await geocoder.geocode({ 'address': address });
+
+                        if (response.results && response.results.length > 0) {
+                            const location = response.results[0].geometry.location;
+                            const destinationLatLng = { lat: location.lat(), lng: location.lng() };
+
+                            const originLat = -6.2000; // Example origin
+                            const originLng = 106.8167;
+
+                            const distanceKm = getHaversineDistance(destinationLatLng.lat, destinationLatLng.lng, originLat, originLng);
+                            const feePerKm = 5000;
+                            const basePreorderDeliveryFee = 20000; // A slightly higher base for pre-order
+                            deliveryFee = Math.round((distanceKm * feePerKm + basePreorderDeliveryFee) / 1000) * 1000;
+                            preorderDeliveryFeeDisplay.textContent = `Biaya pengiriman: Rp${deliveryFee.toLocaleString('id-ID')}`;
+                        } else {
+                            preorderDeliveryFeeDisplay.textContent = 'Alamat tidak ditemukan. Silakan periksa kembali.';
+                            deliveryFee = 0;
+                        }
+                    } catch (error) {
+                        console.error('Geocoding failed for pre-order:', error);
+                        preorderDeliveryFeeDisplay.textContent = 'Gagal menghitung biaya pengiriman. Coba lagi.';
+                        deliveryFee = 0;
+                    }
+                } else if (isDeliverySelected && !address) {
+                    preorderDeliveryFeeDisplay.textContent = 'Masukkan alamat pengiriman.';
+                    deliveryFee = 0;
+                } else {
+                    preorderDeliveryFeeDisplay.textContent = 'Biaya pengiriman akan dihitung.';
+                    deliveryFee = 0;
+                }
+
+                preorderTotalPriceSpan.textContent = `Total Pre-order: Rp${(subtotal + deliveryFee).toLocaleString('id-ID')}`;
+            }
+
+            function updatePreorderDeliveryDisplay() {
+                if (document.getElementById('preorder-delivery-delivery').checked) {
+                    preorderDeliveryDetailsDiv.style.display = 'block';
+                } else {
+                    preorderDeliveryDetailsDiv.style.display = 'none';
+                    preorderAddressInput.value = ''; // Clear address if switching to pickup
+                    preorderDeliveryFeeDisplay.textContent = 'Biaya pengiriman akan dihitung.';
+                }
+                updatePreorderTotal();
+            }
+
+            function handlePreorder(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('preorder-name').value;
+                const email = document.getElementById('preorder-email').value;
+                const phone = document.getElementById('preorder-phone').value;
+                const date = document.getElementById('preorder-date').value;
+                const message = document.getElementById('preorder-message').value;
+                const deliveryOption = document.querySelector('input[name="preorder-delivery-option"]:checked').value;
+                const address = document.getElementById('preorder-address').value;
+
+                const selectedProducts = preorderProducts.filter(p => p.quantity > 0);
+
+                if (selectedProducts.length === 0) {
+                    alert('Mohon pilih setidaknya satu produk untuk pre-order.');
+                    return;
+                }
+
+                if (deliveryOption === 'delivery' && !address.trim()) {
+                    alert('Mohon masukkan alamat pengiriman untuk opsi diantar.');
+                    return;
+                }
+
+                let orderSummary = `Halo, saya ingin melakukan pre-order dengan detail sebagai berikut:\n\n`;
+                orderSummary += `Nama: ${name}\n`;
+                orderSummary += `Email: ${email}\n`;
+                orderSummary += `Telepon: ${phone}\n`;
+                orderSummary += `Tanggal Pengiriman/Pengambilan: ${date}\n`;
+                orderSummary += `Opsi Pengiriman: ${deliveryOption === 'pickup' ? 'Ambil Sendiri' : 'Diantar'}\n`;
+                if (deliveryOption === 'delivery') {
+                    orderSummary += `Alamat Pengiriman: ${address}\n`;
+                }
+                orderSummary += `\nProduk Pre-order:\n`;
+                selectedProducts.forEach(p => {
+                    orderSummary += `- ${p.name} (Jumlah: ${p.quantity}) - Rp${(p.price * p.quantity).toLocaleString('id-ID')}\n`;
+                });
+
+                const currentTotalPrice = preorderTotalPriceSpan.textContent.replace('Total Pre-order: ', '');
+                orderSummary += `\n${currentTotalPrice}\n`;
+
+                if (message) {
+                    orderSummary += `\nCatatan Tambahan: ${message}\n`;
+                }
+
+                const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(orderSummary)}`;
+                window.open(whatsappUrl, '_blank');
+
+                alert('Pre-order Anda akan diarahkan ke WhatsApp kami. Terima kasih!');
+                preorderForm.reset(); // Reset form after submission
+                populatePreorderProducts(); // Reset quantities
+                updatePreorderDeliveryDisplay(); // Reset delivery display
+            }
+
+            // Scroll Animation (existing)
+            function handleScrollAnimation() {
+                const elements = document.querySelectorAll('.section-padding'); // Elements to animate
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                };
+
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('fade-in');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+
+                elements.forEach(element => {
+                    element.classList.add('fade-in-on-scroll'); // Add initial class for styling
+                    observer.observe(element);
+                });
+            }
+
+            // Initial setup
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                menuToggle.querySelector('i').classList.toggle('fa-bars');
+                menuToggle.querySelector('i').classList.toggle('fa-times');
+            });
+
+            cartIcon.addEventListener('click', () => {
+                cartModal.classList.add('active');
+            });
+
+            closeButton.addEventListener('click', () => {
+                cartModal.classList.remove('active');
+            });
+
+            window.addEventListener('click', (e) => {
+                if (e.target === cartModal) {
+                    cartModal.classList.remove('active');
                 }
             });
 
-
-            // Event Listeners
-            if (cartIcon) cartIcon.addEventListener('click', toggleCart);
-            if (closeCart) closeCart.addEventListener('click', toggleCart);
-            if (overlay) overlay.addEventListener('click', handleOverlayClick);
-            if (modalOverlay) modalOverlay.addEventListener('click', hideConfirmationModal);
-            if (checkoutBtn) checkoutBtn.addEventListener('click', checkout);
-            if (hamburger) hamburger.addEventListener('click', toggleMenu);
-            window.addEventListener('scroll', handleScrollAnimation);
-            window.addEventListener('scroll', handleHideHeader);
-            if (cancelConfirmationBtn) cancelConfirmationBtn.addEventListener('click', hideConfirmationModal);
-
-            // Event listener untuk perubahan opsi pengiriman di keranjang
             deliveryOptionRadios.forEach(radio => {
                 if (radio) radio.addEventListener('change', updateCart);
             });
 
-            // Event listener untuk perubahan opsi pengiriman di pre-order
+            // If delivery is selected, show address input and update fee on input
+            if (deliveryAddressInput) {
+                deliveryAddressInput.addEventListener('input', () => {
+                    // Reset deliveryDestinationLatLng if user starts typing again
+                    deliveryDestinationLatLng = null;
+                    updateCart(); // Call updateCart to recalculate delivery fee
+                });
+            }
+
+            // Event listener for changes in pre-order delivery options
             preorderDeliveryOptionsRadios.forEach(radio => {
                 if (radio) radio.addEventListener('change', updatePreorderDeliveryDisplay);
             });
 
-            if (preorderBtn) preorderBtn.addEventListener('click', handlePreorder);
+            // Event listener for input in pre-order address
+            if (preorderAddressInput) {
+                preorderAddressInput.addEventListener('input', updatePreorderTotal);
+            }
+
+            if (preorderForm) preorderForm.addEventListener('submit', handlePreorder);
+
 
             document.querySelectorAll('.nav-links a').forEach(link => {
                 if (link) {
                     link.addEventListener('click', () => {
                         if (navLinks && navLinks.classList.contains('active')) {
-                            toggleMenu();
+                            toggleMenu(); // Function to close menu on link click
                         }
                     });
                 }
             });
+
+            function toggleMenu() {
+                navLinks.classList.toggle('active');
+                menuToggle.querySelector('i').classList.toggle('fa-bars');
+                menuToggle.querySelector('i').classList.toggle('fa-times');
+            }
+
 
             // Hide loader when page is loaded
             setTimeout(() => {
@@ -3258,13 +2291,19 @@
             }, 1000);
 
             // Initialize functions
-            renderProducts();
-            renderTestimonials(); // Render testimonials untuk grid dan swiper
-            updateCart(); // Initial call to set delivery fee display for cart
-            handleScrollAnimation();
-            populatePreorderProducts();
-            setupFaqAccordion();
-            updatePreorderDeliveryDisplay(); // Initial call for preorder delivery display
+            (async () => {
+                products = await fetchProducts();
+                testimonials = await fetchTestimonials();
+                faqs = await fetchFaqs();
+
+                renderProducts();
+                renderTestimonials(); // Render testimonials for grid and swiper
+                updateCart(); // Initial call to set delivery fee display for cart
+                handleScrollAnimation();
+                populatePreorderProducts();
+                setupFaqAccordion();
+                updatePreorderDeliveryDisplay(); // Initial call for preorder delivery display
+            })();
         });
     </script>
 </body>
