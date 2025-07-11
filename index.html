@@ -1,0 +1,3303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delicious Bakery - Toko Kue Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Swiper CSS untuk slider -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ff8e8e;
+            --dark: #333;
+            --light: #fff;
+            --gray: #f5f5f5;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --gradient-preorder: linear-gradient(135deg, #ff6b6b, #ff8e8e); /* Gradien baru untuk pre-order */
+            --preorder-border-radius: 15px; /* Border radius baru untuk pre-order */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--gray);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px; /* Default untuk desktop */
+        }
+
+        /* Header */
+        header {
+            background-color: var(--light);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transform: translateY(0);
+            transition: transform 0.3s ease, background-color 0.3s;
+        }
+
+        header.hidden {
+            transform: translateY(-100%);
+        }
+
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0; /* Sedikit lebih kecil untuk mobile/tablet */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--light);
+            margin-top: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at bottom right, rgba(255, 142, 142, 0.3) 0%, transparent 50%);
+            animation: heroBackgroundPulse 10s infinite alternate;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.3s;
+            position: relative;
+            z-index: 1;
+            text-align: center; /* Pastikan teks di tengah */
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0; /* Default padding vertikal untuk desktop */
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary);
+            bottom: -10px;
+            left: 25%;
+            border-radius: 3px;
+        }
+
+        .section-title p {
+            color: #777;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* How to Order Section (Swiper) */
+        .how-to-order-section {
+            background-color: var(--light);
+            padding: 60px 0;
+        }
+
+        .how-to-order-swiper-container { /* Nama kelas baru untuk menghindari konflik */
+            width: 100%;
+            padding-bottom: 50px; /* Ruang untuk pagination */
+        }
+
+        .how-to-order-swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .order-step-card {
+            background-color: var(--gray);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 220px; /* Tinggi yang konsisten untuk kartu */
+            width: 90%; /* Sesuaikan lebar kartu di dalam slide */
+            max-width: 300px; /* Batasi lebar maksimum */
+        }
+
+        .order-step-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .order-step-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .order-step-card:hover i {
+            transform: scale(1.1);
+        }
+
+        .order-step-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .order-step-card p {
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .order-step-card::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary);
+            border-radius: 0 15px 0 15px;
+            opacity: 0.2;
+            transform: rotate(45deg);
+        }
+
+        /* Swiper Pagination & Navigation */
+        .swiper-pagination-bullet {
+            background: var(--primary);
+        }
+
+        .swiper-button-next, .swiper-button-prev {
+            color: var(--primary);
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            will-change: transform;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+            will-change: transform;
+        }
+
+        .product-img img.lazy {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-img img.loaded {
+            opacity: 1;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .product-info p {
+            color: #777;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .product-rating {
+            margin-bottom: 10px;
+        }
+
+        .product-rating .stars {
+            color: gold;
+            cursor: pointer;
+        }
+
+        .product-rating .stars i {
+            transition: color 0.2s;
+        }
+
+        .product-rating .stars i:hover {
+            color: orange;
+        }
+
+        .product-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary);
+            color: var(--light);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--secondary);
+            transform: rotate(360deg);
+        }
+
+        /* Testimonials Section (Swiper for Mobile/Tablet, Grid for Desktop) */
+        .testimonials {
+            background-color: var(--gray);
+            overflow: hidden;
+            padding: 80px 0; /* Sesuaikan padding */
+        }
+
+        .testimonials-container {
+            /* Default: Grid for larger screens */
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        /* Swiper specific styles for testimonials */
+        .testimonials-swiper-container {
+            width: 100%;
+            padding-bottom: 50px; /* Space for pagination */
+            display: none; /* Hidden by default, shown via media queries */
+        }
+
+        .testimonials-swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 1024px) { /* Aktifkan slider untuk tablet dan mobile */
+            .testimonials-container {
+                display: none; /* Sembunyikan grid pada tablet dan mobile */
+            }
+            .testimonials-swiper-container {
+                display: block; /* Tampilkan slider pada tablet dan mobile */
+            }
+        }
+
+        .testimonial-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            min-height: 300px;
+            justify-content: space-between;
+            width: 90%; /* Sesuaikan lebar kartu di dalam slide */
+            max-width: 300px; /* Batasi lebar maksimum */
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 10px 10px 0 0;
+        }
+
+        .author-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 0 5px rgba(255, 107, 107, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover .author-img {
+            transform: scale(1.05);
+        }
+
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .testimonial-card .quote {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            font-style: italic;
+            color: #555;
+            line-height: 1.6;
+            position: relative;
+            padding: 0 5px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-card .quote::before,
+        .testimonial-card .quote::after {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.15;
+            position: absolute;
+        }
+
+        .testimonial-card .quote::before {
+            content: "\f10d";
+            top: -5px;
+            left: -5px;
+        }
+
+        .testimonial-card .quote::after {
+            content: "\f10e";
+            bottom: -5px;
+            right: -5px;
+        }
+
+        .testimonial-rating {
+            color: gold;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .author-info h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .author-info p {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+
+        /* Payment Methods */
+        .payment-methods {
+            background-color: var(--gray);
+            padding: 40px 0;
+        }
+
+        .payment-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .payment-title h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .payment-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .payment-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100px;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .payment-method:hover {
+            transform: translateY(-5px);
+        }
+
+        .payment-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            font-size: 1.5rem;
+            color: var(--primary);
+            overflow: hidden;
+        }
+
+        .payment-icon:hover {
+            background-color: var(--primary);
+            color: var(--light);
+            transform: scale(1.1);
+        }
+
+        .payment-icon img {
+            max-width: 70%;
+            max-height: 70%;
+            object-fit: contain;
+        }
+
+        .payment-name {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: var(--light);
+        }
+
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center; /* Pusatkan konten */
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: var(--gray); /* Latar belakang abu-abu */
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .contact-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .contact-info p {
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .contact-details {
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            transition: transform 0.3s, background-color 0.3s;
+            flex-shrink: 0;
+        }
+
+        .contact-item:hover i {
+            transform: rotate(360deg);
+            background-color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: var(--light);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: var(--light);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: all 0.3s;
+            text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            animation: none;
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background-color: var(--light);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            transition: transform 0.3s;
+        }
+
+        .close-cart:hover {
+            transform: rotate(90deg);
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .cart-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            width: 25px;
+            height: 25px;
+            background-color: var(--gray);
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background-color: #ddd;
+        }
+
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 3px;
+        }
+
+        .remove-item {
+            color: #ff6b6b;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: transform 0.3s;
+        }
+
+        .remove-item:hover {
+            transform: scale(1.2);
+        }
+
+        .cart-total-section {
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+
+        .cart-total-section .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .cart-total-section .total-row.grand-total {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .delivery-options {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--gray);
+            border-radius: 8px;
+        }
+
+        .delivery-options h4 {
+            margin-bottom: 10px;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        .delivery-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .delivery-option input[type="radio"] {
+            margin-right: 10px;
+            accent-color: var(--primary);
+        }
+
+        /* Ini adalah aturan untuk label opsi pengiriman di checkout */
+        .delivery-option label {
+            font-size: 0.95rem;
+            color: var(--dark); /* Warna hitam untuk checkout */
+        }
+
+        /* Gaya baru untuk info biaya pengiriman di checkout */
+        .delivery-fee-info {
+            font-size: 0.85rem;
+            color: var(--dark); /* Warna hitam untuk checkout */
+            margin-top: 5px;
+            padding-left: 25px; /* Sesuaikan dengan margin radio button */
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: var(--light);
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checkout-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .checkout-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+            color: var(--primary);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--primary);
+            color: var(--light);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .cart-icon:hover .cart-count {
+            transform: scale(1.2);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background-color: var(--light);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark);
+            transition: color 0.3s;
+        }
+
+        .faq-question:hover {
+            color: var(--primary);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            color: #555;
+            padding-right: 20px;
+        }
+
+        .faq-answer.active {
+            max-height: 200px; /* Adjust as needed for content */
+            padding-bottom: 15px;
+        }
+
+        /* Pre-order Section - Modern Look */
+        .preorder-section {
+            background-color: var(--gray);
+            padding: 80px 0;
+        }
+
+        .preorder-form {
+            background: var(--gradient-preorder);
+            padding: 40px;
+            border-radius: var(--preorder-border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--light); /* Ini mengatur warna teks default di dalam form pre-order menjadi putih */
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .preorder-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            clip-path: circle(15% at 0% 0%);
+            transition: clip-path 0.5s ease-out;
+        }
+
+        .preorder-form:hover::before {
+            clip-path: circle(75% at 0% 0%);
+        }
+
+        .preorder-form .form-group {
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .preorder-form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--light); /* Ini juga mengatur warna label di dalam form pre-order menjadi putih */
+            font-size: 1.1rem;
+        }
+
+        .preorder-form input[type="date"],
+        .preorder-form input[type="time"],
+        .preorder-form input[type="text"], /* Added for name field */
+        .preorder-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--dark);
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .preorder-form input[type="date"]:focus,
+        .preorder-form input[type="time"]:focus,
+        .preorder-form input[type="text"]:focus,
+        .preorder-form textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modern Product Selection for Pre-order */
+        .preorder-product-selection {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 10px;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .preorder-product-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            background-color: var(--light);
+            border: 1px solid #eee;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .preorder-product-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .preorder-product-item input[type="checkbox"] {
+            margin-right: 10px;
+            accent-color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .preorder-product-item label {
+            flex-grow: 1;
+            margin-bottom: 0;
+            font-weight: 400;
+            color: var(--dark);
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .preorder-product-item span.price {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-left: 10px;
+        }
+
+        .preorder-product-item.selected {
+            background-color: #ffebeb;
+            border-color: var(--primary);
+        }
+
+        /* Payment Options for Pre-order */
+        .preorder-payment-options {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .preorder-payment-options h4 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .preorder-payment-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .preorder-payment-option:last-child {
+            margin-bottom: 0;
+        }
+
+        .preorder-payment-option input[type="radio"] {
+            margin-right: 10px;
+            accent-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* Ini adalah aturan untuk label metode pembayaran di pre-order */
+        .preorder-payment-option label {
+            font-size: 0.95rem;
+            color: var(--dark); /* Warna hitam untuk metode pembayaran pre-order */
+            margin-bottom: 0; /* Override default label margin */
+        }
+
+        /* --- ATURAN BARU UNTUK MEMASTIKAN WARNA HITAM DI OPSI PENGIRIMAN PRE-ORDER --- */
+        /* Target spesifik untuk label di opsi pengiriman dalam form pre-order */
+        .preorder-form .delivery-options .delivery-option label {
+            color: var(--dark) !important; /* Memaksa warna teks menjadi hitam */
+            font-weight: 500 !important; /* Mengurangi ketebalan teks menjadi medium */
+            font-size: 0.95rem !important; /* Menyesuaikan ukuran teks */
+        }
+
+        /* Target spesifik untuk info biaya pengiriman dalam form pre-order */
+        .preorder-form .delivery-options .delivery-fee-info {
+            color: var(--dark) !important; /* Memaksa warna teks menjadi hitam */
+            font-weight: 500 !important; /* Mengurangi ketebalan teks menjadi medium */
+            font-size: 0.95rem !important; /* Menyesuaikan ukuran teks */
+        }
+        /* --- AKHIR ATURAN BARU --- */
+
+
+        .preorder-form .btn {
+            width: 100%;
+            margin-top: 30px;
+            background-color: var(--light);
+            color: var(--primary);
+            font-size: 1.1rem;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .preorder-form .btn:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Confirmation Modal */
+        .confirmation-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .confirmation-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .confirmation-modal h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .confirmation-modal p {
+            margin-bottom: 25px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .confirmation-modal .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .confirmation-modal .btn-group .btn {
+            padding: 10px 25px;
+            font-size: 1rem;
+            border-radius: 8px;
+            width: auto;
+            margin-top: 0; /* Override default btn margin-top */
+        }
+
+        .confirmation-modal .btn-group .btn.cancel {
+            background-color: #ccc;
+            color: var(--dark);
+        }
+
+        .confirmation-modal .btn-group .btn.cancel:hover {
+            background-color: #bbb;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+            20% {
+                transform: scale(25, 25);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+
+        @keyframes heroBackgroundPulse {
+            0% {
+                background: radial-gradient(circle at top left, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+                            radial-gradient(circle at bottom right, rgba(255, 142, 142, 0.3) 0%, transparent 50%);
+            }
+            50% {
+                background: radial-gradient(circle at top left, rgba(255, 142, 142, 0.4) 0%, transparent 55%),
+                            radial-gradient(circle at bottom right, rgba(255, 107, 107, 0.4) 0%, transparent 55%);
+            }
+            100% {
+                background: radial-gradient(circle at top left, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+                            radial-gradient(circle at bottom right, rgba(255, 142, 142, 0.3) 0%, transparent 50%);
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .navbar {
+                padding: 12px 0;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--light);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 20px 0;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .nav-links li {
+                margin: 20px 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger.active div:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .hamburger.active div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active div:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .cart-sidebar {
+                width: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .navbar {
+                padding: 10px 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem; /* Mengurangi ukuran font untuk mobile */
+                line-height: 1.2; /* Meningkatkan keterbacaan */
+            }
+
+            .hero p {
+                font-size: 1rem; /* Mengurangi ukuran font untuk mobile */
+            }
+
+            .section {
+                padding: 50px 0;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            /* Testimonials Swiper for smaller screens */
+            .testimonials-swiper-container {
+                padding-bottom: 40px; /* Adjust for pagination on smaller screens */
+            }
+
+            .testimonial-card {
+                min-height: 280px; /* Adjusted min-height for smaller screens */
+                width: 95%; /* Menggunakan lebih banyak lebar layar */
+                max-width: none; /* Hapus batasan max-width */
+            }
+
+            .cart-sidebar {
+                width: 300px;
+            }
+
+            .preorder-form {
+                padding: 30px;
+            }
+
+            .order-step-card {
+                min-height: 160px;
+                width: 95%; /* Menggunakan lebih banyak lebar layar */
+                max-width: none; /* Hapus batasan max-width */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            /* Perubahan untuk card produk di mobile */
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .product-card {
+                flex-direction: row;
+                align-items: center;
+                padding: 15px; /* Padding internal card produk */
+                border-radius: 10px;
+            }
+
+            .product-img {
+                width: 100px;
+                height: 100px;
+                flex-shrink: 0;
+                margin-right: 15px;
+                border-radius: 8px;
+            }
+
+            .product-img img {
+                border-radius: 8px;
+            }
+
+            .product-info {
+                padding: 0; /* Hapus padding agar tidak double */
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                flex-grow: 1;
+            }
+
+            .product-info h3 {
+                font-size: 1.1rem;
+                margin-bottom: 5px;
+            }
+
+            .product-info p {
+                font-size: 0.85rem;
+                margin-bottom: 10px;
+            }
+
+            .product-price {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                margin-top: 0;
+            }
+
+            .price {
+                font-size: 1rem;
+            }
+
+            .add-to-cart {
+                width: 35px;
+                height: 35px;
+            }
+
+            /* Perubahan untuk card testimoni di mobile agar mirip produk card */
+            .testimonial-card {
+                flex-direction: column; /* Keep column for better quote display */
+                padding: 20px; /* Padding internal card testimoni */
+                min-height: 260px; /* Adjusted min-height for mobile */
+                width: 95%; /* Menggunakan lebih banyak lebar layar */
+                max-width: none; /* Hapus batasan max-width */
+            }
+            .testimonial-card .quote {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+            .testimonial-card .quote::before,
+            .testimonial-card .quote::after {
+                font-size: 1.8rem;
+            }
+            .author-img {
+                width: 60px;
+                height: 60px;
+            }
+            .testimonial-rating {
+                font-size: 0.9rem;
+            }
+            .author-info h4 {
+                font-size: 0.95rem;
+            }
+            .author-info p {
+                font-size: 0.75rem;
+            }
+
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .cart-sidebar.active {
+                right: 0;
+            }
+
+            /* Responsive adjustment for payment icons */
+            .payment-method {
+                width: 80px;
+            }
+
+            .payment-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .payment-icon img {
+                max-width: 75%;
+                max-height: 75%;
+            }
+
+            .payment-name {
+                font-size: 0.8rem;
+            }
+
+            .preorder-form {
+                padding: 20px; /* Padding form pre-order */
+            }
+
+            .confirmation-modal {
+                width: 95%;
+                padding: 20px;
+            }
+            .confirmation-modal .btn-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .confirmation-modal .btn-group .btn {
+                width: 100%;
+            }
+
+            /* How to Order Swiper */
+            .how-to-order-swiper-slide {
+                width: 100% !important; /* Pastikan slide mengambil lebar penuh pada mobile */
+            }
+            .order-step-card {
+                min-height: unset; /* Hapus min-height saat mobile */
+                width: 100%; /* Pastikan kartu mengambil lebar penuh */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fa-solid fa-kitchen-set"></i> Dapur Ummi
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#how-to-order">Cara Memesan</a></li>
+                    <li><a href="#products">Produk</a></li>
+                    <li><a href="#testimonials">Testimoni</a></li>
+                    <li><a href="#preorder">Pre-order</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+                <div class="header-icons">
+                    <div class="cart-icon" id="cartIcon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+                <div class="hamburger" id="hamburger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Kue Lezat untuk Setiap Momen Spesial</h1>
+                <p>Temukan berbagai macam cookies berkualitas tinggi dengan rasa yang memikat dan desain yang indah untuk acara spesial Anda.</p>
+                <a href="#products" class="btn">Lihat Produk</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Order Section (Diubah menjadi Swiper Slider) -->
+    <section class="section how-to-order-section" id="how-to-order">
+        <div class="container">
+            <div class="section-title">
+                <h2>Cara Memesan</h2>
+                <p>Ikuti langkah mudah ini untuk mendapatkan cookies favorit Anda.</p>
+            </div>
+            <!-- Swiper untuk Cara Memesan -->
+            <div class="swiper-container how-to-order-swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide how-to-order-swiper-slide">
+                        <div class="order-step-card">
+                            <i class="fas fa-cookie-bite"></i>
+                            <h3>1. Pilih Produk</h3>
+                            <p>Jelajahi katalog kami dan tambahkan produk yang Anda inginkan ke keranjang belanja.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide how-to-order-swiper-slide">
+                        <div class="order-step-card">
+                            <i class="fas fa-shopping-cart"></i>
+                            <h3>2. Checkout / Pre-order</h3>
+                            <p>Lanjutkan ke checkout untuk pesanan langsung atau gunakan fitur pre-order untuk pemesanan di masa mendatang.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide how-to-order-swiper-slide">
+                        <div class="order-step-card">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <h3>3. Konfirmasi & Bayar</h3>
+                            <p>Konfirmasi pesanan Anda melalui WhatsApp dan lakukan pembayaran sesuai instruksi.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide how-to-order-swiper-slide">
+                        <div class="order-step-card">
+                            <i class="fas fa-truck-loading"></i>
+                            <h3>4. Ambil / Diantar</h3>
+                            <p>Ambil pesanan Anda di toko atau tunggu pesanan diantar ke alamat Anda.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Produk Kami</h2>
+                <p>Pilih dari berbagai macam cookies lezat kami yang dibuat dengan bahan-bahan terbaik dan penuh cinta.</p>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Produk akan diisi oleh JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section (Diubah menjadi Swiper Slider untuk mobile/tablet) -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Testimoni Pelanggan</h2>
+                <p>Apa kata mereka tentang cookies kami.</p>
+            </div>
+            <!-- Testimonials Grid (untuk desktop) -->
+            <div class="testimonials-container" id="testimonialsContainer">
+                <!-- Testimoni akan diisi oleh JavaScript -->
+            </div>
+            <!-- Testimonials Swiper (untuk mobile/tablet) -->
+            <div class="swiper-container testimonials-swiper-container" id="testimonialsSwiperContainer">
+                <div class="swiper-wrapper" id="testimonialsSwiperWrapper">
+                    <!-- Testimoni akan diisi oleh JavaScript -->
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Methods -->
+    <section class="payment-methods">
+        <div class="container">
+            <div class="payment-title">
+                <h3>Metode Pembayaran</h3>
+                <p>Kami menerima berbagai metode pembayaran untuk kemudahan Anda</p>
+            </div>
+            <div class="payment-icons">
+                <div class="payment-method">
+                    <div class="payment-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <span class="payment-name">DANA</span>
+                </div>
+                <div class="payment-method">
+                    <div class="payment-icon">
+                        <img src="images/icons/payment-method (1).png" alt="OVO" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=OVO';">
+                    </div>
+                    <span class="payment-name">OVO</span>
+                </div>
+                <div class="payment-method">
+                    <div class="payment-icon">
+                        <img src="images/icons/credit-card (1).png" alt="BCA" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=BCA';">
+                    </div>
+                    <span class="payment-name">BCA</span>
+                </div>
+                <div class="payment-method">
+                    <div class="payment-icon">
+                        <img src="images/icons/credit-card.png" alt="Mandiri" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=Mandiri';">
+                    </div>
+                    <span class="payment-name">Mandiri</span>
+                </div>
+                <div class="payment-method">
+                    <div class="payment-icon">
+                        <img src="images/icons/atm-card.png" alt="BNI" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=BNI';">
+                    </div>
+                    <span class="payment-name">BNI</span>
+                </div>
+                <div class="payment-method">
+                    <div class="payment-icon">
+                        <img src="images/icons/cash-payment.png" alt="Cash payment" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/333333?text=Cash';">
+                    </div>
+                    <span class="payment-name">Cash</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pre-order Section -->
+    <section class="section preorder-section" id="preorder">
+        <div class="container">
+            <div class="section-title">
+                <h2>Pesan Sekarang (Pre-order)</h2>
+                <p>Rencanakan momen spesial Anda dengan memesan cookies favorit jauh-jauh hari.</p>
+            </div>
+            <div class="preorder-form">
+                <div class="form-group">
+                    <label for="preorderName">Nama Lengkap:</label>
+                    <input type="text" id="preorderName" placeholder="Masukkan nama Anda" required>
+                </div>
+                <div class="form-group">
+                    <label for="preorderDate">Tanggal Pengambilan/Pengiriman:</label>
+                    <input type="date" id="preorderDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="preorderTime">Waktu Pengambilan/Pengiriman:</label>
+                    <input type="time" id="preorderTime" required>
+                </div>
+                <div class="form-group">
+                    <label>Pilih Produk:</label>
+                    <div class="preorder-product-selection" id="preorderProductSelection">
+                        <!-- Products will be loaded here by JavaScript as checkboxes -->
+                    </div>
+                </div>
+                <!-- Delivery Options for Pre-order -->
+                <div class="form-group">
+                    <label>Opsi Pengiriman Pre-order:</label>
+                    <div class="delivery-options" id="preorderDeliveryOptions">
+                        <div class="delivery-option">
+                            <input type="radio" id="preorderSelfPickup" name="preorderDeliveryOption" value="self-pickup" checked>
+                            <label for="preorderSelfPickup">Ambil Sendiri (Gratis)</label>
+                        </div>
+                        <div class="delivery-option">
+                            <input type="radio" id="preorderFreeDelivery" name="preorderDeliveryOption" value="free-delivery">
+                            <label for="preorderFreeDelivery">Gratis (Jarak < 2 km)</label>
+                        </div>
+                        <div class="delivery-option">
+                            <input type="radio" id="preorderCheapDelivery" name="preorderDeliveryOption" value="cheap-delivery">
+                            <label for="preorderCheapDelivery">Rp 1.500 (Jarak 2 km - 5 km)</label>
+                        </div>
+                        <div class="delivery-option">
+                            <input type="radio" id="preorderFarDelivery" name="preorderDeliveryOption" value="far-delivery">
+                            <label for="preorderFarDelivery">Rp 3.000 (Jarak > 5 km)</label>
+                        </div>
+                        <p class="delivery-fee-info" id="preorderDeliveryFeeInfo"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Metode Pembayaran:</label>
+                    <div class="preorder-payment-options">
+                        <h4>Pilih Metode Pembayaran</h4>
+                        <div class="preorder-payment-option">
+                            <input type="radio" id="preorderPaymentDana" name="preorderPaymentOption" value="DANA" checked>
+                            <label for="preorderPaymentDana">DANA</label>
+                        </div>
+                        <div class="preorder-payment-option">
+                            <input type="radio" id="preorderPaymentOVO" name="preorderPaymentOption" value="OVO">
+                            <label for="preorderPaymentOVO">OVO</label>
+                        </div>
+                        <div class="preorder-payment-option">
+                            <input type="radio" id="preorderPaymentBCA" name="preorderPaymentOption" value="BCA">
+                            <label for="preorderPaymentBCA">BCA</label>
+                        </div>
+                        <div class="preorder-payment-option">
+                            <input type="radio" id="preorderPaymentMandiri" name="preorderPaymentOption" value="Mandiri">
+                            <label for="preorderPaymentMandiri">Mandiri</label>
+                        </div>
+                        <div class="preorder-payment-option">
+                            <input type="radio" id="preorderPaymentBNI" name="preorderPaymentOption" value="BNI">
+                            <label for="preorderPaymentBNI">BNI</label>
+                        </div>
+                        <div class="preorder-payment-option">
+                            <input type="radio" id="preorderPaymentCash" name="preorderPaymentOption" value="Cash">
+                            <label for="preorderPaymentCash">Cash</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="preorderNotes">Catatan Tambahan (opsional):</label>
+                    <textarea id="preorderNotes" placeholder="Contoh: Ucapan di kue, request khusus"></textarea>
+                </div>
+                <button class="btn" id="preorderBtn">Kirim Pesanan Pre-order</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq-section" id="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Pertanyaan Umum (FAQ)</h2>
+                <p>Temukan jawaban atas pertanyaan yang sering diajukan tentang produk dan layanan kami.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Bagaimana cara memesan cookies?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Anda dapat memesan cookies langsung melalui website kami dengan menambahkan produk ke keranjang dan melanjutkan ke checkout. Anda juga bisa menggunakan fitur pre-order untuk pemesanan di masa mendatang.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Apakah ada opsi pengiriman?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Ya, kami menyediakan opsi pengambilan sendiri (gratis) atau pengiriman dengan biaya tambahan. Anda bisa memilih opsi ini saat proses checkout.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Berapa lama waktu yang dibutuhkan untuk pre-order?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Untuk pre-order, kami menyarankan Anda untuk memesan setidaknya H-3 dari tanggal yang diinginkan. Untuk pesanan khusus, mungkin diperlukan waktu lebih lama.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Metode pembayaran apa saja yang diterima?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Kami menerima pembayaran melalui transfer bank (BCA, Mandiri, BNI), dompet digital (DANA, OVO), dan tunai saat pengambilan.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Bisakah saya request desain cookies custom?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tentu! Untuk pesanan cookies custom, silakan hubungi kami langsung melalui WhatsApp atau email untuk mendiskusikan desain dan detail lainnya.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hubungi Kami</h2>
+                <p>Pesan cookies spesial Anda atau tanyakan informasi lebih lanjut.</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Informasi Kontak</h3>
+                    <p>Kami siap membantu Anda dengan segala pertanyaan tentang produk dan pemesanan cookies di toko kami.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Jl. Kalijaga, Perumahan Griya Taman SUci Blok C3 No. 1, Kab. Cirebon</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+62 859 1482 19009</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>faqihalrf@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Buka Setiap Hari 08:00 - 17.00</span>
+                        </div>
+                    </div>
+                    <h3>Ikuti Kami</h3>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/faqihalrf" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Dapur Ummi</h3>
+                    <p>Toko cookies premium dengan bahan-bahan terbaik dan rasa yang tak terlupakan untuk setiap momen spesial Anda.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Menu</h3>
+                    <ul>
+                        <li><a href="#home">Beranda</a></li>
+                        <li><a href="#how-to-order">Cara Memesan</a></li>
+                        <li><a href="#products">Produk</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="#preorder">Pre-order</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#contact">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Produk</h3>
+                    <ul>
+                        <li><a href="#">Bolu</a></li>
+                        <li><a href="#">Muffin</a></li>
+                        <li><a href="#">cookies</a></li>
+                        <li><a href="#">Cupcakes</a></li>
+                        <li><a href="#">Kue Kering</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Dapur Ummi. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/62859148219009" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Keranjang Belanja</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Item keranjang akan diisi oleh JavaScript -->
+        </div>
+        <div class="delivery-options">
+            <h4>Opsi Pengiriman</h4>
+            <div class="delivery-option">
+                <input type="radio" id="deliverySelfPickup" name="deliveryOption" value="self-pickup" checked>
+                <label for="deliverySelfPickup">Ambil Sendiri (Gratis)</label>
+            </div>
+            <div class="delivery-option">
+                <input type="radio" id="deliveryFreeDelivery" name="deliveryOption" value="free-delivery">
+                <label for="deliveryFreeDelivery">Gratis (Jarak < 2 km)</label>
+            </div>
+            <div class="delivery-option">
+                <input type="radio" id="deliveryCheapDelivery" name="deliveryOption" value="cheap-delivery">
+                <label for="deliveryCheapDelivery">Rp 1.500 (Jarak 2 km - 5 km)</label>
+            </div>
+            <div class="delivery-option">
+                <input type="radio" id="deliveryFarDelivery" name="deliveryOption" value="far-delivery">
+                <label for="deliveryFarDelivery">Rp 3.000 (Jarak > 5 km)</label>
+            </div>
+            <p class="delivery-fee-info" id="deliveryFeeInfo"></p>
+        </div>
+        <div class="cart-total-section">
+            <div class="total-row">
+                <span>Subtotal:</span>
+                <span id="cartSubtotal">Rp 0</span>
+            </div>
+            <div class="total-row">
+                <span>Biaya Pengiriman:</span>
+                <span id="deliveryFee">Rp 0</span>
+            </div>
+            <div class="total-row grand-total">
+                <span>Total Keseluruhan:</span>
+                <span id="cartGrandTotal">Rp 0</span>
+            </div>
+        </div>
+        <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="confirmation-modal" id="confirmationModal">
+        <h3>Konfirmasi Pesanan</h3>
+        <p id="confirmationMessage"></p>
+        <div class="btn-group">
+            <button class="btn cancel" id="cancelConfirmation">Batal</button>
+            <button class="btn" id="sendConfirmation">Kirim Pesan Konfirmasi ke WhatsApp</button>
+        </div>
+    </div>
+
+    <!-- Overlay for modal -->
+    <div class="overlay" id="modalOverlay"></div>
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Google Maps API (ganti YOUR_API_KEY dengan kunci API Anda) -->
+    <!-- Tambahkan 'places' library untuk Autocomplete -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=geometry,places&callback=initMap" async defer></script>
+
+    <script>
+        // Inisialisasi Google Maps API (fungsi kosong karena kita hanya butuh geometry dan places library)
+        // Fungsi initMap kini kosong karena kita tidak lagi menggunakan Autocomplete untuk input alamat
+        function initMap() {
+            console.log('Google Maps API dimuat. Autocomplete tidak digunakan untuk input alamat.');
+        }
+
+        // Nomor WhatsApp yang akan digunakan
+        const WHATSAPP_NUMBER = '62859148219009'; // Nomor WhatsApp diperbarui
+        
+        // Batasan jarak untuk biaya pengiriman dalam KM
+        const FREE_DELIVERY_THRESHOLD_KM_MAX = 2; // Gratis jika < 2 km
+        const CHEAP_DELIVERY_THRESHOLD_KM_MAX = 5; // Rp 1.500 jika 2 km hingga 5 km
+        const CHEAP_DELIVERY_FEE = 1500;
+        const FAR_DELIVERY_FEE = 3000; // Rp 3.000 jika > 5 km
+
+        // Data Produk
+        const products = [
+            {
+                id: 1,
+                name: "Cookies Mix",
+                description: "Aneka cookies renyah dengan berbagai varian.",
+                price: 120000,
+                image: "images/product/produk1.jpg",
+                rating: 4.9
+            },
+            {
+                id: 2,
+                name: "Cookies Mix",
+                description: "Kombinasi 5 varian cookies dengan topping berbeda.",
+                price: 120000,
+                image: "images/product/produk2.jpg",
+                rating: 5
+            },
+            {
+                id: 3,
+                name: "Cookies Putri Salju",
+                description: "Cookies lembut bertabur gula halus, lumer di mulut.",
+                price: 70000,
+                image: "images/product/produk3.jpg",
+                rating: 4.7
+            },
+            {
+                id: 4,
+                name: "Cookies Stick Coklat",
+                description: "Stik cokelat klasik yang meleleh di mulut.",
+                price: 80000,
+                image: "images/product/produk5.jpg",
+                rating: 5
+            },
+            {
+                id: 5,
+                name: "Cookies Cherry",
+                description: "Cookies gurih dengan potongan cherry dan kismis.",
+                price: 80000,
+                image: "images/product/produk6jpg.jpg",
+                rating: 5
+            },
+            {
+                id: 6,
+                name: "Cookies Nastar",
+                description: "Nastar lembut dengan isian nanas dan taburan keju.",
+                price: 85000,
+                image: "images/product/produk7.jpg",
+                rating: 4.8
+            },
+            {
+                id: 7,
+                name: "Bolu Ketan Hitam Lumer (Mini)",
+                description: "Bolu ketan hitam mini yang lembut dan lumer.",
+                price: 7000,
+                image: "images/product/produk8.jpg",
+                rating: 5
+            },
+            {
+                id: 8,
+                name: "Muffin Banana",
+                description: "Muffin pisang empuk dan lezat.",
+                price: 5000,
+                image: "images/product/produk9.jpg",
+                rating: 4.9
+            },
+            {
+                id: 9,
+                name: "Bolu Pisang",
+                description: "Bolu pisang klasik, manis dan empuk.",
+                price: 50000,
+                image: "images/product/bolupisang.jpg",
+                rating: 4.9
+            },
+            {
+                id: 10,
+                name: "Bolu Pisang Keju",
+                description: "Bolu pisang dengan taburan keju gurih.",
+                price: 60000,
+                image: "images/product/bolupisangkeju.jpg",
+                rating: 4.9
+            },
+            {
+                id: 11,
+                name: "Muffin Tape",
+                description: "Muffin tape singkong yang unik dan nikmat.",
+                price: 5000,
+                image: "images/product/produk10.jpg",
+                rating: 5
+            },
+            {
+                id: 12,
+                name: "Bolu Ketan Hitam Lumer",
+                description: "Bolu ketan hitam besar yang lembut dan lumer.",
+                price: 70000,
+                image: "images/product/produk11.jpg",
+                rating: 5
+            }
+        ];
+
+        // Data Testimoni (semua rating diatur ke 5)
+        const testimonials = [
+            {
+                id: 1,
+                quote: "Kue ulang tahun dari Delicious Bakery membuat pesta anak saya sangat spesial. Rasanya luar biasa dan dekorasinya persis seperti yang saya minta!",
+                name: "Sarah Wijaya",
+                role: "Ibu Rumah Tangga",
+                image: "https://randomuser.me/api/portraits/women/32.jpg",
+                rating: 5
+            },
+            {
+                id: 2,
+                quote: "Saya selalu memesan kue untuk meeting kantor dari Delicious Bakery. Rekan-rekan kerja selalu memuji pilihan saya!",
+                name: "Budi Santoso",
+                role: "Manajer Perusahaan",
+                image: "https://randomuser.me/api/portraits/men/45.jpg",
+                rating: 5
+            },
+            {
+                id: 3,
+                quote: "Kue pernikahan kami dibuat oleh Delicious Bakery dan semua tamu terkesan. Rasanya sempurna dan tampilannya memukau!",
+                name: "Dewi Anggraeni",
+                role: "Pengantin Bahagia",
+                image: "https://randomuser.me/api/portraits/women/68.jpg",
+                rating: 5
+            },
+            {
+                id: 4,
+                quote: "Pelayanan sangat memuaskan dan kuenya fresh banget. Anak-anak saya sampai minta tambah!",
+                name: "Rina Permata",
+                role: "Guru TK",
+                image: "https://randomuser.me/api/portraits/women/44.jpg",
+                rating: 5
+            },
+            {
+                id: 5,
+                quote: "Sudah 3 tahun langganan Delicious Bakery untuk acara kantor. Kualitas selalu konsisten dan rasanya enak!",
+                name: "Andi Setiawan",
+                role: "Direktur Marketing",
+                image: "https://randomuser.me/api/portraits/men/22.jpg",
+                rating: 5
+            },
+            {
+                id: 6,
+                quote: "Kue ultah suami saya dari sini, semua tamu pada nanya beli dimana. Recommended banget!",
+                name: "Linda Hartono",
+                role: "Pengusaha",
+                image: "https://randomuser.me/api/portraits/women/65.jpg",
+                rating: 5
+            },
+            {
+                id: 7,
+                quote: "Pertama kali pesan kue disini langsung jatuh cinta. Sekarang jadi langganan tetap untuk acara keluarga.",
+                name: "Agus Prabowo",
+                role: "Pegawai Bank",
+                image: "https://randomuser.me/api/portraits/men/33.jpg",
+                rating: 5
+            }
+        ];
+
+        // Keranjang Belanja
+        let cart = [];
+        let currentDeliveryFee = 0; // Variabel untuk menyimpan biaya pengiriman saat ini
+
+        // DOM Elements
+        const productsGrid = document.getElementById('productsGrid');
+        const cartIcon = document.getElementById('cartIcon');
+        const cartCount = document.getElementById('cartCount');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartItems = document.getElementById('cartItems');
+        const cartSubtotal = document.getElementById('cartSubtotal');
+        const deliveryFeeElement = document.getElementById('deliveryFee');
+        const cartGrandTotal = document.getElementById('cartGrandTotal');
+        const closeCart = document.getElementById('closeCart');
+        const overlay = document.getElementById('overlay');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const testimonialsContainer = document.getElementById('testimonialsContainer'); // Grid container
+        const testimonialsSwiperWrapper = document.getElementById('testimonialsSwiperWrapper'); // Swiper wrapper
+        const loader = document.getElementById('loader');
+        const header = document.getElementById('header');
+        const deliveryOptionRadios = document.querySelectorAll('input[name="deliveryOption"]');
+        const deliveryFeeInfo = document.getElementById('deliveryFeeInfo'); // Info biaya pengiriman
+
+        // Pre-order DOM Elements
+        const preorderNameInput = document.getElementById('preorderName');
+        const preorderDateInput = document.getElementById('preorderDate');
+        const preorderTimeInput = document.getElementById('preorderTime');
+        const preorderProductSelection = document.getElementById('preorderProductSelection');
+        const preorderNotesInput = document.getElementById('preorderNotes');
+        const preorderBtn = document.getElementById('preorderBtn');
+        const preorderPaymentOptions = document.querySelectorAll('input[name="preorderPaymentOption"]');
+        const preorderDeliveryOptionsRadios = document.querySelectorAll('input[name="preorderDeliveryOption"]');
+        const preorderDeliveryFeeInfo = document.getElementById('preorderDeliveryFeeInfo');
+
+        // FAQ DOM Elements
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        // Scroll Animation Elements
+        const sections = document.querySelectorAll('.section');
+
+        // Confirmation Modal Elements
+        const confirmationModal = document.getElementById('confirmationModal');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        const sendConfirmationBtn = document.getElementById('sendConfirmation');
+        const cancelConfirmationBtn = document.getElementById('cancelConfirmation');
+        const modalOverlay = document.getElementById('modalOverlay');
+
+        // Fungsi untuk menghasilkan bintang rating
+        function getRatingStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            for (let i = 0; i < (5 - fullStars - (hasHalfStar ? 1 : 0)); i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            return stars;
+        }
+
+        // Render Produk dengan Lazy Loading dan Rating
+        function renderProducts() {
+            productsGrid.innerHTML = '';
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-img">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3C/svg%3E"
+                             data-src="${product.image}"
+                             alt="${product.name}"
+                             class="lazy" onerror="this.onerror=null;this.src='https://placehold.co/400x200/ff6b6b/ffffff?text=Image+Not+Found';">
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <div class="product-rating">
+                            <span class="stars" data-product-id="${product.id}">
+                                ${getRatingStars(product.rating)}
+                            </span>
+                            (${product.rating})
+                        </div>
+                        <div class="product-price">
+                            <span class="price">Rp ${product.price.toLocaleString('id-ID')}</span>
+                            <button class="add-to-cart" data-id="${product.id}">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+
+            // Add event listeners to add to cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', addToCart);
+            });
+
+            // Add event listeners for product rating
+            document.querySelectorAll('.product-rating .stars').forEach(starsContainer => {
+                const productId = parseInt(starsContainer.dataset.productId);
+                starsContainer.querySelectorAll('i').forEach((star, index) => {
+                    star.addEventListener('click', () => {
+                        const newRating = index + 1;
+                        updateProductRating(productId, newRating);
+                    });
+                });
+            });
+
+            // Initialize lazy loading
+            initLazyLoading();
+        }
+
+        // Update Product Rating
+        function updateProductRating(productId, newRating) {
+            const productIndex = products.findIndex(p => p.id === productId);
+            if (productIndex !== -1) {
+                products[productIndex].rating = newRating;
+                renderProducts(); // Re-render products to show updated rating
+                showNotification(`Rating untuk ${products[productIndex].name} diperbarui menjadi ${newRating} bintang!`);
+            }
+        }
+
+        // Render Testimonials (untuk Grid dan Swiper)
+        function renderTestimonials() {
+            testimonialsContainer.innerHTML = ''; // Untuk grid
+            testimonialsSwiperWrapper.innerHTML = ''; // Untuk swiper
+
+            testimonials.forEach(testimonial => {
+                const testimonialCardHtml = `
+                    <div class="author-img">
+                        <img src="${testimonial.image}" alt="${testimonial.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/333333?text=User';">
+                    </div>
+                    <div class="testimonial-content">
+                        <p class="quote">${testimonial.quote}</p>
+                        <div class="testimonial-rating">
+                            ${getRatingStars(testimonial.rating)}
+                        </div>
+                        <div class="author-info">
+                            <h4>${testimonial.name}</h4>
+                            <p>${testimonial.role}</p>
+                        </div>
+                    </div>
+                `;
+
+                // Untuk grid
+                const gridCard = document.createElement('div');
+                gridCard.className = 'testimonial-card';
+                gridCard.innerHTML = testimonialCardHtml;
+                testimonialsContainer.appendChild(gridCard);
+
+                // Untuk swiper
+                const swiperSlide = document.createElement('div');
+                swiperSlide.className = 'swiper-slide testimonials-swiper-slide';
+                const swiperCardContent = document.createElement('div'); // Create a div to hold the card content
+                swiperCardContent.className = 'testimonial-card'; // Re-use the card style
+                swiperCardContent.innerHTML = testimonialCardHtml;
+                swiperSlide.appendChild(swiperCardContent); // Append the content to the slide
+                testimonialsSwiperWrapper.appendChild(swiperSlide);
+            });
+        }
+
+        // Initialize Lazy Loading
+        function initLazyLoading() {
+            const lazyImages = document.querySelectorAll('img.lazy');
+
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
+                        lazyImage.classList.remove('lazy');
+                        lazyImage.classList.add('loaded');
+                        observer.unobserve(lazyImage);
+                    }
+                });
+            }, {
+                rootMargin: '0px 0px 100px 0px'
+            });
+
+            lazyImages.forEach(lazyImage => {
+                imageObserver.observe(lazyImage);
+            });
+        }
+
+        // Add to Cart
+        function addToCart(e) {
+            const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+            const product = products.find(p => p.id === productId);
+
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+
+            updateCart();
+            showNotification(`${product.name} telah ditambahkan ke keranjang`);
+        }
+
+        // Fungsi untuk menghitung biaya pengiriman berdasarkan opsi yang dipilih
+        function calculateDeliveryFee(deliveryOption) {
+            let fee = 0;
+            let infoText = '';
+
+            switch (deliveryOption) {
+                case 'self-pickup':
+                    fee = 0;
+                    infoText = 'Ambil Sendiri (Gratis)';
+                    break;
+                case 'free-delivery':
+                    fee = 0;
+                    infoText = `Gratis (Jarak < ${FREE_DELIVERY_THRESHOLD_KM_MAX} km)`;
+                    break;
+                case 'cheap-delivery':
+                    fee = CHEAP_DELIVERY_FEE;
+                    infoText = `Rp ${CHEAP_DELIVERY_FEE.toLocaleString('id-ID')} (Jarak ${FREE_DELIVERY_THRESHOLD_KM_MAX} km - ${CHEAP_DELIVERY_THRESHOLD_KM_MAX} km)`;
+                    break;
+                case 'far-delivery':
+                    fee = FAR_DELIVERY_FEE;
+                    infoText = `Rp ${FAR_DELIVERY_FEE.toLocaleString('id-ID')} (Jarak > ${CHEAP_DELIVERY_THRESHOLD_KM_MAX} km)`;
+                    break;
+                default:
+                    fee = 0;
+                    infoText = '';
+                    break;
+            }
+            return { fee, infoText };
+        }
+
+        // Update Cart
+        function updateCart() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            if (cartCount) {
+                cartCount.textContent = totalItems;
+            }
+
+            renderCartItems();
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const selectedDeliveryOption = document.querySelector('input[name="deliveryOption"]:checked');
+
+            let deliveryFeeResult = calculateDeliveryFee(selectedDeliveryOption ? selectedDeliveryOption.value : 'self-pickup');
+            currentDeliveryFee = deliveryFeeResult.fee;
+            if (deliveryFeeInfo) deliveryFeeInfo.textContent = deliveryFeeResult.infoText;
+
+            const grandTotal = subtotal + currentDeliveryFee;
+
+            if (cartSubtotal) cartSubtotal.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            if (deliveryFeeElement) deliveryFeeElement.textContent = `Rp ${currentDeliveryFee.toLocaleString('id-ID')}`;
+            if (cartGrandTotal) cartGrandTotal.textContent = `Rp ${grandTotal.toLocaleString('id-ID')}`;
+        }
+
+        // Render Cart Items
+        function renderCartItems() {
+            if (!cartItems) return;
+
+            cartItems.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Keranjang belanja Anda kosong</p>';
+                return;
+            }
+
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="cart-item-img">
+                        <img src="${item.image}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/80x80/ff6b6b/ffffff?text=Product';">
+                    </div>
+                    <div class="cart-item-details">
+                        <h4 class="cart-item-title">${item.name}</h4>
+                        <p class="cart-item-price">Rp ${item.price.toLocaleString('id-ID')}</p>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
+                            <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                            <button class="remove-item" data-id="${item.id}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+
+            document.querySelectorAll('.quantity-btn.minus').forEach(button => {
+                if (button) button.addEventListener('click', decreaseQuantity);
+            });
+
+            document.querySelectorAll('.quantity-btn.plus').forEach(button => {
+                if (button) button.addEventListener('click', increaseQuantity);
+            });
+
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                if (input) input.addEventListener('change', updateQuantity);
+            });
+
+            document.querySelectorAll('.remove-item').forEach(button => {
+                if (button) button.addEventListener('click', removeItem);
+            });
+        }
+
+        // Decrease Quantity
+        function decreaseQuantity(e) {
+            const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+            const item = cart.find(item => item.id === productId);
+
+            if (item.quantity > 1) {
+                item.quantity -= 1;
+            } else {
+                cart = cart.filter(item => item.id !== productId);
+            }
+
+            updateCart();
+        }
+
+        // Increase Quantity
+        function increaseQuantity(e) {
+            const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+            const item = cart.find(item => item.id === productId);
+            item.quantity += 1;
+            updateCart();
+        }
+
+        // Update Quantity
+        function updateQuantity(e) {
+            const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+            const newQuantity = parseInt(e.currentTarget.value);
+            const item = cart.find(item => item.id === productId);
+
+            if (newQuantity > 0) {
+                item.quantity = newQuantity;
+            } else {
+                cart = cart.filter(item => item.id !== productId);
+            }
+
+            updateCart();
+        }
+
+        // Remove Item
+        function removeItem(e) {
+            const productId = parseInt(e.currentTarget.getAttribute('data-id'));
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // Show Notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.backgroundColor = 'var(--primary)';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '1000';
+            notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+            notification.style.animation = 'fadeIn 0.3s';
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.3s';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Show Confirmation Modal
+        function showConfirmationModal(messageHtml, whatsappUrl) {
+            if (confirmationMessage) confirmationMessage.innerHTML = messageHtml;
+            if (sendConfirmationBtn) {
+                sendConfirmationBtn.onclick = () => {
+                    window.open(whatsappUrl, '_blank');
+                    hideConfirmationModal();
+                    cart = [];
+                    updateCart();
+                    if (preorderNameInput) preorderNameInput.value = '';
+                    if (preorderDateInput) preorderDateInput.value = '';
+                    if (preorderTimeInput) preorderTimeInput.value = '';
+                    document.querySelectorAll('#preorderProductSelection input[type="checkbox"]').forEach(checkbox => {
+                        checkbox.checked = false;
+                        if (checkbox.parentElement) checkbox.parentElement.classList.remove('selected');
+                    });
+                    if (preorderNotesInput) preorderNotesInput.value = '';
+                    const defaultPaymentRadio = document.getElementById('preorderPaymentDana');
+                    if (defaultPaymentRadio) defaultPaymentRadio.checked = true;
+                    // Reset delivery options for preorder
+                    const defaultPreorderDeliveryRadio = document.getElementById('preorderSelfPickup');
+                    if (defaultPreorderDeliveryRadio) defaultPreorderDeliveryRadio.checked = true;
+                    if (preorderDeliveryFeeInfo) preorderDeliveryFeeInfo.textContent = '';
+
+                    showNotification('Pesan konfirmasi telah dikirim!');
+                };
+            }
+            if (confirmationModal) confirmationModal.classList.add('active');
+            if (modalOverlay) modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Hide Confirmation Modal
+        function hideConfirmationModal() {
+            if (confirmationModal) confirmationModal.classList.remove('active');
+            if (modalOverlay) modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Checkout function
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Keranjang belanja Anda kosong');
+                return;
+            }
+
+            const selectedDeliveryOption = document.querySelector('input[name="deliveryOption"]:checked');
+            const deliveryOptionValue = selectedDeliveryOption ? selectedDeliveryOption.value : 'self-pickup';
+            const { fee: deliveryFee, infoText: deliveryInfo } = calculateDeliveryFee(deliveryOptionValue);
+
+            let messageDetails = '';
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                messageDetails += `- ${item.name} (${item.quantity}x) = Rp ${(item.price * item.quantity).toLocaleString('id-ID')}\n`;
+                subtotal += item.price * item.quantity;
+            });
+
+            let deliveryText = `Pengiriman: ${deliveryInfo}`;
+            let finalTotal = subtotal + deliveryFee;
+
+            const confirmationText = `
+                Halo, saya ingin mengkonfirmasi pesanan dari keranjang belanja saya.
+                Mohon cek ketersediaan dan instruksi pembayaran.
+
+                *Detail Pesanan:*
+                ${messageDetails}
+                Subtotal: Rp ${subtotal.toLocaleString('id-ID')}
+                ${deliveryText}
+                Total Keseluruhan: Rp ${finalTotal.toLocaleString('id-ID')}
+
+                Terima kasih!
+            `;
+
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(confirmationText)}`;
+
+            showConfirmationModal(
+                `Pesanan Anda akan dikirimkan ke WhatsApp penjual untuk konfirmasi. Penjual akan membalas untuk menginformasikan ketersediaan dan detail pembayaran.<br><br>
+                Setelah penjual menyetujui, Anda dapat melakukan pembayaran sesuai metode yang disepakati.`,
+                whatsappUrl
+            );
+        }
+
+        // Toggle Cart
+        function toggleCart() {
+            if (cartSidebar) cartSidebar.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
+            document.body.style.overflow = (cartSidebar && cartSidebar.classList.contains('active')) || (navLinks && navLinks.classList.contains('active')) || (confirmationModal && confirmationModal.classList.contains('active')) ? 'hidden' : 'auto';
+        }
+
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            if (navLinks) navLinks.classList.toggle('active');
+            if (hamburger) hamburger.classList.toggle('active');
+            document.body.style.overflow = (navLinks && navLinks.classList.contains('active')) || (cartSidebar && cartSidebar.classList.contains('active')) || (confirmationModal && confirmationModal.classList.contains('active')) ? 'hidden' : 'auto';
+        }
+
+        // Close Cart/Menu/Modal when clicking outside
+        function handleOverlayClick() {
+            if (cartSidebar && cartSidebar.classList.contains('active')) {
+                toggleCart();
+            }
+            if (navLinks && navLinks.classList.contains('active')) {
+                toggleMenu();
+            }
+            if (confirmationModal && confirmationModal.classList.contains('active')) {
+                hideConfirmationModal();
+            }
+        }
+
+        // Handle Scroll Animation
+        function handleScrollAnimation() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (sectionTop < windowHeight - 100) {
+                    section.classList.add('visible');
+                }
+            });
+
+            // Header effect on scroll
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }
+        }
+
+        // Hide Header on scroll down
+        let lastScroll = 0;
+        function handleHideHeader() {
+            const currentScroll = window.scrollY;
+
+            if (header) {
+                if (currentScroll > lastScroll && currentScroll > 100) {
+                    header.classList.add('hidden');
+                } else {
+                    header.classList.remove('hidden');
+                }
+            }
+
+            lastScroll = currentScroll;
+        }
+
+        // Populate Pre-order Products (as checkboxes)
+        function populatePreorderProducts() {
+            if (!preorderProductSelection) return;
+
+            preorderProductSelection.innerHTML = '';
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'preorder-product-item';
+                productItem.innerHTML = `
+                    <input type="checkbox" id="preorderProduct-${product.id}" value="${product.id}">
+                    <label for="preorderProduct-${product.id}">${product.name}</label>
+                    <span class="price">Rp ${product.price.toLocaleString('id-ID')}</span>
+                `;
+                preorderProductSelection.appendChild(productItem);
+
+                const checkbox = productItem.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.addEventListener('change', (e) => {
+                        if (e.target.checked) {
+                            productItem.classList.add('selected');
+                        } else {
+                            productItem.classList.remove('selected');
+                        }
+                    });
+                }
+            });
+        }
+
+        // Handle Pre-order
+        function handlePreorder() {
+            const name = preorderNameInput ? preorderNameInput.value.trim() : '';
+            const date = preorderDateInput ? preorderDateInput.value : '';
+            const time = preorderTimeInput ? preorderTimeInput.value : '';
+            const selectedProductCheckboxes = document.querySelectorAll('#preorderProductSelection input[type="checkbox"]:checked');
+            const selectedProductIds = Array.from(selectedProductCheckboxes).map(checkbox => parseInt(checkbox.value));
+            const notes = preorderNotesInput ? preorderNotesInput.value.trim() : '';
+            const selectedPaymentOptionElement = document.querySelector('input[name="preorderPaymentOption"]:checked');
+            const selectedPaymentOption = selectedPaymentOptionElement ? selectedPaymentOptionElement.value : 'Tidak dipilih';
+            
+            // Get selected pre-order delivery option and its fee/info
+            const selectedPreorderDeliveryOption = document.querySelector('input[name="preorderDeliveryOption"]:checked');
+            const preorderDeliveryOptionValue = selectedPreorderDeliveryOption ? selectedPreorderDeliveryOption.value : 'self-pickup';
+            const { fee: preorderDeliveryFee, infoText: preorderDeliveryInfo } = calculateDeliveryFee(preorderDeliveryOptionValue);
+
+            if (!name || !date || !time || selectedProductIds.length === 0) {
+                showNotification('Mohon lengkapi Nama, Tanggal, Waktu, dan pilih minimal satu Produk untuk Pre-order.');
+                return;
+            }
+
+            const selectedProducts = products.filter(p => selectedProductIds.includes(p.id));
+
+            let messageDetails = '';
+            let totalPreorderPrice = 0;
+            selectedProducts.forEach(product => {
+                messageDetails += `- ${product.name} (Rp ${product.price.toLocaleString('id-ID')})\n`;
+                totalPreorderPrice += product.price;
+            });
+
+            let finalPreorderTotal = totalPreorderPrice + preorderDeliveryFee;
+
+            let confirmationText = `
+                Halo, saya ingin melakukan Pre-order:
+
+                *Nama Pemesan:* ${name}
+                *Tanggal Pengambilan/Pengiriman:* ${date}
+                *Waktu Pengambilan/Pengiriman:* ${time}
+
+                *Produk yang dipesan:*
+                ${messageDetails}
+                *Opsi Pengiriman:* ${preorderDeliveryInfo}
+                *Total Estimasi Harga:* Rp ${finalPreorderTotal.toLocaleString('id-ID')}
+                *Metode Pembayaran Pilihan:* ${selectedPaymentOption}
+            `;
+
+            if (notes) {
+                confirmationText += `\n*Catatan Tambahan:* ${notes}`;
+            }
+
+            confirmationText += `\n\nMohon konfirmasi ketersediaan pesanan ini. Jika disetujui, saya akan segera melakukan pembayaran.`;
+
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(confirmationText)}`;
+
+            showConfirmationModal(
+                `Pesanan Pre-order Anda akan dikirimkan ke WhatsApp penjual untuk konfirmasi. Penjual akan membalas untuk menginformasikan ketersediaan dan detail pembayaran.<br><br>
+                Setelah penjual menyetujui, Anda dapat melakukan pembayaran sesuai metode *${selectedPaymentOption}*.`,
+                whatsappUrl
+            );
+        }
+
+        // Update Pre-order Delivery Fee Display
+        function updatePreorderDeliveryDisplay() {
+            const selectedPreorderDeliveryOption = document.querySelector('input[name="preorderDeliveryOption"]:checked');
+            const deliveryOptionValue = selectedPreorderDeliveryOption ? selectedPreorderDeliveryOption.value : 'self-pickup';
+            const { fee: deliveryFee, infoText: deliveryInfo } = calculateDeliveryFee(deliveryOptionValue); // Menggunakan fungsi calculateDeliveryFee yang sama
+            
+            if (preorderDeliveryFeeInfo) {
+                preorderDeliveryFeeInfo.textContent = deliveryInfo;
+            }
+        }
+
+        // FAQ Accordion Functionality
+        function setupFaqAccordion() {
+            faqQuestions.forEach(question => {
+                if (question) {
+                    question.addEventListener('click', () => {
+                        const answer = question.nextElementSibling;
+                        const icon = question.querySelector('i');
+
+                        faqQuestions.forEach(otherQuestion => {
+                            if (otherQuestion && otherQuestion !== question && otherQuestion.classList.contains('active')) {
+                                otherQuestion.classList.remove('active');
+                                if (otherQuestion.nextElementSibling) otherQuestion.nextElementSibling.classList.remove('active');
+                                const otherIcon = otherQuestion.querySelector('i');
+                                if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                                if (otherQuestion.nextElementSibling) otherQuestion.nextElementSibling.style.maxHeight = "0";
+                            }
+                        });
+
+                        question.classList.toggle('active');
+                        if (answer) answer.classList.toggle('active');
+                        if (answer && answer.classList.contains('active')) {
+                            if (icon) icon.style.transform = 'rotate(180deg)';
+                            if (answer) answer.style.maxHeight = answer.scrollHeight + "px";
+                        } else {
+                            if (icon) icon.style.transform = 'rotate(0deg)';
+                            if (answer) answer.style.maxHeight = "0";
+                        }
+                    });
+                }
+            });
+        }
+
+        // Event Listeners and Initialization wrapped in window.onload
+        window.addEventListener('load', () => {
+            // Inisialisasi Swiper untuk "Cara Memesan"
+            new Swiper('.how-to-order-swiper-container', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                        spaceBetween: 40,
+                    },
+                }
+            });
+
+            // Inisialisasi Swiper untuk Testimoni
+            new Swiper('.testimonials-swiper-container', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                // Breakpoints untuk mengaktifkan/menonaktifkan slider
+                breakpoints: {
+                    0: { // Mobile
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                        enabled: true, // Aktifkan slider
+                    },
+                    768: { // Tablet
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                        enabled: true, // Aktifkan slider
+                    },
+                    1025: { // Desktop (nonaktifkan slider, kembali ke grid)
+                        slidesPerView: 3, // Atau jumlah kolom grid yang Anda inginkan
+                        spaceBetween: 30,
+                        enabled: false, // Nonaktifkan slider
+                    }
+                },
+                on: {
+                    // Update CSS display based on Swiper's enabled state
+                    init: function() {
+                        const testimonialsGrid = document.getElementById('testimonialsContainer');
+                        const testimonialsSwiper = document.getElementById('testimonialsSwiperContainer');
+                        if (this.params.enabled) {
+                            testimonialsGrid.style.display = 'none';
+                            testimonialsSwiper.style.display = 'block';
+                        } else {
+                            testimonialsGrid.style.display = 'grid';
+                            testimonialsSwiper.style.display = 'none';
+                        }
+                    },
+                    resize: function() {
+                        const testimonialsGrid = document.getElementById('testimonialsContainer');
+                        const testimonialsSwiper = document.getElementById('testimonialsSwiperContainer');
+                        if (this.params.enabled) {
+                            testimonialsGrid.style.display = 'none';
+                            testimonialsSwiper.style.display = 'block';
+                        } else {
+                            testimonialsGrid.style.display = 'grid';
+                            testimonialsSwiper.style.display = 'none';
+                        }
+                    }
+                }
+            });
+
+
+            // Event Listeners
+            if (cartIcon) cartIcon.addEventListener('click', toggleCart);
+            if (closeCart) closeCart.addEventListener('click', toggleCart);
+            if (overlay) overlay.addEventListener('click', handleOverlayClick);
+            if (modalOverlay) modalOverlay.addEventListener('click', hideConfirmationModal);
+            if (checkoutBtn) checkoutBtn.addEventListener('click', checkout);
+            if (hamburger) hamburger.addEventListener('click', toggleMenu);
+            window.addEventListener('scroll', handleScrollAnimation);
+            window.addEventListener('scroll', handleHideHeader);
+            if (cancelConfirmationBtn) cancelConfirmationBtn.addEventListener('click', hideConfirmationModal);
+
+            // Event listener untuk perubahan opsi pengiriman di keranjang
+            deliveryOptionRadios.forEach(radio => {
+                if (radio) radio.addEventListener('change', updateCart);
+            });
+
+            // Event listener untuk perubahan opsi pengiriman di pre-order
+            preorderDeliveryOptionsRadios.forEach(radio => {
+                if (radio) radio.addEventListener('change', updatePreorderDeliveryDisplay);
+            });
+
+            if (preorderBtn) preorderBtn.addEventListener('click', handlePreorder);
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                if (link) {
+                    link.addEventListener('click', () => {
+                        if (navLinks && navLinks.classList.contains('active')) {
+                            toggleMenu();
+                        }
+                    });
+                }
+            });
+
+            // Hide loader when page is loaded
+            setTimeout(() => {
+                if (loader) loader.classList.add('hidden');
+            }, 1000);
+
+            // Initialize functions
+            renderProducts();
+            renderTestimonials(); // Render testimonials untuk grid dan swiper
+            updateCart(); // Initial call to set delivery fee display for cart
+            handleScrollAnimation();
+            populatePreorderProducts();
+            setupFaqAccordion();
+            updatePreorderDeliveryDisplay(); // Initial call for preorder delivery display
+        });
+    </script>
+</body>
+</html>
